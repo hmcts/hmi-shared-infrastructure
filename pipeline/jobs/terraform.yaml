@@ -50,3 +50,7 @@ jobs:
       subscription: ${{ parameters.subscription }}
       resourceGroup: $(resourceGroup)
       environment: ${{ parameters.envName }}
+  - template: ../steps/tf-apply.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      environment: ${{ parameters.envName }}
