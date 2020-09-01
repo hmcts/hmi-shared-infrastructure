@@ -11,6 +11,6 @@ steps:
   displayName: Terraform apply
   inputs:
     command: apply
-    workingDirectory: $(System.DefaultWorkingDirectory)/infrastructure/terraform/
+    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/
     environmentServiceName: ${{ parameters.subscription }}
     commandOptions: -auto-approve tfplan-${{ parameters.environment}}
