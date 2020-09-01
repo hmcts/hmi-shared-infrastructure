@@ -8,9 +8,11 @@ parameters:
     default: 
     - name: sbox
       subscription: DTS-SHAREDSERVICES-SBOX
+    - name: dev
+      subscription: DTS-SHAREDSERVICES-DEV
 
 variables: 
-  terraformVersion: 0.12.16
+  - group: HMI-APIM-Common
 
 stages:
 
