@@ -1,0 +1,12 @@
+module "network" {
+  source                  = "./network"
+  environment             = var.environment
+  resource_group          = var.resource_group
+  product                 = var.product
+  location                = var.location
+  address_space           = var.address_space
+  subnet_address_prefixes = var.subnet_address_prefixes
+  service_endpoints       = var.service_endpoints
+  subnet_delegation       = var.subnet_delegation
+  tags                    = var.tags
+}

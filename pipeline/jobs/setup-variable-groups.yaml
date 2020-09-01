@@ -1,0 +1,26 @@
+parameters:
+  - name: fileName
+    type: string
+
+  - name: envName
+    type: string
+    
+  - name: displayName
+    type: string 
+
+jobs:
+- job: setupVariableGroups
+  displayName: ${{ parameters.displayName }}
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+    - template: ../steps/download-secure-file.yaml
+      parameters:
+        envName: ${{ parameters.envName }}
+        fileName: ${{ parameters.fileName }}
+    
+    - task: Bash@3
+      inputs:
+        filePath: pipeline/scripts/update_variable_groups.sh
+        arguments: $(devopsUser), $(devopsPAT)
+        workingDirectory: /home/vsts/work/_temp/

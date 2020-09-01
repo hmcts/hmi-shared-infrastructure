@@ -1,0 +1,32 @@
+parameters:
+  - name: subscription
+    type: string
+
+  - name: envName
+    type: string
+
+  - name: location
+    type: string
+    default: uksouth
+
+  - name: displayName
+    type: string
+
+  - name: dependsOn
+    type: string
+    
+jobs:
+- job: setupInfrastructure
+  dependsOn:
+  - ${{ if parameters.dependsOn }}:
+    - ${{ parameters.dependsOn }}
+  displayName: ${{ parameters.displayName }}
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - template: ../steps/create-rg.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      resourceGroup: hmi-sharedinfra-${{ parameters.envName }}-rg
+      storageAccount: hmiapiminfra${{ parameters.envName }}sa
+      location: ${{ parameters.location }}

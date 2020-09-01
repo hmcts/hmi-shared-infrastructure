@@ -1,0 +1,32 @@
+parameters:
+  - name: subscription
+    type: string
+
+  - name: resourceGroup
+    type: string
+
+  - name: storageAccount
+    type: string
+
+  - name: location
+    type: string
+    default: uksouth
+
+
+steps:
+- task: AzureCLI@2
+  displayName: Set up Resource Group
+  name: setupResourceGroup
+  inputs:
+    azureSubscription: ${{ parameters.subscription }}
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }}
+      az storage account create --name ${{ parameters.storageAccount }} --resource-group ${{ parameters.resourceGroup }}
+      key=$(az storage account keys list -g ${{ parameters.resourceGroup }} --account-name ${{ parameters.storageAccount }} --query "[0].value" -o tsv)
+      az storage container create --name apim-terraform --account-name ${{ parameters.storageAccount }} --account-key $key
+      
+      echo "##vso[task.setvariable variable=resourceGroup;isOutput=true;]${{ parameters.resourceGroup }}"
+      echo "##vso[task.setvariable variable=storageAccount;isOutput=true;isSecret=true;]${{ parameters.storageAccount }}"
+      echo "##vso[task.setvariable variable=containerName;isOutput=true;isSecret=true;]apim-terraform"

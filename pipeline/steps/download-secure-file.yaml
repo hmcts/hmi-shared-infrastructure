@@ -1,0 +1,12 @@
+parameters:
+  - name: fileName
+    type: string
+  - name: envName
+    type: string
+  
+steps:
+  - task: DownloadSecureFile@1
+    displayName: 'Download secure file'
+    name: varFile${{ parameters.envName }}
+    inputs:
+      secureFile: ${{ parameters.fileName }}
