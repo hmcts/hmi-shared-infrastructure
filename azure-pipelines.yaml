@@ -10,6 +10,8 @@ parameters:
       subscription: DTS-SHAREDSERVICES-SBOX
     - name: dev
       subscription: DTS-SHAREDSERVICES-DEV
+    - name: test
+      subscription: DTS-SHAREDSERVICES-TEST
 
 variables: 
   - group: HMI-APIM-Common
