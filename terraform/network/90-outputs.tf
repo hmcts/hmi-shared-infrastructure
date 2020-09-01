@@ -3,7 +3,7 @@ output "out_network_vnet_id" {
 }
 
 output "out_network_subnet_id" {
-  value = "${azurerm_subnet.subnet.id}"
+  value = "${azurerm_subnet.apim_subnet.id}"
 }
 
 # output "out_network_nsg_id" {
