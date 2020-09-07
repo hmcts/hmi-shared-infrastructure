@@ -7,8 +7,11 @@ apim_nsg_rules = [
   { name = "DependencyOnAzureSQLOutbound" },
   { name = "DependencyForLogToEventHubPolicyOutbound" },
   { name = "DependencyOnRedisCacheOutbound" },
-  { name = "PublishDiagnosticLogsAndMetricsOutbound" },
-  { name = "AuthenticateToAzureActiveDirectoryOutbound" }
+  { name = "PublishDiagnosticLogsAndMetrics433Outbound" },
+  { name = "PublishDiagnosticLogsAndMetrics1200Outbound" },
+  { name = "PublishDiagnosticLogsAndMetrics1886Outbound" },
+  { name = "AuthenticateToAzureActiveDirectory80Outbound" },
+  { name = "AuthenticateToAzureActiveDirectory433Outbound" }
 ]
 
 apim_rules = {
@@ -20,6 +23,9 @@ apim_rules = {
   DependencyOnAzureSQLOutbound                         = ["Outbound", "Allow", "TCP", "*", "1443", "VirtualNetwork", "Sql"]
   DependencyForLogToEventHubPolicyOutbound             = ["Outbound", "Allow", "TCP", "*", "5671", "VirtualNetwork", "EventHub"]
   DependencyOnRedisCacheOutbound                       = ["Outbound", "Allow", "TCP", "*", "6381-6383", "VirtualNetwork", "VirtualNetwork"]
-  PublishDiagnosticLogsAndMetricsOutbound              = ["Outbound", "Allow", "TCP", "*", "443,12000,1886", "VirtualNetwork", "AzureMonitor"]
-  AuthenticateToAzureActiveDirectoryOutbound           = ["Outbound", "Allow", "TCP", "*", "80,443", "VirtualNetwork", "AzureActiveDirectory"]
+  PublishDiagnosticLogsAndMetrics433Outbound           = ["Outbound", "Allow", "TCP", "*", "443", "VirtualNetwork", "AzureMonitor"]
+  PublishDiagnosticLogsAndMetrics12000Outbound         = ["Outbound", "Allow", "TCP", "*", "12000", "VirtualNetwork", "AzureMonitor"]
+  PublishDiagnosticLogsAndMetrics1886Outbound          = ["Outbound", "Allow", "TCP", "*", "1886", "VirtualNetwork", "AzureMonitor"]
+  AuthenticateToAzureActiveDirectory80Outbound         = ["Outbound", "Allow", "TCP", "*", "80", "VirtualNetwork", "AzureActiveDirectory"]
+  AuthenticateToAzureActiveDirectory433Outbound        = ["Outbound", "Allow", "TCP", "*", "443", "VirtualNetwork", "AzureActiveDirectory"]
 }

@@ -8,7 +8,7 @@ resource "azurerm_network_security_group" "apim_nsg" {
 resource "azurerm_network_security_rule" "apim_nsg_rules" {
   count                       = length(var.apim_nsg_rules)
   name                        = lookup(var.apim_nsg_rules[count.index], "name")
-  priority                    = lookup(var.apim_nsg_rules[count.index], "priority", "${2096 - length(var.apim_nsg_rules) + count.index}" )
+  priority                    = lookup(var.apim_nsg_rules[count.index], "priority", "${100 * (count.index + 1)}" )
   direction                   = element(var.apim_rules["${lookup(var.apim_nsg_rules[count.index], "name")}"], 0)
   access                      = element(var.apim_rules["${lookup(var.apim_nsg_rules[count.index], "name")}"], 1)
   protocol                    = element(var.apim_rules["${lookup(var.apim_nsg_rules[count.index], "name")}"], 2)
