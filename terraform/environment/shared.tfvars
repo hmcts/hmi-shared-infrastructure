@@ -4,15 +4,15 @@ apim_nsg_rules = [
   { name = "SecureClientCommunicationToAPIManagementInbound" },
   { name = "DependencyOnRedisCacheInbound" },
   { name = "DependencyOnAzureStorageOutbound" },
-  { name = "DependencyOnAzureSQLOutbound" },
-  { name = "DependencyForLogToEventHubPolicyOutbound" },
-  { name = "DependencyOnRedisCacheOutbound" },
-  { name = "AzureInfrastructureLoadBalancer" },
-  { name = "PublishDiagnosticLogsAndMetrics433Outbound" },
-  { name = "PublishDiagnosticLogsAndMetrics1200Outbound" },
-  { name = "PublishDiagnosticLogsAndMetrics1886Outbound" },
-  { name = "AuthenticateToAzureActiveDirectory80Outbound" },
-  { name = "AuthenticateToAzureActiveDirectory433Outbound" }
+  { name = "DependencyOnAzureSQLOutbound" }
+#  { name = "DependencyForLogToEventHubPolicyOutbound" },
+#  { name = "DependencyOnRedisCacheOutbound" },
+#  { name = "AzureInfrastructureLoadBalancer" },
+#  { name = "PublishDiagnosticLogsAndMetrics433Outbound" },
+#  { name = "PublishDiagnosticLogsAndMetrics1200Outbound" },
+#  { name = "PublishDiagnosticLogsAndMetrics1886Outbound" },
+#  { name = "AuthenticateToAzureActiveDirectory80Outbound" },
+#  { name = "AuthenticateToAzureActiveDirectory433Outbound" }
 ]
 
 apim_rules = {
