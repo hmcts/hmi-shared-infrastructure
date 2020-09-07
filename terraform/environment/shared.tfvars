@@ -16,12 +16,12 @@ apim_nsg_rules = [
 ]
 
 apim_rules = {
-  ManagementEndpointForAzurePortalAndPowershellInbound = ["Inbound", "Allow", "TCP", "*", "3433", "ApiManagement", "VirtualNetwork"]
+  ManagementEndpointForAzurePortalAndPowershellInbound = ["Inbound", "Allow", "TCP", "*", "3443", "ApiManagement", "VirtualNetwork"]
   ClientCommunicationToAPIManagementInbound            = ["Inbound", "Allow", "TCP", "*", "80", "Internet", "*"]
-  SecureClientCommunicationToAPIManagementInbound      = ["Inbound", "Allow", "TCP", "*", "433", "Internet", "*"]
+  SecureClientCommunicationToAPIManagementInbound      = ["Inbound", "Allow", "TCP", "*", "443", "Internet", "*"]
   DependencyOnRedisCacheInbound                        = ["Inbound", "Allow", "TCP", "*", "6381-6383", "VirtualNetwork", "VirtualNetwork"]
   AzureInfrastructureLoadBalancer                      = ["Inbound", "Allow", "TCP", "*", "*", "AzureLoadBalancer", "VirtualNetwork"]
-  DependencyOnAzureStorageOutbound                     = ["Outbound", "Allow", "TCP", "*", "433", "VirtualNetwork", "Storage"]
+  DependencyOnAzureStorageOutbound                     = ["Outbound", "Allow", "TCP", "*", "443", "VirtualNetwork", "Storage"]
   DependencyOnAzureSQLOutbound                         = ["Outbound", "Allow", "TCP", "*", "1443", "VirtualNetwork", "Sql"]
   DependencyForLogToEventHubPolicyOutbound             = ["Outbound", "Allow", "TCP", "*", "5671", "VirtualNetwork", "EventHub"]
   DependencyOnRedisCacheOutbound                       = ["Outbound", "Allow", "TCP", "*", "6381-6383", "VirtualNetwork", "VirtualNetwork"]
