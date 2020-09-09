@@ -11,4 +11,8 @@ module "network" {
   apim_nsg_rules          = var.apim_nsg_rules
   apim_rules              = var.apim_rules
   tags                    = var.tags
+  route_name              = var.route_name
+  route_address_prefix    = var.route_address_prefix
+  route_next_hop_type     = var.route_next_hop_type
+  next_hop_in_ip_address  = var.next_hop_in_ip_address
 }
