@@ -5,11 +5,14 @@ resource "azurerm_route_table" "apim_rt" {
   disable_bgp_route_propagation = false
   tags                          = var.tags
 
-  route {
-    name                   = var.route_name
-    address_prefix         = var.route_address_prefix
-    next_hop_type          = var.route_next_hop_type
-    next_hop_in_ip_address = var.next_hop_in_ip_address
+  dynamic "route" {
+    for_each = var.route_table == null ? [] : ["route"]
+    content {
+      name                   = var.route_table.name
+      address_prefix         = var.route_table.address_prefix
+      next_hop_type          = var.route_table.next_hop_type
+      next_hop_in_ip_address = var.route_table.next_hop_in_ip_address
+    }
   }
 }
 

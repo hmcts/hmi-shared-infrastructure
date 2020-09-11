@@ -4,7 +4,4 @@ variable "service_endpoints" {}
 variable "subnet_delegation" {}
 variable "apim_nsg_rules" {}
 variable "apim_rules" {}
-variable "route_name" {}
-variable "route_address_prefix" {}
-variable "route_next_hop_type" {}
-variable "next_hop_in_ip_address" {}
+
