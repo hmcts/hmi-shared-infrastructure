@@ -17,4 +17,4 @@ steps:
     command: plan
     workingDirectory: $(System.DefaultWorkingDirectory)/terraform/
     environmentServiceName: ${{ parameters.subscription }}
-    commandOptions: '-var-file="environment/${{ parameters.environment}}.tfvars" -var-file="environment/shared.tfvars" -out="tfplan-${{ parameters.environment}}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment"=${{ parameters.environment}} - var "tenant_id=$(tenant_id)"'
+    commandOptions: '-var-file="environment/${{ parameters.environment}}.tfvars" -var-file="environment/shared.tfvars" -out="tfplan-${{ parameters.environment}}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment"=${{ parameters.environment}} -var "tenant_id=$(tenant_id)"'
