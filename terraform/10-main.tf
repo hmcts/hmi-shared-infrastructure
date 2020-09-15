@@ -13,3 +13,13 @@ module "network" {
   tags                    = var.tags
   route_table             = var.route_table
 }
+
+module "keyvault" {
+  source         = "./keyvault"
+  environment    = var.environment
+  resource_group = var.resource_group
+  location       = var.location
+  product        = var.product
+  tags           = var.tags
+  tenant_id      = var.tenant_id
+}
