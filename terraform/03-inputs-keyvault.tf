@@ -1,0 +1,1 @@
+variable "tenant_id" {}
