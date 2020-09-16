@@ -1,6 +1,6 @@
 variable "sku_name" {
   description = "The SKU for the KeyVault."
-  default     = "standard"
+  default     = "Standard"
 }
 variable "secret_permissions" {
   description = "The permissions (list) for the creating principal accessing secrets."
