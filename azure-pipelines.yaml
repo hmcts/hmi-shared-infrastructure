@@ -1,56 +1,25 @@
----
-trigger:
-  - master
-pr:
-  - none
+variables:
+  rg: 'hmi-sharedinfra-sbox-rg'
+  location: 'uksouth'
 
-parameters:
-  - name: environments
-    type: object
-    default: 
-    - name: sbox
-      subscription: DTS-SHAREDSERVICES-SBOX
-    - name: dev
-      subscription: DTS-SHAREDSERVICES-DEV
-    - name: test
-      subscription: DTS-SHAREDSERVICES-TEST
-
-variables: 
-  - group: HMI-APIM-Common
-
-stages:
-
-- ${{ each environment in parameters.environments }}:
-
-  - stage: ${{ environment.name }}
-    ${{ if environment.condition }}:
-      condition: ${{ environment.condition }}
-    displayName: Build and Test ${{ environment.name }} APIM
-    
-    jobs:
-    - template: pipeline/jobs/setup-variable-groups.yaml
-      parameters:
-        displayName: Set up Variable Groups for APIM deployments
-        envName: ${{ environment.name }}
-        fileName: HMI-APIM-BUILD-${{ environment.name }}.json
-
-    - template: pipeline/jobs/setup-infra.yaml
-      parameters:
-        displayName: Set up infrastructure for APIM deployments
-        dependsOn: setupVariableGroups
-        subscription: ${{ environment.subscription }}
-        envName: ${{ environment.name }}
-        
-    - template: pipeline/jobs/terraform.yaml
-      parameters:
-        displayName: Build Infrastructure with Terraform
-        dependsOn: setupInfrastructure
-        subscription: ${{ environment.subscription }}
-        envName: ${{ environment.name }}
-        resourceGroup: $(resourceGroup)
-        storageAccount: $(storageAccount)
-        containerName: $(containerName)
-        variables:
-          resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
-          storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
-          containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+steps:
+- task: AzurePowerShell@5
+  displayName: 'Azure PowerShell script: InlineScript'
+  inputs:
+    azureSubscription: 'DTS-SHAREDSERVICES-SBOX'
+    ScriptType: InlineScript
+    Inline: |
+     # You can write your azure powershell scripts inline here. 
+     # You can also pass predefined and custom variables to this script using arguments
+     
+     az aks create -g $(rg) -n hmiaks --location $(location) --generate-ssh-keys
+     
+     az mysql server create --resource-group $(rg) --name demoserver  --location $(location) --admin-user myadmin --admin-password  --sku-name GP_Gen5_2 --version 8.0  --ssl-enforcement disabled
+     
+     az mysql db create --resource-group $(rg) --server-name mydemoserver --name wpdatabase
+     
+     az mysql server firewall-rule create --resource-group $(rg) --server-name mydemoserver –-name allowanyazureIPs --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+     
+     az mysql server firewall-rule create --resource-group $(rg) --server-name mydemoserver –-name allowmyIP --start-ip-address   --end-ip-address 
+     
+    azurePowerShellVersion: LatestVersion
