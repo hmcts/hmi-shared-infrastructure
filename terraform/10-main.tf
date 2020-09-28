@@ -12,3 +12,14 @@ module "network" {
   apim_rules              = var.apim_rules
   tags                    = var.tags
 }
+
+module "keyvault" {
+  source         = "./keyvault"
+  environment    = var.environment
+  resource_group = var.resource_group
+  location       = var.location
+  product        = var.product
+  tags           = var.tags
+  tenant_id      = var.tenant_id
+  principal_id   = var.principal_id
+}

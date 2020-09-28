@@ -1,7 +1,7 @@
 location                = "uksouth"
 product                 = "hmi-sharedinfra"
 address_space           = ["10.101.1.64/26"]
-subnet_address_prefixes = ["10.101.1.64/26"]
+subnet_address_prefixes = ["10.101.1.64/27", "10.101.1.96/27"]
 service_endpoints       = ["Microsoft.Web"]
 subnet_delegation = {
   name = "APIM delegations"
