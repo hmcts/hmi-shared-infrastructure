@@ -1,7 +1,6 @@
-resource "random_password" "password" {
-  length = 16
-  special = true
-  override_special = "_%@"
+data "azurerm_key_vault_secret" "pact_password" {
+  name         = "pact-db-password"
+  key_vault_id = var.sharedinfra_kv
 }
 
 resource "azurerm_postgresql_server" "hmi_pact" {
@@ -18,21 +17,7 @@ resource "azurerm_postgresql_server" "hmi_pact" {
   auto_grow_enabled            = false
 
   administrator_login          = "pactadmin"
-  administrator_login_password = random_password.password.result
+  administrator_login_password = data.azurerm_key_vault_secret.pact_password.value
   version                      = "10"
   ssl_enforcement_enabled      = true
-}
-
-resource "azurerm_key_vault_secret" "pact-db-user" {
-  name         = "pact-db-user"
-  value        = azurerm_postgresql_server.hmi_pact.administrator_login
-  key_vault_id = var.sharedinfra_kv
-  tags         = var.tags
-}
-
-resource "azurerm_key_vault_secret" "pact-db-password" {
-  name         = "pact-db-password"
-  value        = azurerm_postgresql_server.hmi_pact.administrator_login_password
-  key_vault_id = var.sharedinfra_kv
-  tags         = var.tags
 }
