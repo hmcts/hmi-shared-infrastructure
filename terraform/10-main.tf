@@ -6,7 +6,6 @@ module "network" {
   location                = var.location
   address_space           = var.address_space
   subnet_address_prefixes = var.subnet_address_prefixes
-  subnet_delegation       = var.subnet_delegation
   apim_nsg_rules          = var.apim_nsg_rules
   apim_rules              = var.apim_rules
   route_table             = var.route_table
