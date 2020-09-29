@@ -28,7 +28,7 @@ steps:
     backendAzureRmResourceGroupLocation: ${{ parameters.location }}
     backendAzureRmStorageAccountName: ${{ parameters.storageAccount }}
     backendAzureRmContainerName: ${{ parameters.containerName }}
-    backendAzureRmKey: ${{ parameters.containerName }}.tfstate
+    backendAzureRmKey: hmishared.tfstate
 
 - task: TerraformCLI@0
   displayName: Terraform validate
