@@ -25,7 +25,7 @@ stages:
   - stage: ${{ environment.name }}
     ${{ if environment.condition }}:
       condition: ${{ environment.condition }}
-    displayName: Build and Test ${{ environment.name }} APIM
+    displayName: Build ${{ environment.name }}
     
     jobs:
     - template: pipeline/jobs/setup-variable-groups.yaml

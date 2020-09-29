@@ -8,6 +8,8 @@ variable "secret_permissions" {
     "get",
     "set",
     "list",
+    "recover",
+    "purge",
     "delete"
   ]
 }

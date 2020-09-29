@@ -6,12 +6,10 @@ module "network" {
   location                = var.location
   address_space           = var.address_space
   subnet_address_prefixes = var.subnet_address_prefixes
-  service_endpoints       = var.service_endpoints
-  subnet_delegation       = var.subnet_delegation
   apim_nsg_rules          = var.apim_nsg_rules
   apim_rules              = var.apim_rules
-  tags                    = var.tags
   route_table             = var.route_table
+  tags                    = var.tags
 }
 
 module "keyvault" {
@@ -22,4 +20,5 @@ module "keyvault" {
   product        = var.product
   tags           = var.tags
   tenant_id      = var.tenant_id
+  principal_id   = var.principal_id
 }
