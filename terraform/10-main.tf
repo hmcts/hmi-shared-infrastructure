@@ -10,6 +10,7 @@ module "network" {
   subnet_delegation       = var.subnet_delegation
   apim_nsg_rules          = var.apim_nsg_rules
   apim_rules              = var.apim_rules
+  route_table             = var.route_table
   tags                    = var.tags
 }
 

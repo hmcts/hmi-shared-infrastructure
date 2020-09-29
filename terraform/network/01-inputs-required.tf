@@ -9,3 +9,4 @@ variable "service_endpoints" {}
 variable "subnet_delegation" {}
 variable "apim_nsg_rules" {}
 variable "apim_rules" {}
+variable "route_table" {}

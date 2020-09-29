@@ -31,11 +31,3 @@ apim_rules = {
   AuthenticateToAzureActiveDirectory80Outbound         = ["Outbound", "Allow", "TCP", "*", "80", "VirtualNetwork", "AzureActiveDirectory"]
   AuthenticateToAzureActiveDirectory433Outbound        = ["Outbound", "Allow", "TCP", "*", "443", "VirtualNetwork", "AzureActiveDirectory"]
 }
-
-subnet_delegation = {
-  name = "APIM delegations"
-  service_delegation = {
-    name = "Microsoft.ApiManagement/service"
-    actions = ["Microsoft.Network/virtualNetworks/subnets/join/action", "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"]
-    }
-  }
