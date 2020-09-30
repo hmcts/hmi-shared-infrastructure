@@ -8,9 +8,6 @@ parameters:
   - name: resourceGroup
     type: string
 
-  - name: environment
-    type: string
-
 steps:
   - task: AzurePowerShell@5
     name: getspid

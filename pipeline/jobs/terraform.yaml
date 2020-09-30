@@ -46,11 +46,11 @@ jobs:
       resourceGroup: $(resourceGroup)
       storageAccount: $(storageAccount)
       containerName: $(containerName)
-  # - template: ../steps/tf-plan.yaml
-  #   parameters:
-  #     subscription: ${{ parameters.subscription }}
-  #     resourceGroup: $(resourceGroup)
-  #     environmentName: ${{ parameters.environmentName }}
+  - template: ../steps/tf-plan.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      resourceGroup: $(resourceGroup)
+      environmentName: ${{ parameters.environmentName }}
   # - template: ../steps/tf-apply.yaml
   #   parameters:
   #     subscription: ${{ parameters.subscription }}
