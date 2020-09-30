@@ -34,23 +34,23 @@ stages:
         environmentName: ${{ environment.name }}
         fileName: HMI-APIM-BUILD-${{ environment.name }}.json
 
-    - template: pipeline/jobs/setup-infra.yaml
-      parameters:
-        displayName: Set up infrastructure for APIM deployments
-        dependsOn: setupVariableGroups
-        subscription: ${{ environment.subscription }}
-        environmentName: ${{ environment.name }}
+    # - template: pipeline/jobs/setup-infra.yaml
+    #   parameters:
+    #     displayName: Set up infrastructure for APIM deployments
+    #     dependsOn: setupVariableGroups
+    #     subscription: ${{ environment.subscription }}
+    #     environmentName: ${{ environment.name }}
         
-    - template: pipeline/jobs/terraform.yaml
-      parameters:
-        displayName: Build Infrastructure with Terraform
-        dependsOn: setupInfrastructure
-        subscription: ${{ environment.subscription }}
-        environmentName: ${{ environment.name }}
-        resourceGroup: $(resourceGroup)
-        storageAccount: $(storageAccount)
-        containerName: $(containerName)
-        variables:
-          resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
-          storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
-          containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+    # - template: pipeline/jobs/terraform.yaml
+    #   parameters:
+    #     displayName: Build Infrastructure with Terraform
+    #     dependsOn: setupInfrastructure
+    #     subscription: ${{ environment.subscription }}
+    #     environmentName: ${{ environment.name }}
+    #     resourceGroup: $(resourceGroup)
+    #     storageAccount: $(storageAccount)
+    #     containerName: $(containerName)
+    #     variables:
+    #       resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
+    #       storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
+    #       containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
