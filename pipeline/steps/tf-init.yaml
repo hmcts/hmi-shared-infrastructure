@@ -2,6 +2,9 @@ parameters:
   - name: subscription
     type: string
 
+  - name: environmentName
+    type: string
+
   - name: resourceGroup
     type: string
 
@@ -21,17 +24,17 @@ steps:
   displayName: Terraform init
   inputs:
     command: init
-    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/
+    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}
     backendType: azurerm
     backendServiceArm: ${{ parameters.subscription }}
     backendAzureRmResourceGroupName: ${{ parameters.resourceGroup }}
     backendAzureRmResourceGroupLocation: ${{ parameters.location }}
     backendAzureRmStorageAccountName: ${{ parameters.storageAccount }}
     backendAzureRmContainerName: ${{ parameters.containerName }}
-    backendAzureRmKey: hmishared.tfstate
+    backendAzureRmKey: hmishared/${{ environmentName }}.tfstate
 
 - task: TerraformCLI@0
   displayName: Terraform validate
   inputs:
     command: validate
-    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/
+    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}

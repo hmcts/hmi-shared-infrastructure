@@ -27,6 +27,6 @@ steps:
     displayName: Terraform plan
     inputs:
       command: plan
-      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}
       environmentServiceName: ${{ parameters.subscription }}
-      commandOptions: '-var-file="environment/${{ parameters.environment}}.tfvars" -var-file="environment/shared.tfvars" -out="tfplan-${{ parameters.environment}}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment"=${{ parameters.environment}} -var "tenant_id=$(tenant_id)" -var "principal_id=$(getspid.spid)"'
+      commandOptions: '-var-file="../../../environments/${{ parameters.environment}}.tfvars" -var-file="../../../environments/shared.tfvars" -out="tfplan-${{ parameters.environment}}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment"=${{ parameters.environment}} -var "tenant_id=$(tenant_id)" -var "principal_id=$(getspid.spid)"'

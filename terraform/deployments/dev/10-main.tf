@@ -1,5 +1,5 @@
 module "network" {
-  source                  = "./network"
+  source                  = "../../modules/network"
   environment             = var.environment
   resource_group          = var.resource_group
   product                 = var.product
@@ -13,7 +13,7 @@ module "network" {
 }
 
 module "keyvault" {
-  source         = "./keyvault"
+  source         = "../../modules/keyvault"
   environment    = var.environment
   resource_group = var.resource_group
   location       = var.location
@@ -24,7 +24,7 @@ module "keyvault" {
 }
 
 module "postgresql" {
-  source           = "./postgresql"
+  source           = "../../modules/postgresql"
   environment      = var.environment
   resource_group   = var.resource_group
   location         = var.location

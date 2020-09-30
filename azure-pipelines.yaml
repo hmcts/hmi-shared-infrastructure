@@ -31,7 +31,7 @@ stages:
     - template: pipeline/jobs/setup-variable-groups.yaml
       parameters:
         displayName: Set up Variable Groups for APIM deployments
-        envName: ${{ environment.name }}
+        environmentName: ${{ environment.name }}
         fileName: HMI-APIM-BUILD-${{ environment.name }}.json
 
     - template: pipeline/jobs/setup-infra.yaml
@@ -39,14 +39,14 @@ stages:
         displayName: Set up infrastructure for APIM deployments
         dependsOn: setupVariableGroups
         subscription: ${{ environment.subscription }}
-        envName: ${{ environment.name }}
+        environmentName: ${{ environment.name }}
         
     - template: pipeline/jobs/terraform.yaml
       parameters:
         displayName: Build Infrastructure with Terraform
         dependsOn: setupInfrastructure
         subscription: ${{ environment.subscription }}
-        envName: ${{ environment.name }}
+        environmentName: ${{ environment.name }}
         resourceGroup: $(resourceGroup)
         storageAccount: $(storageAccount)
         containerName: $(containerName)
