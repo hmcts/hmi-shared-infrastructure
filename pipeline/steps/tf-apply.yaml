@@ -2,7 +2,7 @@
 #   - name: subscription
 #     type: string
   
-#   - name: environmentName
+#   - name: environment
 #     type: string
 
 # steps:
@@ -13,4 +13,4 @@
 #     command: apply
 #     workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}
 #     environmentServiceName: ${{ parameters.subscription }}
-#     commandOptions: -auto-approve tfplan-${{ parameters.environmentName }}
+#     commandOptions: -auto-approve tfplan-${{ parameters.environment}}
