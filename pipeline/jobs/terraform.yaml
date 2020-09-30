@@ -39,19 +39,19 @@ jobs:
     ${{ insert }}: ${{ parameters.variables }}
   steps:
   - template: ../steps/tf-install.yaml
-  - template: ../steps/tf-init.yaml
-    parameters:
-      subscription: ${{ parameters.subscription }}
-      environmentName: ${{ parameters.environmentName }}
-      resourceGroup: $(resourceGroup)
-      storageAccount: $(storageAccount)
-      containerName: $(containerName)
-  - template: ../steps/tf-plan.yaml
-    parameters:
-      subscription: ${{ parameters.subscription }}
-      resourceGroup: $(resourceGroup)
-      environmentName: ${{ parameters.environmentName }}
-  - template: ../steps/tf-apply.yaml
-    parameters:
-      subscription: ${{ parameters.subscription }}
-      environmentName: ${{ parameters.environmentName }}
+  # - template: ../steps/tf-init.yaml
+  #   parameters:
+  #     subscription: ${{ parameters.subscription }}
+  #     environmentName: ${{ parameters.environmentName }}
+  #     resourceGroup: $(resourceGroup)
+  #     storageAccount: $(storageAccount)
+  #     containerName: $(containerName)
+  # - template: ../steps/tf-plan.yaml
+  #   parameters:
+  #     subscription: ${{ parameters.subscription }}
+  #     resourceGroup: $(resourceGroup)
+  #     environmentName: ${{ parameters.environmentName }}
+  # - template: ../steps/tf-apply.yaml
+  #   parameters:
+  #     subscription: ${{ parameters.subscription }}
+  #     environmentName: ${{ parameters.environmentName }}
