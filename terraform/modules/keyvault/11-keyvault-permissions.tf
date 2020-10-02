@@ -1,6 +1,6 @@
 resource "azurerm_key_vault_access_policy" "sp_permissions" {
-  key_vault_id            = azurerm_key_vault.key_vault.id
-  tenant_id               = azurerm_key_vault.key_vault.tenant_id
+  key_vault_id            = data.azurerm_key_vault.shared_kv.id
+  tenant_id               = var.tenant_id
   object_id               = var.principal_id
   certificate_permissions = var.certificate_permissions
   key_permissions         = var.key_permissions
