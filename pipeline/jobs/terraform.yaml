@@ -52,7 +52,7 @@ jobs:
       subscription: ${{ parameters.subscription }}
       resourceGroup: $(resourceGroup)
       environmentName: ${{ parameters.environmentName }}
-  # - template: ../steps/tf-apply.yaml
-  #   parameters:
-  #     subscription: ${{ parameters.subscription }}
-  #     environmentName: ${{ parameters.environmentName }}
+  - template: ../steps/tf-apply.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      environmentName: ${{ parameters.environmentName }}
