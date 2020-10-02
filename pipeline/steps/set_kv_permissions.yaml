@@ -27,6 +27,8 @@ steps:
     azureSubscription: ${{ parameters.subscription }}
     ScriptType: 'InlineScript'
     Inline: |
+      echo "Installing KeyVautl module"
+      Install-Module -Name Az.KeyVault -Force
       echo "Updating KeyVault Permissions"
       az keyvault set-policy --name hmi-shared-kv-${{ parameters.environmentName }} --object-id $(getspid.spid) --secret-permissions backup, delete, get, list, purge, recover, restore, set
       
