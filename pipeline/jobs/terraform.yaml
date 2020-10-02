@@ -39,6 +39,7 @@ jobs:
     ${{ insert }}: ${{ parameters.variables }}
   steps:
   - template: ../steps/tf-install.yaml
+  - template: ../steps/tf-test.yaml
   - template: ../steps/tf-init.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
