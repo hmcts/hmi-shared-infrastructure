@@ -1,10 +1,3 @@
-module "keyvault" {
-  source       = "../../modules/keyvault"
-  environment  = var.environment
-  tenant_id    = var.tenant_id
-  principal_id = var.principal_id
-}
-
 module "network" {
   source                  = "../../modules/network"
   environment             = var.environment
