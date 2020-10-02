@@ -4,4 +4,3 @@ variable "product" {}
 variable "location" {}
 variable "tags" {}
 variable "subnet_id" {}
-variable "keyvault_id" {}

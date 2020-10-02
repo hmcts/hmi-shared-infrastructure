@@ -30,3 +30,8 @@ jobs:
       resourceGroup: hmi-sharedinfra-${{ parameters.environmentName }}-rg
       storageAccount: hmiapiminfra${{ parameters.environmentName }}sa
       location: ${{ parameters.location }}
+
+  - template: ../steps/create-rg.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      environmentName: ${{ parameters.environmentName }}

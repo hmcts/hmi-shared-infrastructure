@@ -20,6 +20,4 @@ module "postgresql" {
   product        = var.product
   tags           = var.tags
   subnet_id      = module.network.apim_subnet_id
-  keyvault_id    = module.keyvault.keyvault_id
-  depends_on     = [module.keyvault]
 }
