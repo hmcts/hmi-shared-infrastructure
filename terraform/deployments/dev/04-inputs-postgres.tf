@@ -1,0 +1,1 @@
+variable "keyvault_id" {}

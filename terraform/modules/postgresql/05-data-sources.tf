@@ -1,9 +1,4 @@
-data "azurerm_key_vault" "shared_kv" {
-  name                = "hmi-shared-kv-${var.environment}"
-  resource_group_name = "hmi-sharedservices-${var.environment}-rg"
-}
-
 data "azurerm_key_vault_secret" "pact_password" {
   name         = "pact-db-password"
-  key_vault_id = data.azurerm_key_vault.shared_kv.id
+  key_vault_id = var.keyvault_id
 }

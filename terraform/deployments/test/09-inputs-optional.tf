@@ -1,1 +1,3 @@
-variable "route_table" {}
+variable "route_table" {
+  default = null
+}
