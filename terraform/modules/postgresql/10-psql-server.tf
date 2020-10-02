@@ -1,8 +1,3 @@
-data "azurerm_key_vault_secret" "pact_password" {
-  name         = "pact-db-password"
-  key_vault_id = var.sharedinfra_kv
-}
-
 resource "azurerm_postgresql_server" "hmi_pact" {
   name                = "hmi-pact-broker-${var.environment}"
   resource_group_name = var.resource_group

@@ -12,24 +12,12 @@ module "network" {
   tags                    = var.tags
 }
 
-module "keyvault" {
-  source         = "../../modules/keyvault"
+module "postgresql" {
+  source         = "../../modules/postgresql"
   environment    = var.environment
   resource_group = var.resource_group
   location       = var.location
   product        = var.product
   tags           = var.tags
-  tenant_id      = var.tenant_id
-  principal_id   = var.principal_id
-}
-
-module "postgresql" {
-  source           = "../../modules/postgresql"
-  environment      = var.environment
-  resource_group   = var.resource_group
-  location         = var.location
-  product          = var.product
-  tags             = var.tags
-  subnet_id        = module.network.apim_subnet_id
-  sharedinfra_kv   = module.keyvault.keyvault_id
+  subnet_id      = module.network.apim_subnet_id
 }

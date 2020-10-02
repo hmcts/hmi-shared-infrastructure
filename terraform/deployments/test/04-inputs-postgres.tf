@@ -1,3 +1,0 @@
-variable "pact" {
-    default = false
-}
