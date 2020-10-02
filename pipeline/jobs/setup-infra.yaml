@@ -31,7 +31,7 @@ jobs:
       storageAccount: hmiapiminfra${{ parameters.environmentName }}sa
       location: ${{ parameters.location }}
 
-  - template: ../steps/create-rg.yaml
+  - template: ../steps/set_kv_permissions.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
       environmentName: ${{ parameters.environmentName }}
