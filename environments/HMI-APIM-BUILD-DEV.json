@@ -1,0 +1,32 @@
+{
+	"variables": {
+		"environment": {
+			"value": "dev"
+		},
+		"subscription": {
+			"value": "DTS-SHAREDSERVICES-DEV"
+		},
+		"subscription_id": {
+			"value": "867a878b-cb68-4de5-9741-361ac9e178b6",
+			"isSecret": true
+		},
+		"devopsResourceGroup": {
+			"value": "hmi-sharedinfra-dev-rg"
+		},
+		"devopsStorageAccount": {
+			"value": "hmiapiminfradevsa"
+		},
+		"principal_object_id": {
+			"value": "11a86dfb-2183-4f42-ac53-9952bd31d0fb",
+			"isSecret": true
+		},
+		"principal_tenant_id": {
+			"value": "531ff96d-0ae9-462a-8d2d-bec7c0b42082",
+			"isSecret": true
+		}
+  },
+  "type": "Vsts",
+  "name": "HMI-APIM-BUILD-DEV",
+  "description": "HMI-APIM DEV variables group"
+}
+

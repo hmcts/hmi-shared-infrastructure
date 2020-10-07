@@ -13,14 +13,10 @@ jobs:
   displayName: ${{ parameters.displayName }}
   pool:
     vmImage: 'ubuntu-latest'
+
   steps:
-    - template: ../steps/download-secure-file.yaml
-      parameters:
-        environmentName: ${{ parameters.environmentName }}
-        fileName: ${{ parameters.fileName }}
-    
     - task: Bash@3
       inputs:
-        filePath: pipeline/scripts/update_variable_groups.sh
+        filePath: $(System.DefaultWorkingDirectory)/pipeline/scripts/update_variable_groups.sh
         arguments: $(devopsUser), $(devopsPAT)
-        workingDirectory: /home/vsts/work/_temp/
+        workingDirectory: $(System.DefaultWorkingDirectory)/environments
