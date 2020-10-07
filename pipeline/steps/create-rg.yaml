@@ -15,7 +15,7 @@ parameters:
 
 steps:
 - task: AzureCLI@2
-  displayName: Set up Resource Group
+  displayName: Setting up Resource Group
   name: setupResourceGroup
   inputs:
     azureSubscription: ${{ parameters.subscription }}

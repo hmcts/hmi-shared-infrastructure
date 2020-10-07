@@ -11,5 +11,5 @@ route_table = {
 tags = {
     "businessarea":"cross-cutting",
     "application":"hearing-management-interface",
-    "environment":"sbox"
+    "environment":"sandbox"
   }

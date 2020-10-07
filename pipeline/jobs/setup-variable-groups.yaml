@@ -2,7 +2,7 @@ parameters:
   - name: fileName
     type: string
 
-  - name: envName
+  - name: environmentName
     type: string
     
   - name: displayName
@@ -16,7 +16,7 @@ jobs:
   steps:
     - template: ../steps/download-secure-file.yaml
       parameters:
-        envName: ${{ parameters.envName }}
+        environmentName: ${{ parameters.environmentName }}
         fileName: ${{ parameters.fileName }}
     
     - task: Bash@3

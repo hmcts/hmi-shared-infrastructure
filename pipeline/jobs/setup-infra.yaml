@@ -2,7 +2,7 @@ parameters:
   - name: subscription
     type: string
 
-  - name: envName
+  - name: environmentName
     type: string
 
   - name: location
@@ -27,6 +27,11 @@ jobs:
   - template: ../steps/create-rg.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
-      resourceGroup: hmi-sharedinfra-${{ parameters.envName }}-rg
-      storageAccount: hmiapiminfra${{ parameters.envName }}sa
+      resourceGroup: hmi-sharedinfra-${{ parameters.environmentName }}-rg
+      storageAccount: hmiapiminfra${{ parameters.environmentName }}sa
       location: ${{ parameters.location }}
+
+  - template: ../steps/set_kv_permissions.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      environmentName: ${{ parameters.environmentName }}

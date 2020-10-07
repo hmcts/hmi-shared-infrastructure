@@ -24,7 +24,7 @@ parameters:
   - name: displayName
     type: string
   
-  - name: envName
+  - name: environmentName
     type: string
 
 jobs:
@@ -39,9 +39,11 @@ jobs:
     ${{ insert }}: ${{ parameters.variables }}
   steps:
   - template: ../steps/tf-install.yaml
+  - template: ../steps/tf-test.yaml
   - template: ../steps/tf-init.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
+      environmentName: ${{ parameters.environmentName }}
       resourceGroup: $(resourceGroup)
       storageAccount: $(storageAccount)
       containerName: $(containerName)
@@ -49,8 +51,8 @@ jobs:
     parameters:
       subscription: ${{ parameters.subscription }}
       resourceGroup: $(resourceGroup)
-      environment: ${{ parameters.envName }}
+      environmentName: ${{ parameters.environmentName }}
   - template: ../steps/tf-apply.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
-      environment: ${{ parameters.envName }}
+      environmentName: ${{ parameters.environmentName }}

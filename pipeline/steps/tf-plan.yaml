@@ -1,32 +1,19 @@
-
 parameters:
   - name: subscription
+    type: string
+
+  - name: environmentName
     type: string
 
   - name: resourceGroup
     type: string
 
-  - name: environment
-    type: string
-
 steps:
-  - task: AzurePowerShell@5
-    name: getspid
-    inputs:
-      azureSubscription: ${{ parameters.subscription }}
-      ScriptType: 'InlineScript'
-      Inline: |
-        echo "Obtaining Service Principal Id"
-        $sp = (Get-AzContext).Account.Id
-        $spid = (Get-AzADServicePrincipal -ApplicationId $sp)
-        $spid = $spid.Id
-        echo "##vso[task.setvariable variable=spid;isOutput=true;isSecret=true;]$spid"
-      azurePowerShellVersion: 'LatestVersion'
-  
+
   - task: TerraformCLI@0
     displayName: Terraform plan
     inputs:
       command: plan
-      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}
       environmentServiceName: ${{ parameters.subscription }}
-      commandOptions: '-var-file="environment/${{ parameters.environment}}.tfvars" -var-file="environment/shared.tfvars" -out="tfplan-${{ parameters.environment}}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment"=${{ parameters.environment}} -var "tenant_id=$(tenant_id)" -var "principal_id=$(getspid.spid)"'
+      commandOptions: '-var-file="../../../environments/${{ parameters.environmentName }}.tfvars" -var-file="../../../environments/shared.tfvars" -out="tfplan-${{ parameters.environmentName }}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment"=${{ parameters.environmentName }}'

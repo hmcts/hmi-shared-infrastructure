@@ -1,5 +1,5 @@
 module "network" {
-  source                  = "./network"
+  source                  = "../../modules/network"
   environment             = var.environment
   resource_group          = var.resource_group
   product                 = var.product
@@ -12,13 +12,12 @@ module "network" {
   tags                    = var.tags
 }
 
-module "keyvault" {
-  source         = "./keyvault"
+module "postgresql" {
+  source         = "../../modules/postgresql"
   environment    = var.environment
   resource_group = var.resource_group
   location       = var.location
   product        = var.product
   tags           = var.tags
-  tenant_id      = var.tenant_id
-  principal_id   = var.principal_id
+  subnet_id      = module.network.apim_subnet_id
 }
