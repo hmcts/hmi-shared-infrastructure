@@ -2,6 +2,7 @@ location                = "uksouth"
 product                 = "hmi-sharedinfra"
 address_space           = ["10.101.1.0/26"]
 subnet_address_prefixes = ["10.101.1.0/27", "10.101.1.32/27"]
+health_check_url        = "https://hmi-apim.sandbox.platform.hmcts.net/health/liveness"
 route_table = {
   name = "ss_aks"
   address_prefix = "10.140.15.250/32"
