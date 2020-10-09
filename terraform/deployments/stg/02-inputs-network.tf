@@ -1,9 +1,4 @@
-variable "environment" {}
-variable "resource_group" {}
-variable "product" {}
-variable "location" {}
 variable "address_space" {}
-variable "tags" {}
 variable "subnet_address_prefixes" {}
 variable "apim_nsg_rules" {}
 variable "apim_rules" {}
