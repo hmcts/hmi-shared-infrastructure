@@ -7,3 +7,4 @@ variable "tags" {}
 variable "subnet_address_prefixes" {}
 variable "apim_nsg_rules" {}
 variable "apim_rules" {}
+variable "route_table" {}
