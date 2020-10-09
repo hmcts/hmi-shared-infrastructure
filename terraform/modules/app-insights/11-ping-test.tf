@@ -1,6 +1,5 @@
 resource "azurerm_application_insights_web_test" "ping_test" {
-
-  name                    = "tf-test-appinsights-webtest"
+  name                    = "ping-test"
   location                = var.location
   resource_group_name     = var.resource_group
   application_insights_id = azurerm_application_insights.app_insights.id
