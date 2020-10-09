@@ -9,7 +9,5 @@ resource "azurerm_application_insights_web_test" "ping_test" {
   timeout                 = 120
   enabled                 = true
   geo_locations           = ["emea-nl-ams-azr", "emea-ru-msa-edge", ]
-  configuration           = templatefile("../template/api-policy.tmpl", { url = "${var.health_check_url}" })
-
+  configuration           = templatefile("../../modules/app-insights/ping-test.tmpl", { url = "${var.health_check_url}" })
 }
-
