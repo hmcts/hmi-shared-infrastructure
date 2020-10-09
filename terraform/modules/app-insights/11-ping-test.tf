@@ -8,6 +8,6 @@ resource "azurerm_application_insights_web_test" "ping_test" {
   frequency               = 300
   timeout                 = 120
   enabled                 = true
-  geo_locations           = ["emea-nl-ams-azr", "emea-ru-msa-edge", ]
+  geo_locations           = ["emea-nl-ams-azr", "emea-ru-msa-edge", "emea-se-sto-edge"]
   configuration           = templatefile("../../modules/app-insights/ping-test.tmpl", { url = "${var.health_check_url}" })
 }

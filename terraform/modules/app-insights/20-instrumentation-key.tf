@@ -1,5 +1,5 @@
 data "azurerm_key_vault" "shared_keyvault" {
-  name                = "${var.product}-appins-${var.environment}"
+  name                = "${var.product}-shared-kv-${var.environment}"
   resource_group_name = "${var.product}-sharedservices-${var.environment}-rg"
 }
 
