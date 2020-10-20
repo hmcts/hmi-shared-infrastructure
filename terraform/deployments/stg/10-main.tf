@@ -11,3 +11,13 @@ module "network" {
   route_table             = var.route_table
   tags                    = var.tags
 }
+
+module "app-insights" {
+  source           = "../../modules/app-insights"
+  environment      = var.environment
+  resource_group   = var.resource_group
+  location         = var.location
+  product          = var.product
+  tags             = var.tags
+  health_check_url = var.health_check_url
+}
