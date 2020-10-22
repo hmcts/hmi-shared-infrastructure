@@ -1,0 +1,65 @@
+---
+trigger:
+  - master
+pr:
+  - none
+
+parameters:
+  - name: environments
+    type: object
+    default: 
+    - name: sbox
+      subscription: DTS-SHAREDSERVICES-SBOX
+    - name: dev
+      subscription: DTS-SHAREDSERVICES-DEV
+    - name: test
+      subscription: DTS-SHAREDSERVICES-TEST
+    - name: stg
+      subscription: DTS-SHAREDSERVICES-STG
+
+variables: 
+  - group: HMI-APIM-Common
+
+stages:
+
+- ${{ each environment in parameters.environments }}:
+
+  - stage: ${{ environment.name }}
+    ${{ if environment.condition }}:
+      condition: ${{ environment.condition }}
+    displayName: Build ${{ environment.name }}
+    
+    jobs:
+    - template: pipeline/jobs/setup-variable-groups.yaml
+      parameters:
+        displayName: Set up Variable Groups for APIM deployments
+        environmentName: ${{ environment.name }}
+        fileName: HMI-APIM-BUILD-${{ environment.name }}.json
+
+    - template: pipeline/jobs/setup-infra.yaml
+      parameters:
+        displayName: Set up infrastructure for APIM deployments
+        dependsOn: setupVariableGroups
+        subscription: ${{ environment.subscription }}
+        environmentName: ${{ environment.name }}
+        
+    - template: pipeline/jobs/terraform.yaml
+      parameters:
+        displayName: Build Infrastructure with Terraform
+        dependsOn: setupInfrastructure
+        subscription: ${{ environment.subscription }}
+        environmentName: ${{ environment.name }}
+        resourceGroup: $(resourceGroup)
+        storageAccount: $(storageAccount)
+        containerName: $(containerName)
+        variables:
+          resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
+          storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
+          containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+    
+    - template: pipeline/jobs/setup-azmonlink.yaml
+      parameters:
+        displayName: Set up Azure Monitor Link to Log Analytics
+        dependsOn: Terraform
+        subscription: ${{ environment.subscription }}
+        environmentName: ${{ environment.name }}

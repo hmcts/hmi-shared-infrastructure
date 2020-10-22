@@ -1,0 +1,19 @@
+parameters:
+  - name: subscription
+    type: string
+
+  - name: environmentName
+    type: string
+
+  - name: resourceGroup
+    type: string
+
+steps:
+
+  - task: TerraformCLI@0
+    displayName: Terraform plan
+    inputs:
+      command: plan
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}
+      environmentServiceName: ${{ parameters.subscription }}
+      commandOptions: '-var-file="../../../environments/${{ parameters.environmentName }}.tfvars" -var-file="../../../environments/shared.tfvars" -out="tfplan-${{ parameters.environmentName }}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment"=${{ parameters.environmentName }}'

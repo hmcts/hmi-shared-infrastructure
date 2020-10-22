@@ -1,0 +1,40 @@
+parameters:
+  - name: subscription
+    type: string
+
+  - name: environmentName
+    type: string
+
+  - name: resourceGroup
+    type: string
+
+  - name: location
+    type: string
+    default: uksouth
+
+  - name: storageAccount
+    type: string
+
+  - name: containerName
+    type: string
+
+steps:
+
+- task: TerraformCLI@0
+  displayName: Terraform init
+  inputs:
+    command: init
+    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}
+    backendType: azurerm
+    backendServiceArm: ${{ parameters.subscription }}
+    backendAzureRmResourceGroupName: ${{ parameters.resourceGroup }}
+    backendAzureRmResourceGroupLocation: ${{ parameters.location }}
+    backendAzureRmStorageAccountName: ${{ parameters.storageAccount }}
+    backendAzureRmContainerName: ${{ parameters.containerName }}
+    backendAzureRmKey: hmishared/${{ parameters.environmentName }}.tfstate
+
+- task: TerraformCLI@0
+  displayName: Terraform validate
+  inputs:
+    command: validate
+    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}

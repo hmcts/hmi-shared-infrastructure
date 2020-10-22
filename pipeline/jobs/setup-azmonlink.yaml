@@ -1,0 +1,29 @@
+parameters:
+  - name: subscription
+    type: string
+
+  - name: environmentName
+    type: string
+
+  - name: displayName
+    type: string
+
+  - name: dependsOn
+    type: string
+    
+jobs:
+- job: setupAzureMonitorLink
+  dependsOn:
+  - ${{ if parameters.dependsOn }}:
+    - ${{ parameters.dependsOn }}
+  displayName: ${{ parameters.displayName }}
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: AzurePowerShell@5
+    inputs:
+      azureSubscription: ${{ parameters.subscription }}
+      ScriptType: 'FilePath'
+      ScriptPath: '$(System.DefaultWorkingDirectory)/pipeline/scripts/azmonlink.ps1'
+      ScriptArguments: '-environment ${{ parameters.environmentName }} -larg $(la-rg) -lasboxsubid $(la-sbox-sub-id) -lanonprodsubid $(la-nonprod-sub-id) -laprodsubid $(la-prod-sub-id)'
+      azurePowerShellVersion: 'LatestVersion'

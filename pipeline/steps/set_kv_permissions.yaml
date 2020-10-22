@@ -1,0 +1,33 @@
+parameters:
+  - name: subscription
+    type: string
+
+  - name: environmentName
+    type: string
+    
+steps:
+- task: AzurePowerShell@5
+  name: getspid
+  displayName: Getting SP Id
+  inputs:
+    azureSubscription: ${{ parameters.subscription }}
+    ScriptType: 'InlineScript'
+    Inline: |
+      echo "Obtaining Service Principal Id"
+      $sp = (Get-AzContext).Account.Id
+      $spid = (Get-AzADServicePrincipal -ApplicationId $sp)
+      $spid = $spid.Id
+      echo "##vso[task.setvariable variable=spid;isOutput=true;isSecret=true;]$spid"
+    azurePowerShellVersion: 'LatestVersion'
+
+- task: AzureCLI@2
+  name: updatekv
+  displayName: Updating KeyVault Permissions
+  inputs:
+    azureSubscription: ${{ parameters.subscription }}
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      echo "Updating KeyVault Permissions"
+      az keyvault set-policy --name hmi-shared-kv-${{ parameters.environmentName }} --object-id $(getspid.spid) --secret-permissions backup delete get list purge recover restore set
+      
