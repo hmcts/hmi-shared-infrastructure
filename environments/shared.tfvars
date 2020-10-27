@@ -1,6 +1,5 @@
 apim_nsg_rules = [
   { name = "ManagementEndpointForAzurePortalAndPowershellInbound" },
-  { name = "ClientCommunicationToAPIManagementInbound" },
   { name = "SecureClientCommunicationToAPIManagementInbound" },
   { name = "DependencyOnRedisCacheInbound" },
   { name = "AzureInfrastructureLoadBalancer" },
@@ -17,8 +16,7 @@ apim_nsg_rules = [
 
 apim_rules = {
   ManagementEndpointForAzurePortalAndPowershellInbound = ["Inbound", "Allow", "TCP", "*", "3443", "ApiManagement", "VirtualNetwork"]
-  ClientCommunicationToAPIManagementInbound            = ["Inbound", "Allow", "TCP", "*", "80", "Internet", "*"]
-  SecureClientCommunicationToAPIManagementInbound      = ["Inbound", "Allow", "TCP", "*", "443", "Internet", "*"]
+  SecureClientCommunicationToAPIManagementInbound      = ["Inbound", "Allow", "TCP", "*", "443", "Internet", "AzureFrontDoor.Backend"]
   DependencyOnRedisCacheInbound                        = ["Inbound", "Allow", "TCP", "*", "6381-6383", "VirtualNetwork", "VirtualNetwork"]
   AzureInfrastructureLoadBalancer                      = ["Inbound", "Allow", "TCP", "*", "*", "AzureLoadBalancer", "VirtualNetwork"]
   DependencyOnAzureStorageOutbound                     = ["Outbound", "Allow", "TCP", "*", "443", "VirtualNetwork", "Storage"]
