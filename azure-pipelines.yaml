@@ -30,16 +30,10 @@ stages:
     displayName: Build ${{ environment.name }}
     
     jobs:
-    - template: pipeline/jobs/setup-variable-groups.yaml
-      parameters:
-        displayName: Set up Variable Groups for APIM deployments
-        environmentName: ${{ environment.name }}
-        fileName: HMI-APIM-BUILD-${{ environment.name }}.json
 
     - template: pipeline/jobs/setup-infra.yaml
       parameters:
         displayName: Set up infrastructure for APIM deployments
-        dependsOn: setupVariableGroups
         subscription: ${{ environment.subscription }}
         environmentName: ${{ environment.name }}
         
