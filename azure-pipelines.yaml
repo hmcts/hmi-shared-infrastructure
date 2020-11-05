@@ -16,8 +16,8 @@ parameters:
       subscription: DTS-SHAREDSERVICES-TEST
     - name: stg
       subscription: DTS-SHAREDSERVICES-STG
-    - name: prod
-      subscription: DTS-SHAREDSERVICES-PROD
+    # - name: prod
+    #   subscription: DTS-SHAREDSERVICES-PROD
 
 variables: 
   - group: HMI-APIM-Common

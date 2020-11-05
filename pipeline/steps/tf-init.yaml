@@ -19,7 +19,6 @@ parameters:
     type: string
 
 steps:
-- checkout: self
 - task: TerraformCLI@0
   displayName: Terraform init
   inputs:
