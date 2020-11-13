@@ -8,6 +8,9 @@ parameters:
   - name: storageAccount
     type: string
 
+  - name: policiesAccount
+    type: string
+
   - name: location
     type: string
     default: uksouth
