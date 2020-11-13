@@ -30,6 +30,7 @@ jobs:
       subscription: ${{ parameters.subscription }}
       resourceGroup: hmi-sharedinfra-${{ parameters.environmentName }}-rg
       storageAccount: hmiapiminfra${{ parameters.environmentName }}sa
+      policiesAccount: hmiapimpolicies${{ parameters.environmentName }}
       location: ${{ parameters.location }}
 
   - template: ../steps/set_kv_permissions.yaml
