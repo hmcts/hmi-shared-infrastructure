@@ -43,7 +43,7 @@ if($environment -ieq "sbox")
     else { Write-Host "Workspace not set." }
 
 Write-Host "Starting script"
-if((Get-AzInsightsPrivateLinkScope -Name "$("hmi-apim-ampls-" + $environment)" -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue)){
+if(!(Get-AzInsightsPrivateLinkScope -Name "$("hmi-apim-ampls-" + $environment)" -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue)){
     $virtualNetwork = Get-AzVirtualNetwork -ResourceName "$("hmi-sharedinfra-vnet-" + $environment)" -ResourceGroupName $ResourceGroupName
     $subnet = $virtualNetwork | Select-Object -ExpandProperty subnets | Where-Object Name -like 'mgmt-subnet-*'
 
