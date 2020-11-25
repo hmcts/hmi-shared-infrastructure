@@ -23,13 +23,14 @@ jobs:
     - ${{ parameters.dependsOn }}
   displayName: ${{ parameters.displayName }}
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: 'ubuntu-20.04'
   steps:
   - template: ../steps/create-rg.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
       resourceGroup: hmi-sharedinfra-${{ parameters.environmentName }}-rg
       storageAccount: hmiapiminfra${{ parameters.environmentName }}sa
+      policiesAccount: hmiapimpolicies${{ parameters.environmentName }}sa
       location: ${{ parameters.location }}
 
   - template: ../steps/set_kv_permissions.yaml
