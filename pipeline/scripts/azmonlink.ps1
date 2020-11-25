@@ -50,9 +50,11 @@ if(!(Get-AzInsightsPrivateLinkScope -Name "$("hmi-apim-ampls-" + $environment)" 
     Write-Host "Create Azure Monitor Private Link Scope"
     $linkScope=(New-AzInsightsPrivateLinkScope -Location "global" -ResourceGroupName $ResourceGroupName -Name "$("hmi-apim-ampls-" + $environment)")
     New-AzTag -ResourceId $linkScope.Id -Tag $tags
+    $appins = (Get-AzApplicationInsights -ResourceGroupName $ResourceGroupName -name "$("hmi-sharedinfra-appins-" + $environment)")
 
     Write-Host "Add Azure Monitor Resource"
     New-AzInsightsPrivateLinkScopedResource -LinkedResourceId $workspaceId -Name $workspaceName -ResourceGroupName $ResourceGroupName -ScopeName $linkScope.Name
+    New-AzInsightsPrivateLinkScopedResource -LinkedResourceId $appins.Id -Name $appins.Name -ResourceGroupName $ResourceGroupName -ScopeName $linkScope.Name 
 
     Write-Host "Set up Private Endpoint Connection"
     $PrivateLinkResourceId = "/subscriptions/"+$subscriptionId+"/resourceGroups/"+$ResourceGroupName+"/providers/microsoft.insights/privateLinkScopes/"+$linkScope.Name
