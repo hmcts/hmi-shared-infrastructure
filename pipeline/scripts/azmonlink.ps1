@@ -97,7 +97,3 @@ if(!(Get-AzInsightsPrivateLinkScope -Name "$("hmi-apim-ampls-" + $environment)" 
 } else {
     Write-Host "Azure Private Link Scope already exists. Exiting."
 }
-    $linkScope=(New-AzInsightsPrivateLinkScope -Location "global" -ResourceGroupName $ResourceGroupName -Name "$("hmi-apim-ampls-" + $environment)")
-
-    $appins = (Get-AzApplicationInsights -ResourceGroupName $ResourceGroupName -name "$("hmi-sharedinfra-appins-" + $environment)")
-    New-AzInsightsPrivateLinkScopedResource -LinkedResourceId $appins.Id -Name $appins.Name -ResourceGroupName $ResourceGroupName -ScopeName $linkScope.Name 
