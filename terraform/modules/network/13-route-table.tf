@@ -8,10 +8,10 @@ resource "azurerm_route_table" "apim_rt" {
   dynamic "route" {
     for_each = var.route_table == null ? [] : ["route"]
     content {
-      name                   = var.route_table.name
-      address_prefix         = var.route_table.address_prefix
-      next_hop_type          = var.route_table.next_hop_type
-      next_hop_in_ip_address = var.route_table.next_hop_in_ip_address
+      name                   = route.value.name
+      address_prefix         = route.value.address_prefix
+      next_hop_type          = route.value.next_hop_type
+      next_hop_in_ip_address = route.value.next_hop_in_ip_address
     }
   }
 }
