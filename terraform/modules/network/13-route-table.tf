@@ -6,7 +6,7 @@ resource "azurerm_route_table" "apim_rt" {
   tags                          = var.tags
 
   dynamic "route" {
-    for_each = var.route_table == null ? [] : ["route"]
+    for_each = var.route_table
     content {
       name                   = route.value.name
       address_prefix         = route.value.address_prefix
