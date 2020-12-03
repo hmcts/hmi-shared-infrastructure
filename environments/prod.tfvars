@@ -9,7 +9,8 @@ route_table = [
     next_hop_type          = "Internet"
     next_hop_in_ip_address = null
   }
-]tags = {
+]
+tags = {
   "businessarea" : "cross-cutting",
   "application" : "hearing-management-interface",
   "environment" : "production"
