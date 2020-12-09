@@ -97,8 +97,3 @@ if(!(Get-AzInsightsPrivateLinkScope -Name "$("hmi-apim-ampls-" + $environment)" 
 } else {
     Write-Host "Azure Private Link Scope already exists. Exiting."
 }
-
-
-$ID = "/subscriptions/"+$subscriptionId+"/resourceGroups/"+$ResourceGroupName+"/providers/Microsoft.ApiManagement/service/hmi-apim-svc-"+ $environment
-$name = "hmi-apim-"+ $environment
-az monitor diagnostic-settings create --resource $ID -n $name --workspace $WorkspaceId --export-to-resource-specific true --logs '[{"category": "GatewayLogs", "enabled": true, "retentionPolicy": {"enabled": false, "days": 0 }}]' --metrics '[{"category": "Gateway Requests","enabled": true,"retentionPolicy": {"enabled": false, "days": 0}}, {"category": "Capacity", "enabled": true, "retentionPolicy": {"enabled": false, "days": 0 }}, {"category": "Network Status","enabled": true,"retentionPolicy": {"enabled": false, "days": 0}}]'
