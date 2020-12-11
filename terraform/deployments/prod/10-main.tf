@@ -12,7 +12,7 @@ module "network" {
   tags                          = var.tags
   log_analytics_workspace_name  = var.log_analytics_workspace_name
   log_analytics_workspace_rg    = var.log_analytics_workspace_rg
-  log_analytics_subscription_id = var.la_sbox_sub_id
+  log_analytics_subscription_id = var.la_prod_sub_id
 }
 
 module "app-insights" {
