@@ -12,7 +12,6 @@ module "network" {
   tags                          = var.tags
   log_analytics_workspace_name  = var.log_analytics_workspace_name
   log_analytics_workspace_rg    = var.log_analytics_workspace_rg
-  sds_subcription_id            = var.sds_subcription_id
   log_analytics_subscription_id = var.la_nonprod_sub_id
 }
 
