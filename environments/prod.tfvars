@@ -15,3 +15,4 @@ tags = {
   "application" : "hearing-management-interface",
   "environment" : "production"
 }
+log_analytics_workspace_name = "hmcts-prod"

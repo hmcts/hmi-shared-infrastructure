@@ -9,3 +9,11 @@ output "apim_subnet_id" {
 output "mgmt_subnet_id" {
   value = azurerm_subnet.mgmt_subnet.id
 }
+
+output "watcher" {
+  value = data.azurerm_network_watcher.network_watcher.name
+}
+
+output "la" {
+  value = data.azurerm_log_analytics_workspace.hmcts.name
+}

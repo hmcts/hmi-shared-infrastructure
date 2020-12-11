@@ -16,4 +16,4 @@ steps:
       command: plan
       workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environmentName }}
       environmentServiceName: ${{ parameters.subscription }}
-      commandOptions: '-var-file="../../../environments/${{ parameters.environmentName }}.tfvars" -var-file="../../../environments/shared.tfvars" -out="tfplan-${{ parameters.environmentName }}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment"=${{ parameters.environmentName }}'
+      commandOptions: '-var-file="../../../environments/${{ parameters.environmentName }}.tfvars" -var-file="../../../environments/shared.tfvars" -out="tfplan-${{ parameters.environmentName }}" -var "resource_group=${{ parameters.resourceGroup }}" -var "environment=${{ parameters.environmentName }}" -var "la_nonprod_sub_id=$(la-nonprod-sub-id)" -var "la_prod_sub_id=$(la-prod-sub-id)" -var "la_sbox_sub_id=$(la-sbox-sub-id)"'

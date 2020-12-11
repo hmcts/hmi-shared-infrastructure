@@ -21,3 +21,4 @@ tags = {
   "application" : "hearing-management-interface",
   "environment" : "sandbox"
 }
+log_analytics_workspace_name = "hmcts-sandbox"
