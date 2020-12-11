@@ -40,6 +40,6 @@ resource "azurerm_network_watcher_flow_log" "network_watcher_flow" {
     workspace_id          = data.azurerm_log_analytics_workspace.hmcts.workspace_id
     workspace_region      = data.azurerm_log_analytics_workspace.hmcts.location
     workspace_resource_id = data.azurerm_log_analytics_workspace.hmcts.id
-    interval_in_minutes   = 10
+    interval_in_minutes   = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 60 : 10
   }
 }
