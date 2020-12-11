@@ -10,7 +10,7 @@ variable "apim_rules" {}
 variable "route_table" {}
 variable "log_analytics_workspace_name" {}
 variable "log_analytics_workspace_rg" {
-    default = "oms-automation"
+  default = "oms-automation"
 }
 
 variable "log_analytics_subscription_id" {}
