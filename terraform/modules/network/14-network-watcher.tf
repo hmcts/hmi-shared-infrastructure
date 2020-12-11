@@ -1,18 +1,4 @@
-data "azurerm_subscription" "current" {
-}
-
-provider "azurerm" {
-  subscription_id = data.azurerm_subscription.current.id
-  alias           = "sharedservices-subscription"
-}
-
-provider "azurerm" {
-  subscription_id = var.log_analytics_subscription_id
-  alias           = "log-analytics-subscription"
-}
-
 data "azurerm_network_watcher" "network_watcher" {
-  provider            = "sharedservices-subscription"
   name                = "NetworkWatcher_${var.location}"
   resource_group_name = "NetworkWatcherRG"
 }
