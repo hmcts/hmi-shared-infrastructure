@@ -16,3 +16,4 @@ tags = {
   "environment" : "production"
 }
 log_analytics_workspace_name = "hmcts-prod"
+log_analytics_workspace_rg = "oms-automation"

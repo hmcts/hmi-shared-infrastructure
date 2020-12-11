@@ -22,3 +22,4 @@ tags = {
   "environment" : "test"
 }
 log_analytics_workspace_name = "hmcts-nonprod"
+log_analytics_workspace_rg = "oms-automation"

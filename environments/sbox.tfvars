@@ -22,3 +22,4 @@ tags = {
   "environment" : "sandbox"
 }
 log_analytics_workspace_name = "hmcts-sandbox"
+log_analytics_workspace_rg = "oms-automation"
