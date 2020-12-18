@@ -15,6 +15,21 @@ module "network" {
   log_analytics_subscription_id = var.la_sbox_sub_id
 }
 
+module "network_peering" {
+  source = "git::git@github.com:aks-module-network-peering.git"
+
+  deploy_environment = var.environment
+  network_location   = var.location
+
+  requester_network_name                = data.azurerm_virtual_network.hmi.name
+  requester_network_id                  = data.azurerm_virtual_network.hmi.id
+  requester_network_resource_group_name = data.azurerm_resource_group.hmi.name
+
+  accepter_network_name                = data.azurerm_virtual_network.aks.name
+  accepter_network_id                  = data.azurerm_virtual_network.aks.id
+  accepter_network_resource_group_name = data.azurerm_resource_group.aks.name
+}
+
 module "postgresql" {
   source         = "../../modules/postgresql"
   environment    = var.environment
