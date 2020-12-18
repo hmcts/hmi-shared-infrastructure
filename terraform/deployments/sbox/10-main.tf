@@ -16,7 +16,7 @@ module "network" {
 }
 
 module "network_peering" {
-  source = "git::git@github.com:aks-module-network-peering.git"
+  source = "git::git@github.com:hmcts/aks-module-network-peering.git"
 
   deploy_environment = var.environment
   network_location   = var.location
