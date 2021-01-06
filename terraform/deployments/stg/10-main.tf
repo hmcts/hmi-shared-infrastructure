@@ -16,10 +16,11 @@ module "network" {
 }
 
 module "app-insights" {
-  source         = "../../modules/app-insights"
-  environment    = var.environment
-  resource_group = var.resource_group
-  location       = var.location
-  product        = var.product
-  tags           = var.tags
+  source           = "../../modules/app-insights"
+  environment      = var.environment
+  resource_group   = var.resource_group
+  location         = var.location
+  product          = var.product
+  health_check_url = var.health_check_url
+  tags             = var.tags
 }
