@@ -1,5 +1,5 @@
 resource "azurerm_application_insights_web_test" "ping_test" {
-  name                    = "hmi-apim-ping-test-${var.environment}-${format("%02d", count.index)}"
+  name                    = "${lookup(var.ping_tests[count.index], "name")}-${var.environment}-${format("%02d", count.index)}"
   count                   = length(var.ping_tests)
   location                = var.location
   resource_group_name     = var.resource_group
