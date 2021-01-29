@@ -23,4 +23,3 @@ tags = {
 }
 log_analytics_workspace_name = "hmcts-nonprod"
 log_analytics_workspace_rg = "oms-automation"
-health_check_url = "https://hmi-apim.dev.platform.hmcts.net/status-0123456789abcdef"

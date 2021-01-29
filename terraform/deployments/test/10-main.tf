@@ -31,6 +31,5 @@ module "app-insights" {
   resource_group   = var.resource_group
   location         = var.location
   product          = var.product
-  health_check_url = var.health_check_url
   tags             = var.tags
 }
