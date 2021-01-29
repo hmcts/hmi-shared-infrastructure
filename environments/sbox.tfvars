@@ -25,7 +25,7 @@ log_analytics_workspace_name = "hmcts-sandbox"
 log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
   {
-    name             = "hmi-apim"
+    name             = "hmi-api-management"
     health_check_url = "https://hmi-apim.sandbox.platform.hmcts.net/status-0123456789abcdef"
   },
   {
