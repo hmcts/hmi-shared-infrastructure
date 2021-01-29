@@ -22,4 +22,18 @@ tags = {
   "environment" : "sandbox"
 }
 log_analytics_workspace_name = "hmcts-sandbox"
-log_analytics_workspace_rg = "oms-automation"
+log_analytics_workspace_rg   = "oms-automation"
+ping_tests = [
+  {
+    name             = "hmi-api-management"
+    health_check_url = "https://hmi-apim.sandbox.platform.hmcts.net/status-0123456789abcdef"
+  },
+  {
+    name             = "hmi-casehqemulator"
+    health_check_url = "https://hmi-apim.sandbox.platform.hmcts.net/hmi/emulator-health"
+  },
+  {
+    name             = "hmi-pact"
+    health_check_url = "https://hmi-apim.sandbox.platform.hmcts.net/hmi/pact-health"
+  }
+]
