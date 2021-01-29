@@ -16,4 +16,10 @@ tags = {
   "environment" : "staging"
 }
 log_analytics_workspace_name = "hmcts-prod"
-log_analytics_workspace_rg = "oms-automation"
+log_analytics_workspace_rg   = "oms-automation"
+ping_tests = [
+  {
+    name             = "hmi-apim-"
+    health_check_url = "https://hmi-apim.staging.platform.hmcts.net/status-0123456789abcdef"
+  }
+]

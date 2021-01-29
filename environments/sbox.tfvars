@@ -22,22 +22,18 @@ tags = {
   "environment" : "sandbox"
 }
 log_analytics_workspace_name = "hmcts-sandbox"
-log_analytics_workspace_rg = "oms-automation"
+log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
   {
-    name = "hmi-apim-"
+    name             = "hmi-apim-"
     health_check_url = "https://hmi-apim.sandbox.platform.hmcts.net/status-0123456789abcdef"
   },
   {
-    name = "hmi-wiremock-"
-    health_check_url = "https://hmi-apim.sandbox.platform.hmcts.net/product/p0001"
-  },
-  {
-    name = "hmi-casehqemulator-"
+    name             = "hmi-casehqemulator-"
     health_check_url = "https://hmi-apim.sandbox.platform.hmcts.net/hmi/emulator-health"
   },
   {
-    name = "hmi-pact-"
+    name             = "hmi-pact-"
     health_check_url = "https://hmi-apim.sandbox.platform.hmcts.net/hmi/pact-health"
   }
 ]

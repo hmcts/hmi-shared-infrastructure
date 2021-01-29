@@ -22,4 +22,18 @@ tags = {
   "environment" : "development"
 }
 log_analytics_workspace_name = "hmcts-nonprod"
-log_analytics_workspace_rg = "oms-automation"
+log_analytics_workspace_rg   = "oms-automation"
+ping_tests = [
+  {
+    name             = "hmi-apim-"
+    health_check_url = "https://hmi-apim.dev.platform.hmcts.net/status-0123456789abcdef"
+  },
+  {
+    name             = "hmi-casehqemulator-"
+    health_check_url = "https://hmi-apim.dev.platform.hmcts.net/hmi/emulator-health"
+  },
+  {
+    name             = "hmi-pact-"
+    health_check_url = "https://hmi-apim.dev.platform.hmcts.net/hmi/pact-health"
+  }
+]
