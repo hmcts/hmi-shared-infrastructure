@@ -25,15 +25,15 @@ log_analytics_workspace_name = "hmcts-nonprod"
 log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
   {
-    name             = "hmi-apim-"
+    name             = "hmi-apim"
     health_check_url = "https://hmi-apim.test.platform.hmcts.net/status-0123456789abcdef"
   },
   {
-    name             = "hmi-casehqemulator-"
+    name             = "hmi-casehqemulator"
     health_check_url = "https://hmi-apim.test.platform.hmcts.net/hmi/emulator-health"
   },
   {
-    name             = "hmi-pact-"
+    name             = "hmi-pact"
     health_check_url = "https://hmi-apim.test.platform.hmcts.net/hmi/pact-health"
   }
 ]

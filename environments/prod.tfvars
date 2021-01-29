@@ -19,7 +19,7 @@ log_analytics_workspace_name = "hmcts-prod"
 log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
   {
-    name             = "hmi-apim-"
+    name             = "hmi-apim"
     health_check_url = "https://hmi-apim.platform.hmcts.net/status-0123456789abcdef"
   }
 ]

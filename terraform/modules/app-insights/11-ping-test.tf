@@ -1,5 +1,5 @@
 resource "azurerm_application_insights_web_test" "ping_test" {
-  name                    = "${lookup(var.ping_tests[count.index], "name")}-${var.environment}"
+  name                    = "${lookup(var.ping_tests[count.index], "name")}-test-${var.environment}"
   count                   = length(var.ping_tests)
   location                = var.location
   resource_group_name     = var.resource_group
