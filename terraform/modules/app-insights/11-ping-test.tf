@@ -21,7 +21,7 @@ resource "azurerm_monitor_metric_alert" "web_alert" {
   description         = "Hello World"
 
   criteria {
-    metric_namespace = "Microsoft.Web/sites"
+    metric_namespace = "microsoft.insights/webtests"
     metric_name      = "Http5xx"
     aggregation      = "Total"
     operator         = "GreaterThan"
