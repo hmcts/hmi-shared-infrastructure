@@ -15,8 +15,9 @@ resource "azurerm_application_insights_web_test" "ping_test" {
 
 resource "azurerm_monitor_metric_alert" "web_alert" {
   name                = "example-metricalert"
+  count               = length(var.ping_tests)
   resource_group_name = var.resource_group
-  scopes              = element(azurerm_application_insights_web_test.ping_test.*.id, count.index)
+  scopes              = [element(azurerm_application_insights_web_test.ping_test.*.id, count.index)]
   description         = "Hello World"
 
   criteria {
