@@ -29,4 +29,3 @@ apim_rules = {
   AuthenticateToAzureActiveDirectory80Outbound         = ["Outbound", "Allow", "TCP", "*", "80", "VirtualNetwork", "AzureActiveDirectory"]
   AuthenticateToAzureActiveDirectory433Outbound        = ["Outbound", "Allow", "TCP", "*", "443", "VirtualNetwork", "AzureActiveDirectory"]
 }
-support_email = "kara.nottingham1@hmcts.net" # change when shared email gets created
