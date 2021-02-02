@@ -21,6 +21,6 @@ module "app-insights" {
   resource_group   = var.resource_group
   location         = var.location
   product          = var.product
-  ping_tests       = var.ping_tests
+  email_support    = var.email_support
   tags             = var.tags
 }
