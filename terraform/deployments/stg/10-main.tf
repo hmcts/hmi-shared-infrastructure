@@ -21,6 +21,6 @@ module "app-insights" {
   resource_group   = var.resource_group
   location         = var.location
   product          = var.product
-  email_support    = var.email_support
+  support_email    = var.support_email
   tags             = var.tags
 }
