@@ -6,3 +6,4 @@ variable "tags" {}
 variable "support_email" {
   default = "kara.nottingham1@hmcts.net"
 }
+variable "ping_tests" {}

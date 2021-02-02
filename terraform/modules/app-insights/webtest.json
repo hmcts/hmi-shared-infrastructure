@@ -20,11 +20,14 @@
     },
     "location": {
       "type": "string"
+    }, 
+    "severity": {
+      "type": "string"
     }
   },
   "variables": {
     "pingpingTestName": "[concat('PingTest-', toLower(parameters('pingTestName')))]",
-    "pingAlertRuleName": "[concat('PingAlert-', toLower(parameters('pingTestName')), '-', toLower(parameters('appInsNameights'))]"
+    "pingAlertRuleName": "[concat('PingAlert-', toLower(parameters('pingTestName')), '-', toLower(parameters('appInsightsName')))]"
   },
   "resources": [
     {
@@ -33,7 +36,7 @@
       "apiVersion": "2014-04-01",
       "location": "[parameters('location')]",
       "tags": {
-        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsNameights')))]": "Resource"
+        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource"
       },
       "properties": {
         "Name": "[variables('pingpingTestName')]",
@@ -75,23 +78,23 @@
         "[resourceId('Microsoft.Insights/webtests', variables('pingpingTestName'))]"
       ],
       "tags": {
-        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsNameights')))]": "Resource",
+        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource",
         "[concat('hidden-link:', resourceId('Microsoft.Insights/webtests', variables('pingpingTestName')))]": "Resource"
       },
       "properties": {
         "description": "Alert for web test",
-        "severity": 1,
+        "severity": "[parameters('severity')]",
         "enabled": true,
         "scopes": [
           "[resourceId('Microsoft.Insights/webtests',variables('pingpingTestName'))]",
-          "[resourceId('Microsoft.Insights/components',parameters('appInsNameights'))]"
+          "[resourceId('Microsoft.Insights/components',parameters('appInsightsName'))]"
         ],
         "evaluationFrequency": "PT1M",
         "windowSize": "PT5M",
         "criteria": {
           "odata.type": "Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria",
           "webTestId": "[resourceId('Microsoft.Insights/webtests', variables('pingpingTestName'))]",
-          "componentId": "[resourceId('Microsoft.Insights/components', parameters('appInsNameights'))]",
+          "componentId": "[resourceId('Microsoft.Insights/components', parameters('appInsightsName'))]",
           "failedLocationCount": 2
         },
         "actions": [

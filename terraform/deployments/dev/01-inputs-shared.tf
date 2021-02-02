@@ -4,3 +4,4 @@ variable "product" {}
 variable "location" {}
 variable "tags" {}
 variable "support_email" {}
+variable "ping_tests" {}
