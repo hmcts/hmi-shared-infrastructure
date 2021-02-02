@@ -1,11 +1,12 @@
-module "hmi-action-group" {
-  source   = "github.com/hmcts/cnp-module-action-group"
-  location = "global"
-  env      = var.environment
+resource "azurerm_monitor_action_group" "hmi-action-group" {
+  name                = "hmi-support"
+  resource_group_name = var.resource_group
+  short_name          = "hmi-support"
 
-  resourcegroup_name     = var.resource_group
-  action_group_name      = "hmi-support"
-  short_name             = "hmi-support"
-  email_receiver_name    = "HMI Support Mailing List"
-  email_receiver_address = var.support_email
+  email_receiver {
+    name          = "HMI Support Mailing List"
+    email_address = var.support_email
+  }
+
+  tags = var.tags
 }
