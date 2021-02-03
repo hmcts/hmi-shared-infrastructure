@@ -5,7 +5,7 @@ resource "azurerm_template_deployment" "web-test" {
   count               = length(var.ping_tests)
   parameters = {
     appInsightsName = azurerm_application_insights.app_insights.name
-    pingTestName    = lookup(var.ping_tests[count.index], "pingTestName")
+    pingTestName    = "${lookup(var.ping_tests[count.index], "pingTestName")-var.environment}"
     pingTestURL     = lookup(var.ping_tests[count.index], "pingTestURL")
     pingText        = lookup(var.ping_tests[count.index], "pingText")
     actionGroupId   = azurerm_monitor_action_group.hmi-action-group.id
