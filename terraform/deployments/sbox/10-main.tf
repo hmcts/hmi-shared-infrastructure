@@ -41,11 +41,12 @@ module "postgresql" {
 }
 
 module "app-insights" {
-  source           = "../../modules/app-insights"
-  environment      = var.environment
-  resource_group   = var.resource_group
-  location         = var.location
-  product          = var.product
-  ping_tests       = var.ping_tests
-  tags             = var.tags
+  source         = "../../modules/app-insights"
+  environment    = var.environment
+  resource_group = var.resource_group
+  location       = var.location
+  product        = var.product
+  support_email  = var.support_email
+  ping_tests     = var.ping_tests
+  tags           = var.tags
 }

@@ -17,9 +17,11 @@ tags = {
 }
 log_analytics_workspace_name = "hmcts-prod"
 log_analytics_workspace_rg   = "oms-automation"
+support_email                = "kara.nottingham1@hmcts.net" # change when shared email gets created
 ping_tests = [
   {
-    name             = "hmi-api-management"
-    health_check_url = "https://hmi-apim.staging.platform.hmcts.net/status-0123456789abcdef"
+    pingTestName = "apim-service"
+    pingTestURL  = "https://hmi-apim.staging.platform.hmcts.net/status-0123456789abcdef"
+    pingText     = ""
   }
 ]
