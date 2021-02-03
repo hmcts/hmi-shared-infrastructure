@@ -29,5 +29,16 @@ ping_tests = [
     pingTestName = "apim-service"
     pingTestURL  = "https://hmi-apim.dev.platform.hmcts.net/status-0123456789abcdef"
     pingText     = ""
+  },
+  {
+    pingTestName = "hmi-casehqemulator"
+    pingTestURL  = "https://hmi-apim.dev.platform.hmcts.net/hmi/emulator-health"
+    pingText     = ""
+  },
+  {
+    pingTestName = "hmi-pact"
+    pingTestURL  = "https://hmi-apim.dev.platform.hmcts.net/hmi/pact-health"
+    pingText     = ""
   }
+
 ]
