@@ -40,5 +40,4 @@ ping_tests = [
     pingTestURL  = "https://hmi-apim.dev.platform.hmcts.net/hmi/pact-health"
     pingText     = ""
   }
-
 ]
