@@ -4,6 +4,7 @@ Repository for deploying support infrastructure for HMI APIM
 
 ### Monitoring and Alerting:
 If you need to update web test endpoint, add or modify `var.ping_tests` in /environments/*env*.tfvars:
+
 `ping_tests = [
   {
     pingTestName = "webcheck-name"
@@ -11,6 +12,7 @@ If you need to update web test endpoint, add or modify `var.ping_tests` in /envi
     pingText     = "Status: UP" # optional
   }
 ]`
+
 To change action group email, modify `var.support_email` in `/environments/shared.tfvars`
 
 ### Changing password on pact-broker database:
