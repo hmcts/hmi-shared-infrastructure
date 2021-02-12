@@ -4,6 +4,6 @@ variable "product" {}
 variable "location" {}
 variable "tags" {}
 variable "support_email" {
-  default = "kara.nottingham1@hmcts.net"
+  default = "hmi-team@HMCTS.NET"
 }
 variable "ping_tests" {}

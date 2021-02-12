@@ -17,7 +17,6 @@ tags = {
 }
 log_analytics_workspace_name = "hmcts-prod"
 log_analytics_workspace_rg   = "oms-automation"
-support_email                = "kara.nottingham1@hmcts.net" # change when shared email gets created
 ping_tests = [
   {
     pingTestName = "apim-service"
