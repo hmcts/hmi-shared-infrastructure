@@ -1,3 +1,6 @@
+location      = "uksouth"
+product       = "hmi-sharedinfra"
+support_email = "hmi-team@HMCTS.NET"
 apim_nsg_rules = [
   { name = "ManagementEndpointForAzurePortalAndPowershellInbound" },
   { name = "SecureClientCommunicationToAPIManagementInbound" },
@@ -13,7 +16,6 @@ apim_nsg_rules = [
   { name = "AuthenticateToAzureActiveDirectory80Outbound" },
   { name = "AuthenticateToAzureActiveDirectory433Outbound" }
 ]
-
 apim_rules = {
   ManagementEndpointForAzurePortalAndPowershellInbound = ["Inbound", "Allow", "TCP", "*", "3443", "ApiManagement", "VirtualNetwork"]
   SecureClientCommunicationToAPIManagementInbound      = ["Inbound", "Allow", "TCP", "*", "443", "Internet", "AzureFrontDoor.Backend"]
