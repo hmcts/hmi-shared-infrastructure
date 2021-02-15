@@ -11,6 +11,7 @@ resource "azurerm_template_deployment" "web-test" {
     actionGroupId   = azurerm_monitor_action_group.hmi-action-group.id
     location        = var.location
     severity        = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 3 : 0
+    environment     = var.tags.environment
   }
   template_body = <<DEPLOY
 {
