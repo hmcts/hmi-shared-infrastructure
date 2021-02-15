@@ -23,6 +23,9 @@
     }, 
     "severity": {
       "type": "string"
+    },
+    "environment": {
+      "type": "string"
     }
   },
   "variables": {
@@ -36,7 +39,10 @@
       "apiVersion": "2014-04-01",
       "location": "[parameters('location')]",
       "tags": {
-        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource"
+        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource",
+        "application": "hearing-management-interface",
+        "businessarea": "cross-cuttting",
+        "environment": "[parameters('environment')]"
       },
       "properties": {
         "Name": "[variables('pingpingTestName')]",

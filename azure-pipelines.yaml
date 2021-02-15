@@ -37,14 +37,14 @@ stages:
       parameters:
         displayName: Set up infrastructure for APIM deployments
         subscription: ${{ environment.subscription }}
-        environmentName: ${{ environment.name }}
+        environment: ${{ environment.name }}
         
     - template: pipeline/jobs/terraform.yaml
       parameters:
         displayName: Build Infrastructure with Terraform
         dependsOn: setupInfrastructure
         subscription: ${{ environment.subscription }}
-        environmentName: ${{ environment.name }}
+        environment: ${{ environment.name }}
         resourceGroup: $(resourceGroup)
         storageAccount: $(storageAccount)
         containerName: $(containerName)
@@ -58,4 +58,4 @@ stages:
         displayName: Set up Azure Monitor Link to Log Analytics
         dependsOn: Terraform
         subscription: ${{ environment.subscription }}
-        environmentName: ${{ environment.name }}
+        environment: ${{ environment.name }}

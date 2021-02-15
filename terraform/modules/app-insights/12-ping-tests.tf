@@ -11,6 +11,7 @@ resource "azurerm_template_deployment" "web-test" {
     actionGroupId   = azurerm_monitor_action_group.hmi-action-group.id
     location        = var.location
     severity        = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 3 : 0
+    environment     = var.tags.environment
   }
   template_body = <<DEPLOY
 {
@@ -38,6 +39,9 @@ resource "azurerm_template_deployment" "web-test" {
     }, 
     "severity": {
       "type": "string"
+    },
+    "environment": {
+      "type": "string"
     }
   },
   "variables": {
@@ -51,7 +55,10 @@ resource "azurerm_template_deployment" "web-test" {
       "apiVersion": "2014-04-01",
       "location": "[parameters('location')]",
       "tags": {
-        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource"
+        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource",
+        "application": "hearing-management-interface",
+        "businessarea": "cross-cuttting",
+        "environment": "[parameters('environment')]"
       },
       "properties": {
         "Name": "[variables('pingpingTestName')]",
