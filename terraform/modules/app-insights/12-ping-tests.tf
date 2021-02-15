@@ -39,6 +39,9 @@ resource "azurerm_template_deployment" "web-test" {
     }, 
     "severity": {
       "type": "string"
+    },
+    "enviroment": {
+      "type": "string"
     }
   },
   "variables": {
@@ -52,7 +55,10 @@ resource "azurerm_template_deployment" "web-test" {
       "apiVersion": "2014-04-01",
       "location": "[parameters('location')]",
       "tags": {
-        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource"
+        "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource",
+        "application": "hearing-management-interface",
+        "businessarea": "cross-cuttting",
+        "environment": "[parameters('environment')]"
       },
       "properties": {
         "Name": "[variables('pingpingTestName')]",
