@@ -2,7 +2,7 @@ parameters:
   - name: subscription
     type: string
 
-  - name: environmentName
+  - name: environment
     type: string
 
   - name: displayName
@@ -25,5 +25,5 @@ jobs:
       azureSubscription: ${{ parameters.subscription }}
       ScriptType: 'FilePath'
       ScriptPath: '$(System.DefaultWorkingDirectory)/pipeline/scripts/azmonlink.ps1'
-      ScriptArguments: '-environment ${{ parameters.environmentName }} -larg $(la-rg) -lasboxsubid $(la-sbox-sub-id) -lanonprodsubid $(la-nonprod-sub-id) -laprodsubid $(la-prod-sub-id)'
+      ScriptArguments: '-environment ${{ parameters.environment }} -larg $(la-rg) -lasboxsubid $(la-sbox-sub-id) -lanonprodsubid $(la-nonprod-sub-id) -laprodsubid $(la-prod-sub-id)'
       azurePowerShellVersion: 'LatestVersion'
