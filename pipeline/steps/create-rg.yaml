@@ -8,6 +8,9 @@ parameters:
   - name: storageAccount
     type: string
 
+  - name: environment
+    type: string
+
   - name: policiesAccount
     type: string
 
@@ -25,8 +28,14 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
+      if [[ ${{ parameters.environment }} = "sbox" ]]; then env="Sandbox"; fi
+      if [[ ${{ parameters.environment }} = "dev" ]]; then env="Development"; fi
+      if [[ ${{ parameters.environment }} = "test" ]]; then env="Test"; fi
+      if [[ ${{ parameters.environment }} = "stg" ]]; then env="Staging"; fi
+      if [[ ${{ parameters.environment }} = "prod" ]]; then env="Production"; fi
       az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }}
       az group update -g ${{ parameters.resourceGroup }} --set tags='{"application":"hearing-management-interface","businessarea":"cross-cuttting"}'
+      az group update -g ${{ parameters.resourceGroup }} --set tags.environment=$env
       az storage account create --name ${{ parameters.storageAccount }} --resource-group ${{ parameters.resourceGroup }}
       key=$(az storage account keys list -g ${{ parameters.resourceGroup }} --account-name ${{ parameters.storageAccount }} --query "[0].value" -o tsv)
       az storage container create --name hmiapimterraform --account-name ${{ parameters.storageAccount }} --account-key $key

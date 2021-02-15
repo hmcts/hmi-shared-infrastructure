@@ -32,6 +32,7 @@ jobs:
       storageAccount: hmiapiminfra${{ parameters.environment }}sa
       policiesAccount: hmiapimpolicies${{ parameters.environment }}sa
       location: ${{ parameters.location }}
+      environment: ${{ parameters.environment }}
 
   - template: ../steps/set_kv_permissions.yaml
     parameters:
