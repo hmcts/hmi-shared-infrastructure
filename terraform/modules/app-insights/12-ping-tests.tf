@@ -40,7 +40,7 @@ resource "azurerm_template_deployment" "web-test" {
     "severity": {
       "type": "string"
     },
-    "enviroment": {
+    "environment": {
       "type": "string"
     }
   },

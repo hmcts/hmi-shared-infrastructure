@@ -24,7 +24,7 @@
     "severity": {
       "type": "string"
     },
-    "enviroment": {
+    "environment": {
       "type": "string"
     }
   },
