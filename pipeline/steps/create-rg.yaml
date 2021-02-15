@@ -25,8 +25,7 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }}
-      az storage account delete --name ${{ parameters.policiesAccount }} --resource-group ${{ parameters.resourceGroup }} --yes
+      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }} --tags application=hearing-management-interface businessarea=cross-cuttting
       az storage account create --name ${{ parameters.storageAccount }} --resource-group ${{ parameters.resourceGroup }}
       key=$(az storage account keys list -g ${{ parameters.resourceGroup }} --account-name ${{ parameters.storageAccount }} --query "[0].value" -o tsv)
       az storage container create --name hmiapimterraform --account-name ${{ parameters.storageAccount }} --account-key $key
