@@ -25,7 +25,7 @@ ping_tests = [
   {
     pingTestName = "apim-service"
     pingTestURL  = "https://hmi-apim.sandbox.platform.hmcts.net/health/liveness"
-    pingText     = "\"status\": \"Up\""
+    pingText     = "&#x22;status&#x22;&#x3A;&#x20;&#x22;Up&#x22;" # xml encoding
   },
   {
     pingTestName = "hmi-casehqemulator"
