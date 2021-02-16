@@ -18,7 +18,7 @@ log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
   {
     pingTestName = "apim-service"
-    pingTestURL  = "https://hmi-apim.platform.hmcts.net/status-0123456789abcdef"
-    pingText     = ""
+    pingTestURL  = "https://hmi-apim.platform.hmcts.net/health/liveness"
+    pingText     = "&#x22;status&#x22;&#x3A;&#x20;&#x22;Up&#x22;" # xml encoding
   }
 ]
