@@ -16,6 +16,19 @@ Param (
 [string] $laprodsubid
 )
 
+[Parameter(Mandatory=$true)]
+[string] $businessArea
+)
+
+[Parameter(Mandatory=$true)]
+[string] $product
+)
+
+[Parameter(Mandatory=$true)]
+[string] $builtFrom
+)
+
+
 if (!(Get-Module -Name Az.MonitoringSolutions)){
     Write-Host "Installing Az.MonitoringSolutions Module..." -ForegroundColor Yellow
     Install-Module -Name Az.MonitoringSolutions -Force -Verbose
@@ -29,17 +42,19 @@ $ResourceGroupName = "hmi-sharedinfra-"+$environment+"-rg"
 
 $subscriptionId = (Get-AzSubscription -SubscriptionName $subscriptionName).Id
 
-$tags = @{"application"="hearing-management-interface"; "businessarea"="cross-cuttting"}
+$tags = @{"application"="hearing-management-interface"; "businessArea"=$businessArea; "builtFrom"=$builtFrom; "product"=$product}
 $env = ""
 if($environment -ieq "sbox"){ $env = "sandbox" } elseif($environment -ieq "dev") { $env = "development" } elseif($environment -ieq "stg") { $env = "staging"} elseif($environment -ieq "prod") { $env = "production" } else { $env = $environment }
 $tags += @{"environment"=$env}
 
+Write-Host "Resources would be tagged with: " + $tags
+
 if($environment -ieq "sbox")
-    { $workspaceName = "hmcts-sandbox"; $workspaceId = "/subscriptions/$lasboxsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-sandbox" } 
+    { $workspaceName = "hmcts-sandbox"; $workspaceId = "/subscriptions/$lasboxsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-sandbox" }
     elseif($environment -ieq "dev" -or $environment -ieq "test")
-    { $workspaceName = "hmcts-nonprod"; $workspaceId = "/subscriptions/$lanonprodsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-nonprod" } 
+    { $workspaceName = "hmcts-nonprod"; $workspaceId = "/subscriptions/$lanonprodsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-nonprod" }
     elseif($environment -ieq "stg" -or $environment -ieq "prod")
-    { $workspaceName = "hmcts-prod" ; $workspaceId = "/subscriptions/$laprodsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-prod" } 
+    { $workspaceName = "hmcts-prod" ; $workspaceId = "/subscriptions/$laprodsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-prod" }
     else { Write-Host "Workspace not set." }
 
 Write-Host "Starting script"
@@ -54,7 +69,7 @@ if(!(Get-AzInsightsPrivateLinkScope -Name "$("hmi-apim-ampls-" + $environment)" 
 
     Write-Host "Add Azure Monitor Resource"
     New-AzInsightsPrivateLinkScopedResource -LinkedResourceId $workspaceId -Name $workspaceName -ResourceGroupName $ResourceGroupName -ScopeName $linkScope.Name
-    New-AzInsightsPrivateLinkScopedResource -LinkedResourceId $appins.Id -Name $appins.Name -ResourceGroupName $ResourceGroupName -ScopeName $linkScope.Name 
+    New-AzInsightsPrivateLinkScopedResource -LinkedResourceId $appins.Id -Name $appins.Name -ResourceGroupName $ResourceGroupName -ScopeName $linkScope.Name
 
     Write-Host "Set up Private Endpoint Connection"
     $PrivateLinkResourceId = "/subscriptions/"+$subscriptionId+"/resourceGroups/"+$ResourceGroupName+"/providers/microsoft.insights/privateLinkScopes/"+$linkScope.Name

@@ -66,3 +66,5 @@ stages:
         dependsOn: Terraform
         subscription: ${{ environment.subscription }}
         environment: ${{ environment.name }}
+        builtFrom: ${{ variables.builtFrom }}
+        product: ${{ variables.product }}
