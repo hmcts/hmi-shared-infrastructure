@@ -23,6 +23,8 @@ variables:
   - group: HMI-APIM-Common
   - name: product
     value: 'sds-platform'
+  - name: businessArea
+    value: 'Cross-Cutting'
   - name: builtFrom
     value: $(Build.Repository.Name)
 
@@ -55,6 +57,7 @@ stages:
         containerName: $(containerName)
         builtFrom: ${{ variables.builtFrom }}
         product: ${{ variables.product }}
+        businessArea: $ {{ variables.businessArea }}
         variables:
           resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
           storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
@@ -68,3 +71,4 @@ stages:
         environment: ${{ environment.name }}
         builtFrom: ${{ variables.builtFrom }}
         product: ${{ variables.product }}
+        businessArea: $ {{ variables.businessArea }}

@@ -11,7 +11,7 @@ parameters:
 
   - name: businessArea
     type: string
-    default: 'Cross-Cutting'
+    default: ''
 
   - name: product
     type: string
