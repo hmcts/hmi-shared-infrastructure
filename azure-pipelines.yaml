@@ -22,7 +22,7 @@ parameters:
 variables:
   - group: HMI-APIM-Common
   - name: product
-    value: 'hearing-management-interface'
+    value: 'sds-platform'
   - name: builtFrom
     value: $(Build.Repository.Name)
 
