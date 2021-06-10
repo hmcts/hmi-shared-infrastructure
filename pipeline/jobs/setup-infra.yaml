@@ -9,6 +9,10 @@ parameters:
     type: string
     default: ''
 
+  - name: businessArea
+    type: string
+    default: 'Cross-Cutting'
+
   - name: product
     type: string
     default: ''
@@ -32,9 +36,6 @@ jobs:
   displayName: ${{ parameters.displayName }}
   pool:
     vmImage: 'ubuntu-20.04'
-  variables:
-  - name: businessArea
-    value: 'Cross-Cutting'
   steps:
   - template: ../steps/create-rg.yaml
     parameters:
