@@ -45,7 +45,7 @@ stages:
         environment: ${{ environment.name }}
         builtFrom: ${{ variables.builtFrom }}
         product: ${{ variables.product }}
-        businessArea: $ {{ variables.businessArea }}
+        businessArea: ${{ variables.businessArea }}
 
     - template: pipeline/jobs/terraform.yaml
       parameters:
