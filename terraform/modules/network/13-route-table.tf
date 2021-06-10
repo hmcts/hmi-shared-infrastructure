@@ -1,5 +1,5 @@
 resource "azurerm_route_table" "apim_rt" {
-  name                          = "${var.project}-rt-${var.environment}"
+  name                          = "${var.product}-rt-${var.environment}"
   location                      = var.location
   resource_group_name           = var.resource_group
   disable_bgp_route_propagation = false

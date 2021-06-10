@@ -13,7 +13,7 @@ parameters:
     type: string
     default: 'Cross-Cutting'
 
-  - name: product
+  - name: productName
     type: string
     default: ''
 
@@ -46,7 +46,7 @@ jobs:
       location: ${{ parameters.location }}
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
-      product: ${{ parameters.product }}
+      productName: ${{ parameters.productName }}
       businessArea: ${{ parameters.businessArea }}
 
   - template: ../steps/set_kv_permissions.yaml

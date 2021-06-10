@@ -15,7 +15,7 @@ parameters:
     type: string
     default: ''
 
-  - name: product
+  - name: productName
     type: string
     default: ''
 
@@ -50,7 +50,7 @@ steps:
       # Revisit tagging via inline script
       az group update -g ${{ parameters.resourceGroup }} --set tags='{"application":"hearing-management-interface"}'
       az group update -g ${{ parameters.resourceGroup }} --set tags.environment=$env
-      az group update -g ${{ parameters.resourceGroup }} --set tags.product=${{ parameters.product }}
+      az group update -g ${{ parameters.resourceGroup }} --set tags.product=${{ parameters.productName }}
       az group update -g ${{ parameters.resourceGroup }} --set tags.builtFrom=${{ parameters.builtFrom }}
       az group update -g ${{ parameters.resourceGroup }} --set tags.businessArea=${{ parameters.businessArea }}
 
