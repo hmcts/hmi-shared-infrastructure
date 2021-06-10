@@ -23,3 +23,4 @@ If you need to change pact-broker database password:
 - update the secret `pact-db-password` in Key Vault `hmi-sharedinfra-kv-*env*`
 
 IMPORTANT! - if you don't update the keyvault secret, AKS cluster won't be able to read it and will fail to start Pact on the pod.
+
