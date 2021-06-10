@@ -13,16 +13,13 @@ Param (
 [string] $lanonprodsubid,
 
 [Parameter(Mandatory=$true)]
-[string] $laprodsubid
-)
+[string] $laprodsubid,
 
 [Parameter(Mandatory=$true)]
-[string] $businessArea
-)
+[string] $businessArea,
 
 [Parameter(Mandatory=$true)]
-[string] $product
-)
+[string] $product,
 
 [Parameter(Mandatory=$true)]
 [string] $builtFrom
