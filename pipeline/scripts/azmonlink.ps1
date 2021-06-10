@@ -44,8 +44,6 @@ $env = ""
 if($environment -ieq "sbox"){ $env = "sandbox" } elseif($environment -ieq "dev") { $env = "development" } elseif($environment -ieq "stg") { $env = "staging"} elseif($environment -ieq "prod") { $env = "production" } else { $env = $environment }
 $tags += @{"environment"=$env}
 
-Write-Host "Resources would be tagged with: " + $tags
-
 if($environment -ieq "sbox")
     { $workspaceName = "hmcts-sandbox"; $workspaceId = "/subscriptions/$lasboxsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-sandbox" }
     elseif($environment -ieq "dev" -or $environment -ieq "test")
