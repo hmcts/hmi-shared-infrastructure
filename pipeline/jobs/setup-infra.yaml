@@ -5,6 +5,14 @@ parameters:
   - name: environment
     type: string
 
+  - name: builtFrom
+    type: string
+    default: ''
+
+  - name: product
+    type: string
+    default: ''
+
   - name: location
     type: string
     default: uksouth
@@ -15,7 +23,11 @@ parameters:
   - name: dependsOn
     type: string
     default: ''
-    
+
+variables:
+  - name: businessArea
+    value: 'Cross-Cutting'
+
 jobs:
 - job: setupInfrastructure
   dependsOn:
@@ -33,6 +45,9 @@ jobs:
       policiesAccount: hmiapimpolicies${{ parameters.environment }}sa
       location: ${{ parameters.location }}
       environment: ${{ parameters.environment }}
+      builtFrom: ${{ parameters.builtFrom }}
+      product: ${{ parameters.product }}
+      businessArea: ${{ parameters.businessArea }}
 
   - template: ../steps/set_kv_permissions.yaml
     parameters:

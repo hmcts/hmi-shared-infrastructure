@@ -7,7 +7,7 @@ pr:
 parameters:
   - name: environments
     type: object
-    default: 
+    default:
     - name: sbox
       subscription: DTS-SHAREDSERVICES-SBOX
     - name: dev
@@ -19,8 +19,12 @@ parameters:
     - name: prod
       subscription: DTS-SHAREDSERVICES-PROD
 
-variables: 
+variables:
   - group: HMI-APIM-Common
+  - name: product
+    value: 'hearing-management-interface'
+  - name: builtFrom
+    value: $(Build.Repository.Name)
 
 stages:
 
@@ -30,15 +34,16 @@ stages:
     ${{ if environment.condition }}:
       condition: ${{ environment.condition }}
     displayName: Build ${{ environment.name }}
-    
-    jobs:
 
+    jobs:
     - template: pipeline/jobs/setup-infra.yaml
       parameters:
         displayName: Set up infrastructure for APIM deployments
         subscription: ${{ environment.subscription }}
         environment: ${{ environment.name }}
-        
+        builtFrom: ${{ variables.builtFrom }}
+        product: ${{ variables.product }}
+
     - template: pipeline/jobs/terraform.yaml
       parameters:
         displayName: Build Infrastructure with Terraform
@@ -48,11 +53,13 @@ stages:
         resourceGroup: $(resourceGroup)
         storageAccount: $(storageAccount)
         containerName: $(containerName)
+        builtFrom: ${{ variables.builtFrom }}
+        product: ${{ variables.product }}
         variables:
           resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
           storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
           containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
-    
+
     - template: pipeline/jobs/setup-azmonlink.yaml
       parameters:
         displayName: Set up Azure Monitor Link to Log Analytics
