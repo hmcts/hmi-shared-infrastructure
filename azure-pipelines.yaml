@@ -45,6 +45,7 @@ stages:
         environment: ${{ environment.name }}
         builtFrom: ${{ variables.builtFrom }}
         product: ${{ variables.product }}
+        businessArea: $ {{ variables.businessArea }}
 
     - template: pipeline/jobs/terraform.yaml
       parameters:
@@ -57,7 +58,6 @@ stages:
         containerName: $(containerName)
         builtFrom: ${{ variables.builtFrom }}
         product: ${{ variables.product }}
-        businessArea: $ {{ variables.businessArea }}
         variables:
           resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
           storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
