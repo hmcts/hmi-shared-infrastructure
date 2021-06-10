@@ -1,3 +1,5 @@
+variable "product" {}
+
 # Generic locals
 locals {
   common_tags = module.ctags.common_tags
