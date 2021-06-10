@@ -1,6 +1,6 @@
 variable "environment" {}
 variable "resource_group" {}
-variable "product" {}
+variable "project" {}
 variable "location" {}
 variable "address_space" {}
 variable "tags" {}

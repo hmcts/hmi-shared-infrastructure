@@ -21,7 +21,7 @@ parameters:
 
 variables:
   - group: HMI-APIM-Common
-  - name: productName
+  - name: product
     value: 'sds-platform'
   - name: builtFrom
     value: $(Build.Repository.Name)
@@ -42,7 +42,7 @@ stages:
         subscription: ${{ environment.subscription }}
         environment: ${{ environment.name }}
         builtFrom: ${{ variables.builtFrom }}
-        productName: ${{ variables.productName }}
+        product: ${{ variables.product }}
 
     - template: pipeline/jobs/terraform.yaml
       parameters:
@@ -54,7 +54,7 @@ stages:
         storageAccount: $(storageAccount)
         containerName: $(containerName)
         builtFrom: ${{ variables.builtFrom }}
-        productName: ${{ variables.productName }}
+        product: ${{ variables.product }}
         variables:
           resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
           storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]

@@ -31,7 +31,7 @@ parameters:
     type: string
     default: ''
 
-  - name: productName
+  - name: product
     type: string
     default: ''
 
@@ -61,7 +61,7 @@ jobs:
       resourceGroup: $(resourceGroup)
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
-      productName: ${{ parameters.productName }}
+      product: ${{ parameters.product }}
   - template: ../steps/tf-apply.yaml
     parameters:
       subscription: ${{ parameters.subscription }}

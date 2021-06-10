@@ -12,7 +12,7 @@ parameters:
     type: string
     default: ''
 
-  - name: productName
+  - name: product
     type: string
     default: ''
 
@@ -34,4 +34,4 @@ steps:
         -var "la_prod_sub_id=$(la-prod-sub-id)"
         -var "la_sbox_sub_id=$(la-sbox-sub-id)"
         -var "builtFrom=${{ parameters.builtFrom }} "
-        -var "product=${{ parameters.productName }}"
+        -var "product=${{ parameters.product }}"
