@@ -24,10 +24,6 @@ parameters:
     type: string
     default: ''
 
-variables:
-  - name: businessArea
-    value: 'Cross-Cutting'
-
 jobs:
 - job: setupInfrastructure
   dependsOn:
@@ -36,6 +32,9 @@ jobs:
   displayName: ${{ parameters.displayName }}
   pool:
     vmImage: 'ubuntu-20.04'
+  variables:
+  - name: businessArea
+    value: 'Cross-Cutting'
   steps:
   - template: ../steps/create-rg.yaml
     parameters:
