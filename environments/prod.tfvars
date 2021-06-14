@@ -8,11 +8,6 @@ route_table = [
     next_hop_in_ip_address = null
   }
 ]
-tags = {
-  "businessarea" : "cross-cutting",
-  "application" : "hearing-management-interface",
-  "environment" : "production"
-}
 log_analytics_workspace_name = "hmcts-prod"
 log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
