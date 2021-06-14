@@ -49,9 +49,7 @@ steps:
       if [[ ${{ parameters.environment }} = "stg" ]]; then env="staging"; fi
       if [[ ${{ parameters.environment }} = "prod" ]]; then env="production"; fi
 
-      TAGS='{"application":"${{ parameters.application }}","product":"${{ parameters.product }}","builtFrom":"${{ parameters.builtFrom }}","businessArea":"${{ parameters.businessArea }}"}'
-      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }} --tags $TAGS
-      az group update -g ${{ parameters.resourceGroup }} --set tags.environment=$env
+      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }} --tags environment=$env businessArea=${{ parameters.businessArea }} application=${{ parameters.application }} product=${{ parameters.product }} builtFrom=${{ parameters.builtFrom }}
       az storage account create --name ${{ parameters.storageAccount }} --resource-group ${{ parameters.resourceGroup }}
       key=$(az storage account keys list -g ${{ parameters.resourceGroup }} --account-name ${{ parameters.storageAccount }} --query "[0].value" -o tsv)
       az storage container create --name hmiapimterraform --account-name ${{ parameters.storageAccount }} --account-key $key
