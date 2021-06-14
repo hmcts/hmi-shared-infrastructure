@@ -30,7 +30,6 @@ parameters:
     type: string
     default: uksouth
 
-
 steps:
 - task: AzureCLI@2
   displayName: Setting up Resource Group
@@ -45,14 +44,11 @@ steps:
       if [[ ${{ parameters.environment }} = "test" ]]; then env="test"; fi
       if [[ ${{ parameters.environment }} = "stg" ]]; then env="staging"; fi
       if [[ ${{ parameters.environment }} = "prod" ]]; then env="production"; fi
-      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }}
 
-      # Revisit tagging via inline script
-      az group update -g ${{ parameters.resourceGroup }} --set tags='{"application":"hearing-management-interface"}'
-      az group update -g ${{ parameters.resourceGroup }} --set tags.environment=$env
-      az group update -g ${{ parameters.resourceGroup }} --set tags.product=${{ parameters.product }}
-      az group update -g ${{ parameters.resourceGroup }} --set tags.builtFrom=${{ parameters.builtFrom }}
-      az group update -g ${{ parameters.resourceGroup }} --set tags.businessArea=${{ parameters.businessArea }}
+      TAGS='{"application":"hearing-management-interface","environment":"$(env)","product":"${{ parameters.product }}","builtFrom":"${{ parameters.builtFrom }}","businessArea":"${{ parameters.businessArea }}"}'
+      echo $TAGS
+      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }}
+      az group update -g ${{ parameters.resourceGroup }} --set tags=$TAGS
 
       az storage account create --name ${{ parameters.storageAccount }} --resource-group ${{ parameters.resourceGroup }}
       key=$(az storage account keys list -g ${{ parameters.resourceGroup }} --account-name ${{ parameters.storageAccount }} --query "[0].value" -o tsv)
