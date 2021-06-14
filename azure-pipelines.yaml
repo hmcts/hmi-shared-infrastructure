@@ -46,7 +46,6 @@ stages:
         subscription: ${{ environment.subscription }}
         environment: ${{ environment.name }}
         builtFrom: ${{ variables.builtFrom }}
-        product: ${{ variables.product }}
         businessArea: ${{ variables.businessArea }}
         application: ${{ variables.application }}
 

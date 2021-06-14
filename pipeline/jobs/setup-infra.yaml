@@ -17,10 +17,6 @@ parameters:
     type: string
     default: ''
 
-  - name: product
-    type: string
-    default: ''
-
   - name: location
     type: string
     default: uksouth
@@ -50,7 +46,6 @@ jobs:
       location: ${{ parameters.location }}
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
-      product: ${{ parameters.product }}
       businessArea: ${{ parameters.businessArea }}
       application: ${{ parameters.application }}
 
