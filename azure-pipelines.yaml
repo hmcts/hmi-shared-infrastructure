@@ -22,7 +22,7 @@ parameters:
 variables:
   - group: HMI-APIM-Common
   - name: product
-    value: 'sds-platform'
+    value: 'hmi'
   - name: businessArea
     value: 'Cross-Cutting'
   - name: builtFrom
