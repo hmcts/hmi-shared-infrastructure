@@ -2,7 +2,7 @@ module "network" {
   source                        = "../../modules/network"
   environment                   = var.environment
   resource_group                = var.resource_group
-  product                       = var.product
+  project                       = var.project
   location                      = var.location
   address_space                 = var.address_space
   subnet_address_prefixes       = var.subnet_address_prefixes
