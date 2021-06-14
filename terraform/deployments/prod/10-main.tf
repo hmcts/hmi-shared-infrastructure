@@ -5,7 +5,7 @@ module "network" {
   project                       = var.project
   location                      = var.location
   address_space                 = var.address_space
-  subnet_address_prefixes        = var.subnet_address_prefixes
+  subnet_address_prefixes       = var.subnet_address_prefixes
   apim_nsg_rules                = var.apim_nsg_rules
   apim_rules                    = var.apim_rules
   route_table                   = var.route_table
