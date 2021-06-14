@@ -1,5 +1,5 @@
 resource "azurerm_application_insights" "app_insights" {
-  name                = "${var.product}-appins-${var.environment}"
+  name                = "${var.project}-appins-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group
   tags                = var.tags

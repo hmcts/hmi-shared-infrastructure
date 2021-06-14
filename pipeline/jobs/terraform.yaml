@@ -23,9 +23,17 @@ parameters:
 
   - name: displayName
     type: string
-  
+
   - name: environment
     type: string
+
+  - name: builtFrom
+    type: string
+    default: ''
+
+  - name: product
+    type: string
+    default: ''
 
 jobs:
 - job: Terraform
@@ -52,6 +60,8 @@ jobs:
       subscription: ${{ parameters.subscription }}
       resourceGroup: $(resourceGroup)
       environment: ${{ parameters.environment }}
+      builtFrom: ${{ parameters.builtFrom }}
+      product: ${{ parameters.product }}
   - template: ../steps/tf-apply.yaml
     parameters:
       subscription: ${{ parameters.subscription }}

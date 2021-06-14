@@ -14,11 +14,6 @@ route_table = [
     next_hop_in_ip_address = null
   }
 ]
-tags = {
-  "businessarea" : "cross-cutting",
-  "application" : "hearing-management-interface",
-  "environment" : "sandbox"
-}
 log_analytics_workspace_name = "hmcts-sandbox"
 log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
