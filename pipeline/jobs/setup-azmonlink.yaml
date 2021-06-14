@@ -13,10 +13,6 @@ parameters:
     type: string
     default: ''
 
-  - name: product
-    type: string
-    default: ''
-
   - name: displayName
     type: string
 
@@ -37,5 +33,5 @@ jobs:
       azureSubscription: ${{ parameters.subscription }}
       ScriptType: 'FilePath'
       ScriptPath: '$(System.DefaultWorkingDirectory)/pipeline/scripts/azmonlink.ps1'
-      ScriptArguments: '-businessArea ${{ parameters.businessArea }} -product ${{ parameters.product}} -builtFrom ${{ parameters.builtFrom }} -environment ${{ parameters.environment }} -larg $(la-rg) -lasboxsubid $(la-sbox-sub-id) -lanonprodsubid $(la-nonprod-sub-id) -laprodsubid $(la-prod-sub-id)'
+      ScriptArguments: '-businessArea ${{ parameters.businessArea }} -builtFrom ${{ parameters.builtFrom }} -environment ${{ parameters.environment }} -larg $(la-rg) -lasboxsubid $(la-sbox-sub-id) -lanonprodsubid $(la-nonprod-sub-id) -laprodsubid $(la-prod-sub-id)'
       azurePowerShellVersion: 'LatestVersion'
