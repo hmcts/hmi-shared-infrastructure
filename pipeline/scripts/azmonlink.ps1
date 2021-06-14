@@ -19,9 +19,6 @@ Param (
 [string] $businessArea,
 
 [Parameter(Mandatory=$true)]
-[string] $product,
-
-[Parameter(Mandatory=$true)]
 [string] $builtFrom
 )
 
