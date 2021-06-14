@@ -27,6 +27,8 @@ variables:
     value: 'Cross-Cutting'
   - name: builtFrom
     value: $(Build.Repository.Name)
+  - name: application
+    value: 'hearing-management-interface'
 
 stages:
 
@@ -46,6 +48,7 @@ stages:
         builtFrom: ${{ variables.builtFrom }}
         product: ${{ variables.product }}
         businessArea: ${{ variables.businessArea }}
+        application: ${{ variables.application }}
 
     - template: pipeline/jobs/terraform.yaml
       parameters:

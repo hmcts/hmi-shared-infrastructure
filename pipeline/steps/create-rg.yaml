@@ -19,6 +19,10 @@ parameters:
     type: string
     default: ''
 
+  - name: application
+    type: string
+    default: ''
+
   - name: businessArea
     type: string
     default: ''
@@ -45,7 +49,7 @@ steps:
       if [[ ${{ parameters.environment }} = "stg" ]]; then env="staging"; fi
       if [[ ${{ parameters.environment }} = "prod" ]]; then env="production"; fi
 
-      TAGS='{"application":"hearing-management-interface","environment":"$env","product":"${{ parameters.product }}","builtFrom":"${{ parameters.builtFrom }}","businessArea":"${{ parameters.businessArea }}"}'
+      TAGS='{"application":"${{ parameters.application }}","environment":"$env","product":"${{ parameters.product }}","builtFrom":"${{ parameters.builtFrom }}","businessArea":"${{ parameters.businessArea }}"}'
       echo $TAGS
       az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }} --tags $TAGS
 

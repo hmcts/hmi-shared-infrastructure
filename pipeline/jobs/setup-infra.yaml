@@ -13,6 +13,10 @@ parameters:
     type: string
     default: ''
 
+  - name: application
+    type: string
+    default: ''
+
   - name: product
     type: string
     default: ''
@@ -48,6 +52,7 @@ jobs:
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
       businessArea: ${{ parameters.businessArea }}
+      application: ${{ parameters.application }}
 
   - template: ../steps/set_kv_permissions.yaml
     parameters:
