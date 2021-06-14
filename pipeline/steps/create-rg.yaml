@@ -47,7 +47,7 @@ steps:
 
       TAGS='{"application":"hearing-management-interface","environment":"$(env)","product":"${{ parameters.product }}","builtFrom":"${{ parameters.builtFrom }}","businessArea":"${{ parameters.businessArea }}"}'
       echo $TAGS
-      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }}
+      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }} --tags $TAGS
       az group update -g ${{ parameters.resourceGroup }} --set tags=$TAGS
 
       az storage account create --name ${{ parameters.storageAccount }} --resource-group ${{ parameters.resourceGroup }}
