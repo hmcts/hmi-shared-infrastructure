@@ -39,7 +39,7 @@ $ResourceGroupName = "hmi-sharedinfra-"+$environment+"-rg"
 
 $subscriptionId = (Get-AzSubscription -SubscriptionName $subscriptionName).Id
 
-$tags = @{"application"="hearing-management-interface"; "businessArea"=$businessArea; "builtFrom"=$builtFrom; "product"=$product}
+$tags = @{"application"="hearing-management-interface"; "businessArea"=$businessArea; "builtFrom"=$builtFrom}
 $env = ""
 if($environment -ieq "sbox"){ $env = "sandbox" } elseif($environment -ieq "dev") { $env = "development" } elseif($environment -ieq "stg") { $env = "staging"} elseif($environment -ieq "prod") { $env = "production" } else { $env = $environment }
 $tags += @{"environment"=$env}
