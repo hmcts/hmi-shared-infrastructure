@@ -88,7 +88,8 @@ if(!(Get-AzInsightsPrivateLinkScope -Name "$("hmi-apim-ampls-" + $environment)" 
         $link  = New-AzPrivateDnsVirtualNetworkLink -ResourceGroupName $ResourceGroupName `
         -ZoneName $_ `
         -Name "dnsZoneLink" `
-        -VirtualNetworkId $virtualNetwork.Id
+        -VirtualNetworkId $virtualNetwork.Id `
+        -Tag $tags
 
         $zoneConfigs += (New-AzPrivateDnsZoneConfig -Name $_ -PrivateDnsZoneId $zone.ResourceId)
     }
