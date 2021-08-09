@@ -61,6 +61,10 @@ jobs:
       storageAccount: $(storageAccount)
       containerName: $(containerName)
       workingDirectory: ${{ parameters.workingDirectory }}
+  - bash: |
+      mkdir '$(Build.SourcesDirectory)/plans'
+      mkdir '$(Build.SourcesDirectory)/plans/${{ parameters.environment }}'
+    displayName: Create plan directory
   - template: ../steps/tf-plan.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
