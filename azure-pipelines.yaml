@@ -59,12 +59,12 @@ stages:
   - ${{ each service in parameters.services }}:
     - ${{ each environment in parameters.environments }}:
 
-      - stage: '${{ service.name }}_${{ environment.name }}'
+      - stage: 'Plan_${{ service.name }}_${{ environment.name }}'
         ${{ if eq(environment.dependency, 'CIBuild') }}:
           dependsOn: '${{ environment.dependency }}'
         ${{ if ne(environment.dependency, 'CIBuild') }}:
-          dependsOn: '${{ service.name }}_${{ environment.dependency }}'
-        displayName: ${{ environment.name }} ${{ service.displayName }}
+          dependsOn: 'Apply_${{ service.name }}_${{ environment.dependency }}'
+        displayName: Plan ${{ environment.name }} ${{ service.displayName }}
         variables: 
           - name: planOutputName
             value: '${{ service.name }}_${{ environment.name }}'
@@ -111,8 +111,42 @@ stages:
               storageAccount: ${{ variables.storageAccount }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
-            ${{ if eq(environment.name, 'sbox') }}:
-              waitForValidation: true
+
+      - ${{ if eq(environment.name, 'sbox') }}:
+        - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
+          dependsOn: 'Plan_${{ service.name }}_${{ environment.dependency }}'
+          displayName: Wait ${{ environment.name }} ${{ service.displayName }}
+
+          jobs:
+            - job: Wait
+              displayName: "Wait for approval"
+              pool:
+                vmImage: 'ubuntu-20.04'
+              steps:
+                - template: pipeline/steps/wait.yml
+                  parameters:
+                    environment: ${{ environment.name }}
+
+      - stage: 'Apply_${{ service.name }}_${{ environment.name }}'
+        ${{ if eq(environment.name, 'sbox') }}:
+          dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
+        ${{ if ne(environment.name, 'sbox') }}:
+          dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
+        displayName: Apply ${{ environment.name }} ${{ service.displayName }}
+        variables: 
+          - name: planOutputName
+            value: '${{ service.name }}_${{ environment.name }}'
+          - name: workingDirectory          
+            ${{ if eq(service.name, 'SharedInfra') }}:
+              value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
+            ${{ if eq(service.name, 'SharedServies') }}:
+              value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
+          - name: storageAccount
+            value: '${{ service.resourcePrefix }}infra${{ environment.name }}sa'
+          - name: resourceGroupName
+            value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
+          - name: containerName
+            value: '${{ service.resourcePrefix }}terraform'
 
         - template: pipeline/jobs/terraform-deploy.yaml
           parameters:

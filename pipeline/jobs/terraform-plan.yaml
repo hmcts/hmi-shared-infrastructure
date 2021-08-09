@@ -1,45 +1,30 @@
 parameters:
   - name: subscription
     type: string
-
   - name: dependsOn
     type: string
-
   - name: resourceGroup
     type: string
-
   - name: storageAccount
     type: string
-
   - name: containerName
     type: string
-
   - name: variables
     type: object
-
   - name: displayName
     type: string
-
   - name: environment
     type: string
-
   - name: builtFrom
     type: string
     default: ''
-
   - name: product
     type: string
     default: ''
-
   - name: outputName
     type: string
-
   - name: workingDirectory
     type: string
-
-  - name: waitForValidation
-    type: boolean
-    default: true
 
 jobs:
 - job: TerraformPlan
@@ -80,10 +65,4 @@ jobs:
       targetPath: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
       artifact: '${{ parameters.outputName }}'
 
-  - bash: |
-      echo 'Should we wait? ${{parameters.waitForValidation}}'
-    displayName: Should we wait
-  - ${{ if eq('${{parameters.waitForValidation}}','True')}}:
-    - template: ../steps/wait.yml
-      parameters:
-        environment: ${{ parameters.environment }}
+  
