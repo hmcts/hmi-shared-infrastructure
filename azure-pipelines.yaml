@@ -30,10 +30,10 @@ parameters:
         displayName: 'Shared Infrastructure'
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
-      - name: SharedServies
-        displayName: 'Shared Services'
-        resourceGroupName: 'sharedservices'
-        resourcePrefix: 'hmiss'
+      #- name: SharedServies
+      #  displayName: 'Shared Services'
+      #  resourceGroupName: 'sharedservices'
+      #  resourcePrefix: 'hmiss'
         
 
 variables:
