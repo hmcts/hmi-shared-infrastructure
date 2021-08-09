@@ -120,8 +120,7 @@ stages:
           jobs:
             - job: Wait
               displayName: "Wait for approval"
-              pool:
-                vmImage: 'ubuntu-20.04'
+              pool: server
               steps:
                 - template: pipeline/steps/wait.yml
                   parameters:
