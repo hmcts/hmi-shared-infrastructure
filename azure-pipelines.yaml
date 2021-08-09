@@ -111,10 +111,11 @@ stages:
               storageAccount: ${{ variables.storageAccount }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
-            ${{ if eq(environment.name, 'sbox') }}:
-              waitForValidation: false
-            ${{ if ne(environment.name, 'sbox') }}:
-              waitForValidation: true
+
+        - ${{ if ne(environment.name, 'dev') }}:
+          - template: pipeline/steps/wait.yml
+            parameters:
+              environment: ${{ environment.name }}
 
         - template: pipeline/jobs/terraform-deploy.yaml
           parameters:
