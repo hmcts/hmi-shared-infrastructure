@@ -74,7 +74,7 @@ stages:
             ${{ if eq(service.name, 'SharedServies') }}:
               value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
           - name: storageAccount
-            value: '${{ service.resourcePrefix }}infra${{ parameters.environment }}sa'
+            value: '${{ service.resourcePrefix }}infra${{ environment.name }}sa'
           - name: resourceGroupName
             value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
           - name: containerName
