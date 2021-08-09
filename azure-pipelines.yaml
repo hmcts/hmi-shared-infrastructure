@@ -112,7 +112,7 @@ stages:
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
 
-      - ${{ if eq(environment.name, 'sbox') }}:
+      - ${{ if ne(environment.name, 'sbox') }}:
         - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
           dependsOn: 'Plan_${{ service.name }}_${{ environment.dependency }}'
           displayName: Wait ${{ environment.name }} ${{ service.displayName }}
@@ -129,7 +129,7 @@ stages:
 
       - stage: 'Apply_${{ service.name }}_${{ environment.name }}'
         ${{ if eq(environment.name, 'sbox') }}:
-          dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
+          dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
         ${{ if ne(environment.name, 'sbox') }}:
           dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
         displayName: Apply ${{ environment.name }} ${{ service.displayName }}
@@ -152,7 +152,7 @@ stages:
           - template: pipeline/jobs/terraform-deploy.yaml
             parameters:
               displayName: "Deploy ${{ environment.name }} Shared Infra"
-              dependsOn: TerraformPlan
+              dependsOn: '[]'
               subscription: ${{ environment.subscription }}
               environment: ${{ environment.name }}
               resourceGroup: $(resourceGroup)
