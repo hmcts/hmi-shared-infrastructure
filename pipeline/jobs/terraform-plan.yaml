@@ -74,7 +74,7 @@ jobs:
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Terraform Plan'
     inputs:
-      targetPath: ${{ parameters.outputLocation }}
+      targetPath: '$(Build.SourcesDirectory)/plans/${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
       artifact: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
 
   - ${{ if eq('${{parameters.waitForValidation}}','true')}}:
