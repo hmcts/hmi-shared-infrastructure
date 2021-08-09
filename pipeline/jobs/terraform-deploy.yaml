@@ -72,4 +72,5 @@ jobs:
     parameters:
       subscription: ${{ parameters.subscription }}
       environment: ${{ parameters.environment }}
+      workingDirectory: ${{ parameters.workingDirectory }}
       planLocation: '$(Pipeline.Workspace)/${{parameters.outputName}}/${{parameters.outputName}}.tfplan'
