@@ -73,6 +73,12 @@ stages:
               value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
             ${{ if eq(service.name, 'SharedServies') }}:
               value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
+          - name: storageAccount
+            value: '${{ service.resourcePrefix }}infra${{ parameters.environment }}sa'
+          - name: resourceGroupName
+            value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
+          - name: containerName
+            value: '${{ service.resourcePrefix }}terraform'
 
         jobs:
         - template: pipeline/jobs/setup-infra.yaml
@@ -83,7 +89,9 @@ stages:
             builtFrom: ${{ variables.builtFrom }}
             businessArea: ${{ variables.businessArea }}
             application: ${{ variables.application }}
-            resourceGroupName: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
+            resourceGroupName: ${{ variables.resourceGroupName }}
+            containerName: ${{ variables.containerName }}
+            storageAccount: ${{ variables.storageAccount }}
             resourcePrefix: ${{ service.resourcePrefix }}
 
         - template: pipeline/jobs/terraform-plan.yaml
@@ -98,9 +106,9 @@ stages:
             builtFrom: ${{ variables.builtFrom }}
             product: ${{ variables.product }}
             variables:
-              resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
-              storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
-              containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+              resourceGroup: ${{ variables.resourceGroupName }}
+              containerName: ${{ variables.containerName }}
+              storageAccount: ${{ variables.storageAccount }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
             ${{ if eq(environment.name, 'sbox') }}:
@@ -120,9 +128,9 @@ stages:
             builtFrom: ${{ variables.builtFrom }}
             product: ${{ variables.product }}
             variables:
-              resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
-              storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
-              containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+              resourceGroup: ${{ variables.resourceGroupName }}
+              containerName: ${{ variables.containerName }}
+              storageAccount: ${{ variables.storageAccount }}
             outputName: '${{ variables.planOutputName }}'
             workingDirectory: ${{ variables.workingDirectory }}
 

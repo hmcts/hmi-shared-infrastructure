@@ -30,6 +30,10 @@ parameters:
   
   - name: resourceGroupName
     type: string
+  - name: storageAccount
+    type: string
+  - name: containerName
+    type: string
   - name: resourcePrefix
     type: string
 
@@ -46,7 +50,8 @@ jobs:
     parameters:
       subscription: ${{ parameters.subscription }}
       resourceGroup: ${{ parameters.resourceGroupName }}
-      storageAccount: ${{ parameters.resourcePrefix }}infra${{ parameters.environment }}sa
+      storageAccount: ${{ parameters.storageAccount }}
+      containerName: ${{ parameters.containerName }}
       policiesAccount: ${{ parameters.resourcePrefix }}policies${{ parameters.environment }}sa
       location: ${{ parameters.location }}
       environment: ${{ parameters.environment }}
