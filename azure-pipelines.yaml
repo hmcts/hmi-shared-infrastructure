@@ -64,7 +64,7 @@ stages:
           dependsOn: '${{ environment.dependency }}'
         ${{ if ne(environment.dependency, 'CIBuild') }}:
           dependsOn: '${{ service.name }}_${{ environment.dependency }}'
-        displayName: Build ${{ environment.name }} ${{ service.displayName }}
+        displayName: ${{ environment.name }} ${{ service.displayName }}
         variables: 
           - name: planOutputName
             value: '${{ service.name }}_${{ environment.name }}'
@@ -123,7 +123,7 @@ stages:
               resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
               storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
               containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
-            outputName: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
+            outputName: '${{ variables.planOutputName }}'
             workingDirectory: ${{ variables.workingDirectory }}
 
         - ${{ if eq('${{ service.name }}','SharedInfra') }}:

@@ -78,7 +78,7 @@ jobs:
     displayName: 'Publish Terraform Plan'
     inputs:
       targetPath: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
-      artifact: '${{ parameters.outputName }}.tfplan'
+      artifact: '${{ parameters.outputName }}'
 
   - ${{ if eq('${{parameters.waitForValidation}}','true')}}:
     - template: ../steps/wait.yml
