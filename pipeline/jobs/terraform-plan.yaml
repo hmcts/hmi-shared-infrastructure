@@ -68,7 +68,7 @@ jobs:
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
-      outputLocation: '$(Build.SourcesDirectory)/plans/${{ environment.name }}/${{ parameters.outputName }}.tfplan'
+      outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
       workingDirectory: ${{ parameters.workingDirectory }}
   
   - task: PublishPipelineArtifact@1
