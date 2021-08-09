@@ -56,83 +56,82 @@ stages:
         parameters:
           displayName: "Validate Terraform files"
 
-- ${{ each service in parameters.services }}:
-  - ${{ each environment in parameters.environments }}:
+  - ${{ each service in parameters.services }}:
+    - ${{ each environment in parameters.environments }}:
 
-    - stage: '${{ service.name }}-${{ environment.name }}'
-      ${{ if eq(environment.dependency, '') }}:
-        dependsOn: []
-      ${{ if ne(environment.dependency, '') }}:
-        dependsOn: '${{ service.name }}-${{ environment.dependency }}'
-      displayName: Build ${{ environment.name }} ${{ service.displayName }}
-      variables: 
-        - name: planOutputName
-          value: '${{ service.name }}-${{ environment.name }}'
-        - name: workingDirectory          
-          ${{ if eq(service.name, 'SharedInfra') }}:
-            value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
-          ${{ if eq(service.name, 'SharedServies') }}:
-            value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
+      - stage: '${{ service.name }}-${{ environment.name }}'
+        ${{ if eq(environment.dependency, '') }}:
+          dependsOn: []
+        ${{ if ne(environment.dependency, '') }}:
+          dependsOn: '${{ service.name }}-${{ environment.dependency }}'
+        displayName: Build ${{ environment.name }} ${{ service.displayName }}
+        variables: 
+          - name: planOutputName
+            value: '${{ service.name }}-${{ environment.name }}'
+          - name: workingDirectory          
+            ${{ if eq(service.name, 'SharedInfra') }}:
+              value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
+            ${{ if eq(service.name, 'SharedServies') }}:
+              value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
 
-      jobs:
-      - template: pipeline/jobs/setup-infra.yaml
-        parameters:
-          displayName: Set up ${{ environment.name }} infrastructure for APIM deployments
-          subscription: ${{ environment.subscription }}
-          environment: ${{ environment.name }}
-          builtFrom: ${{ variables.builtFrom }}
-          businessArea: ${{ variables.businessArea }}
-          application: ${{ variables.application }}
-          resourceGroupName: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
-          resourcePrefix: ${{ service.resourcePrefix }}
-
-      - template: pipeline/jobs/terraform-plan.yaml
-        parameters:
-          displayName: "Plan ${{ environment.name }} Shared Infra"
-          dependsOn: setupInfrastructure
-          subscription: ${{ environment.subscription }}
-          environment: ${{ environment.name }}
-          resourceGroup: $(resourceGroup)
-          storageAccount: $(storageAccount)
-          containerName: $(containerName)
-          builtFrom: ${{ variables.builtFrom }}
-          product: ${{ variables.product }}
-          variables:
-            resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
-            storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
-            containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
-          outputName: ${{ variables.planOutputName }}
-          workingDirectory: ${{ service.workingDirectory }}
-          ${{ if eq(environment.name, 'sbox') }}:
-            waitForValidation: false
-          ${{ if ne(environment.name, 'sbox') }}:
-            waitForValidation: true
-
-      - template: pipeline/jobs/terraform-deploy.yaml
-        parameters:
-          displayName: "Deploy ${{ environment.name }} Shared Infra"
-          dependsOn: TerraformPlan
-          subscription: ${{ environment.subscription }}
-          environment: ${{ environment.name }}
-          resourceGroup: $(resourceGroup)
-          storageAccount: $(storageAccount)
-          containerName: $(containerName)
-          builtFrom: ${{ variables.builtFrom }}
-          product: ${{ variables.product }}
-          variables:
-            resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
-            storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
-            containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
-          outputName: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
-          workingDirectory: ${{ service.workingDirectory }}
-
-      - ${{ if eq('${{ service.name }}','SharedInfra') }}:
-        - template: pipeline/jobs/setup-azmonlink.yaml
+        jobs:
+        - template: pipeline/jobs/setup-infra.yaml
           parameters:
-            displayName: Set up Azure Monitor Link to Log Analytics
-            dependsOn: TerraformDeploy
+            displayName: Set up ${{ environment.name }} infrastructure for APIM deployments
             subscription: ${{ environment.subscription }}
             environment: ${{ environment.name }}
             builtFrom: ${{ variables.builtFrom }}
             businessArea: ${{ variables.businessArea }}
+            application: ${{ variables.application }}
+            resourceGroupName: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
+            resourcePrefix: ${{ service.resourcePrefix }}
 
+        - template: pipeline/jobs/terraform-plan.yaml
+          parameters:
+            displayName: "Plan ${{ environment.name }} Shared Infra"
+            dependsOn: setupInfrastructure
+            subscription: ${{ environment.subscription }}
+            environment: ${{ environment.name }}
+            resourceGroup: $(resourceGroup)
+            storageAccount: $(storageAccount)
+            containerName: $(containerName)
+            builtFrom: ${{ variables.builtFrom }}
+            product: ${{ variables.product }}
+            variables:
+              resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
+              storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
+              containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+            outputName: ${{ variables.planOutputName }}
+            workingDirectory: ${{ service.workingDirectory }}
+            ${{ if eq(environment.name, 'sbox') }}:
+              waitForValidation: false
+            ${{ if ne(environment.name, 'sbox') }}:
+              waitForValidation: true
+
+        - template: pipeline/jobs/terraform-deploy.yaml
+          parameters:
+            displayName: "Deploy ${{ environment.name }} Shared Infra"
+            dependsOn: TerraformPlan
+            subscription: ${{ environment.subscription }}
+            environment: ${{ environment.name }}
+            resourceGroup: $(resourceGroup)
+            storageAccount: $(storageAccount)
+            containerName: $(containerName)
+            builtFrom: ${{ variables.builtFrom }}
+            product: ${{ variables.product }}
+            variables:
+              resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
+              storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
+              containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+            outputName: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
+            workingDirectory: ${{ service.workingDirectory }}
+
+        - ${{ if eq('${{ service.name }}','SharedInfra') }}:
+          - template: pipeline/jobs/setup-azmonlink.yaml
+            parameters:
+              displayName: Set up Azure Monitor Link to Log Analytics
+              dependsOn: TerraformDeploy
+              subscription: ${{ environment.subscription }}
+              environment: ${{ environment.name }}
+              builtFrom: ${{ variables.builtFrom }}
+              businessArea: ${{ variables.businessArea }}
