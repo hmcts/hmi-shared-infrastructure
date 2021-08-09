@@ -27,12 +27,10 @@ parameters:
     type: object
     default: 
       - name: SharedInfra
-        workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}
         displayName: 'Shared Infrastructure'
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
       - name: SharedServies
-        workingDirectory: $(System.DefaultWorkingDirectory)/terraform/sharedservices
         displayName: 'Shared Services'
         resourceGroupName: 'sharedservices'
         resourcePrefix: 'hmiss'
@@ -67,6 +65,11 @@ stages:
       variables: 
         - name: planOutputName
           value: '${{ service.name }}-${{ environment.name }}'
+        - name: workingDirectory          
+          ${{ if eq(service.name, 'SharedInfra') }}:
+            value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
+          ${{ if eq(service.name, 'SharedServies') }}:
+            value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
 
       jobs:
       - template: pipeline/jobs/setup-infra.yaml
