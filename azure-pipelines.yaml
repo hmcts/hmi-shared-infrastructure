@@ -59,15 +59,15 @@ stages:
   - ${{ each service in parameters.services }}:
     - ${{ each environment in parameters.environments }}:
 
-      - stage: '${{ service.name }}-${{ environment.name }}'
+      - stage: '${{ service.name }}_${{ environment.name }}'
         ${{ if eq(environment.dependency, '') }}:
           dependsOn: []
         ${{ if ne(environment.dependency, '') }}:
-          dependsOn: '${{ service.name }}-${{ environment.dependency }}'
+          dependsOn: '${{ service.name }}_${{ environment.dependency }}'
         displayName: Build ${{ environment.name }} ${{ service.displayName }}
         variables: 
           - name: planOutputName
-            value: '${{ service.name }}-${{ environment.name }}'
+            value: '${{ service.name }}_${{ environment.name }}'
           - name: workingDirectory          
             ${{ if eq(service.name, 'SharedInfra') }}:
               value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
