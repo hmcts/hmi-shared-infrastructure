@@ -38,6 +38,9 @@ parameters:
   - name: outputName
     type: string
 
+  - name: workingDirectory
+    type: string
+
 jobs:
 - job: Terraform
   dependsOn:

@@ -34,12 +34,15 @@ parameters:
   - name: outputName
     type: string
 
+  - name: workingDirectory
+    type: string
+
   - name: waitForValidation
     type: boolean
     default: true
 
 jobs:
-- job: Terraform
+- job: TerraformPlan
   dependsOn:
   - ${{ if parameters.dependsOn }}:
     - ${{ parameters.dependsOn }}
@@ -57,6 +60,7 @@ jobs:
       resourceGroup: $(resourceGroup)
       storageAccount: $(storageAccount)
       containerName: $(containerName)
+      workingDirectory: ${{ parameters.workingDirectory }}
   - template: ../steps/tf-plan.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
@@ -65,6 +69,7 @@ jobs:
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
       outputLocation: '$(Build.SourcesDirectory)/plans/${{ environment.name }}/${{ parameters.outputName }}.tfplan'
+      workingDirectory: ${{ parameters.workingDirectory }}
   
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Terraform Plan'
