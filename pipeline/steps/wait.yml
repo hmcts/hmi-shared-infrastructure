@@ -2,7 +2,7 @@ parameters:
   - name: environment
     type: string
 
-steps:
+stages:
   - stage: Wait${{parameters.environment}}
     displayName: '${{parameters.environment}} Waiting for Approval'
     jobs:
