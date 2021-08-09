@@ -63,7 +63,6 @@ jobs:
       workingDirectory: ${{ parameters.workingDirectory }}
   - bash: |
       mkdir '$(Build.SourcesDirectory)/plans'
-      mkdir '$(Build.SourcesDirectory)/plans/${{ parameters.environment }}'
     displayName: Create plan directory
   - template: ../steps/tf-plan.yaml
     parameters:
@@ -72,14 +71,14 @@ jobs:
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
-      outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
+      outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
       workingDirectory: ${{ parameters.workingDirectory }}
   
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Terraform Plan'
     inputs:
-      targetPath: '$(Build.SourcesDirectory)/plans/${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
-      artifact: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
+      targetPath: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
+      artifact: '${{ parameters.outputName }}.tfplan'
 
   - ${{ if eq('${{parameters.waitForValidation}}','true')}}:
     - template: ../steps/wait.yml
