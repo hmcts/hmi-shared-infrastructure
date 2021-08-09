@@ -102,7 +102,7 @@ stages:
               storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
               containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
             outputName: ${{ variables.planOutputName }}
-            workingDirectory: ${{ service.workingDirectory }}
+            workingDirectory: ${{ variables.workingDirectory }}
             ${{ if eq(environment.name, 'sbox') }}:
               waitForValidation: false
             ${{ if ne(environment.name, 'sbox') }}:
@@ -124,7 +124,7 @@ stages:
               storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
               containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
             outputName: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
-            workingDirectory: ${{ service.workingDirectory }}
+            workingDirectory: ${{ variables.workingDirectory }}
 
         - ${{ if eq('${{ service.name }}','SharedInfra') }}:
           - template: pipeline/jobs/setup-azmonlink.yaml
