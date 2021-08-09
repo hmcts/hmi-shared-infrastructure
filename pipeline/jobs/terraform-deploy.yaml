@@ -53,8 +53,8 @@ jobs:
     ${{ insert }}: ${{ parameters.variables }}
   steps:
   - download: current
-    artifact: '${{parameters.outputName}}.tfplan'
-    displayName: 'Download ${{parameters.artifact}}'
+    artifact: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
+    displayName: 'Download ${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
   - template: ../steps/tf-install.yaml
   - template: ../steps/tf-apply.yaml
     parameters:
