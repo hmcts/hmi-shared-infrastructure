@@ -114,7 +114,7 @@ stages:
 
       - ${{ if ne(environment.name, 'sbox') }}:
         - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
-          dependsOn: 'Plan_${{ service.name }}_${{ environment.dependency }}'
+          dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
           displayName: Wait ${{ environment.name }} ${{ service.displayName }}
 
           jobs:
