@@ -49,9 +49,12 @@ variables:
 
 stages:
 
-- template: pipeline/jobs/terraform-validate.yaml
-  parameters:
-    displayName: "Validate Terraform files"
+  - stage: CIBuild
+    displayName: 'CI Build Application'
+    jobs:
+      - template: pipeline/jobs/terraform-validate.yaml
+        parameters:
+          displayName: "Validate Terraform files"
 
 - ${{ each service in parameters.services }}:
   - ${{ each environment in parameters.environments }}:
