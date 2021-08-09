@@ -148,30 +148,31 @@ stages:
           - name: containerName
             value: '${{ service.resourcePrefix }}terraform'
 
-        - template: pipeline/jobs/terraform-deploy.yaml
-          parameters:
-            displayName: "Deploy ${{ environment.name }} Shared Infra"
-            dependsOn: TerraformPlan
-            subscription: ${{ environment.subscription }}
-            environment: ${{ environment.name }}
-            resourceGroup: $(resourceGroup)
-            storageAccount: $(storageAccount)
-            containerName: $(containerName)
-            builtFrom: ${{ variables.builtFrom }}
-            product: ${{ variables.product }}
-            variables:
-              resourceGroup: ${{ variables.resourceGroupName }}
-              containerName: ${{ variables.containerName }}
-              storageAccount: ${{ variables.storageAccount }}
-            outputName: '${{ variables.planOutputName }}'
-            workingDirectory: ${{ variables.workingDirectory }}
-
-        - ${{ if eq('${{ service.name }}','SharedInfra') }}:
-          - template: pipeline/jobs/setup-azmonlink.yaml
+        jobs:
+          - template: pipeline/jobs/terraform-deploy.yaml
             parameters:
-              displayName: Set up Azure Monitor Link to Log Analytics
-              dependsOn: TerraformDeploy
+              displayName: "Deploy ${{ environment.name }} Shared Infra"
+              dependsOn: TerraformPlan
               subscription: ${{ environment.subscription }}
               environment: ${{ environment.name }}
+              resourceGroup: $(resourceGroup)
+              storageAccount: $(storageAccount)
+              containerName: $(containerName)
               builtFrom: ${{ variables.builtFrom }}
-              businessArea: ${{ variables.businessArea }}
+              product: ${{ variables.product }}
+              variables:
+                resourceGroup: ${{ variables.resourceGroupName }}
+                containerName: ${{ variables.containerName }}
+                storageAccount: ${{ variables.storageAccount }}
+              outputName: '${{ variables.planOutputName }}'
+              workingDirectory: ${{ variables.workingDirectory }}
+
+          - ${{ if eq('${{ service.name }}','SharedInfra') }}:
+            - template: pipeline/jobs/setup-azmonlink.yaml
+              parameters:
+                displayName: Set up Azure Monitor Link to Log Analytics
+                dependsOn: TerraformDeploy
+                subscription: ${{ environment.subscription }}
+                environment: ${{ environment.name }}
+                builtFrom: ${{ variables.builtFrom }}
+                businessArea: ${{ variables.businessArea }}
