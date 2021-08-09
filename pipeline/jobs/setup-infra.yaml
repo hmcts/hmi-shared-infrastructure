@@ -27,6 +27,11 @@ parameters:
   - name: dependsOn
     type: string
     default: ''
+  
+  - name: resourceGroupName
+    type: string
+  - name: resourcePrefix
+    type: string
 
 jobs:
 - job: setupInfrastructure
@@ -40,9 +45,9 @@ jobs:
   - template: ../steps/create-rg.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
-      resourceGroup: hmi-sharedinfra-${{ parameters.environment }}-rg
-      storageAccount: hmiapiminfra${{ parameters.environment }}sa
-      policiesAccount: hmiapimpolicies${{ parameters.environment }}sa
+      resourceGroup: ${{ parameters.resourceGroupName }}
+      storageAccount: ${{ parameters.resourcePrefix }}infra${{ parameters.environment }}sa
+      policiesAccount: ${{ parameters.resourcePrefix }}policies${{ parameters.environment }}sa
       location: ${{ parameters.location }}
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}

@@ -29,9 +29,13 @@ parameters:
       - name: SharedInfra
         workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}
         displayName: 'Shared Infrastructure'
+        resourceGroupName: 'sharedinfra'
+        resourcePrefix: 'hmiapim'
       - name: SharedServies
         workingDirectory: $(System.DefaultWorkingDirectory)/terraform/sharedservices
         displayName: 'Shared Services'
+        resourceGroupName: 'sharedservices'
+        resourcePrefix: 'hmiss'
         
 
 variables:
@@ -65,23 +69,21 @@ stages:
           value: '${{ service.name }}-${{ environment.name }}'
 
       jobs:
-      - ${{ if eq('${{ service.name }}','SharedInfra') }}:
-        - template: pipeline/jobs/setup-infra.yaml
-          parameters:
-            displayName: Set up ${{ environment.name }} infrastructure for APIM deployments
-            subscription: ${{ environment.subscription }}
-            environment: ${{ environment.name }}
-            builtFrom: ${{ variables.builtFrom }}
-            businessArea: ${{ variables.businessArea }}
-            application: ${{ variables.application }}
+      - template: pipeline/jobs/setup-infra.yaml
+        parameters:
+          displayName: Set up ${{ environment.name }} infrastructure for APIM deployments
+          subscription: ${{ environment.subscription }}
+          environment: ${{ environment.name }}
+          builtFrom: ${{ variables.builtFrom }}
+          businessArea: ${{ variables.businessArea }}
+          application: ${{ variables.application }}
+          resourceGroupName: 'hmi-${{ services.resourceGroupName }}-${{ environment.name }}-rg'
+          resourcePrefix: ${{ services.resourcePrefix }}
 
       - template: pipeline/jobs/terraform-plan.yaml
         parameters:
           displayName: "Plan ${{ environment.name }} Shared Infra"
-          ${{ if eq('${{ service.name }}','SharedInfra') }}:
-            dependsOn: setupInfrastructure
-          ${{ if ne('${{ service.name }}','SharedInfra') }}:
-            dependsOn: []
+          dependsOn: setupInfrastructure
           subscription: ${{ environment.subscription }}
           environment: ${{ environment.name }}
           resourceGroup: $(resourceGroup)
