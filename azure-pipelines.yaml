@@ -80,8 +80,8 @@ stages:
           builtFrom: ${{ variables.builtFrom }}
           businessArea: ${{ variables.businessArea }}
           application: ${{ variables.application }}
-          resourceGroupName: 'hmi-${{ services.resourceGroupName }}-${{ environment.name }}-rg'
-          resourcePrefix: ${{ services.resourcePrefix }}
+          resourceGroupName: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
+          resourcePrefix: ${{ service.resourcePrefix }}
 
       - template: pipeline/jobs/terraform-plan.yaml
         parameters:
