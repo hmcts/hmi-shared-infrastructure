@@ -57,9 +57,9 @@ jobs:
     parameters:
       subscription: ${{ parameters.subscription }}
       environment: ${{ parameters.environment }}
-      resourceGroup: $(resourceGroup)
-      storageAccount: $(storageAccount)
-      containerName: $(containerName)
+      resourceGroup: ${{ variables.resourceGroup }}
+      storageAccount: ${{ variables.storageAccount }}
+      containerName: ${{ variables.containerName }}
       workingDirectory: ${{ parameters.workingDirectory }}
   - bash: |
       mkdir '$(Build.SourcesDirectory)/plans'
