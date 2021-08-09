@@ -4,6 +4,7 @@ parameters:
 
   - name: dependsOn
     type: string
+    default: '[]'
 
   - name: resourceGroup
     type: string
@@ -43,9 +44,6 @@ parameters:
 
 jobs:
 - job: Terraform
-  dependsOn:
-  - ${{ if parameters.dependsOn }}:
-    - ${{ parameters.dependsOn }}
   displayName: ${{ parameters.displayName }}
   pool:
     vmImage: 'ubuntu-20.04'
