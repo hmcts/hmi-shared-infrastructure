@@ -62,7 +62,7 @@ stages:
       - stage: '${{ service.name }}_${{ environment.name }}'
         ${{ if eq(environment.dependency, 'CIBuild') }}:
           dependsOn: '${{ environment.dependency }}'
-        ${{ if ne(environment.dependency, '') }}:
+        ${{ if ne(environment.dependency, 'CIBuild') }}:
           dependsOn: '${{ service.name }}_${{ environment.dependency }}'
         displayName: Build ${{ environment.name }} ${{ service.displayName }}
         variables: 
