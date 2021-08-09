@@ -10,7 +10,7 @@ parameters:
     default:
     - name: sbox
       subscription: DTS-SHAREDSERVICES-SBOX
-      dependency: 'TerraformValidate'
+      dependency: 'CIBuild'
     - name: dev
       subscription: DTS-SHAREDSERVICES-DEV
       dependency: 'sbox'
@@ -60,8 +60,8 @@ stages:
     - ${{ each environment in parameters.environments }}:
 
       - stage: '${{ service.name }}_${{ environment.name }}'
-        ${{ if eq(environment.dependency, '') }}:
-          dependsOn: []
+        ${{ if eq(environment.dependency, 'CIBuild') }}:
+          dependsOn: '${{ environment.dependency }}'
         ${{ if ne(environment.dependency, '') }}:
           dependsOn: '${{ service.name }}_${{ environment.dependency }}'
         displayName: Build ${{ environment.name }} ${{ service.displayName }}
