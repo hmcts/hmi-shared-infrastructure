@@ -37,6 +37,10 @@ parameters:
   - name: workingDirectory
     type: string
 
+  - name: waitForValidation
+    type: boolean
+    default: true
+
 jobs:
 - job: TerraformPlan
   dependsOn:
@@ -76,4 +80,10 @@ jobs:
       targetPath: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
       artifact: '${{ parameters.outputName }}'
 
-  
+  - bash: |
+      echo 'Should we wait? ${{parameters.waitForValidation}}'
+    displayName: Should we wait
+  - ${{ if eq('${{parameters.waitForValidation}}','true')}}:
+    - template: ../steps/wait.yml
+      parameters:
+        environment: ${{ parameters.environment }}
