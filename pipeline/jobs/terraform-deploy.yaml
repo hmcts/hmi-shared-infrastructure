@@ -1,0 +1,60 @@
+parameters:
+  - name: subscription
+    type: string
+
+  - name: dependsOn
+    type: string
+
+  - name: resourceGroup
+    type: string
+
+  - name: location
+    type: string
+    default: uksouth
+
+  - name: storageAccount
+    type: string
+
+  - name: containerName
+    type: string
+
+  - name: variables
+    type: object
+
+  - name: displayName
+    type: string
+
+  - name: environment
+    type: string
+
+  - name: builtFrom
+    type: string
+    default: ''
+
+  - name: product
+    type: string
+    default: ''
+
+  - name: outputName
+    type: string
+
+jobs:
+- job: Terraform
+  dependsOn:
+  - ${{ if parameters.dependsOn }}:
+    - ${{ parameters.dependsOn }}
+  displayName: ${{ parameters.displayName }}
+  pool:
+    vmImage: 'ubuntu-20.04'
+  variables:
+    ${{ insert }}: ${{ parameters.variables }}
+  steps:
+  - download: current
+    artifact: '${{parameters.outputName}}.tfplan'
+    displayName: 'Download ${{parameters.artifact}}'
+  - template: ../steps/tf-install.yaml
+  - template: ../steps/tf-apply.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      environment: ${{ parameters.environment }}
+      planLocation: '$(Pipeline.Workspace)/${{parameters.outputName}}'

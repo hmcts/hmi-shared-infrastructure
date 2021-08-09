@@ -8,10 +8,6 @@ parameters:
   - name: resourceGroup
     type: string
 
-  - name: location
-    type: string
-    default: uksouth
-
   - name: storageAccount
     type: string
 
@@ -34,6 +30,13 @@ parameters:
   - name: product
     type: string
     default: ''
+
+  - name: outputName
+    type: string
+
+  - name: waitForValidation
+    type: boolean
+    default: true
 
 jobs:
 - job: Terraform
@@ -62,7 +65,15 @@ jobs:
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
-  - template: ../steps/tf-apply.yaml
-    parameters:
-      subscription: ${{ parameters.subscription }}
-      environment: ${{ parameters.environment }}
+      outputLocation: '$(Build.SourcesDirectory)/plans/${{ environment.name }}/${{ parameters.outputName }}.tfplan'
+  
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Terraform Plan'
+    inputs:
+      targetPath: ${{ parameters.outputLocation }}
+      artifact: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
+
+  - ${{ if eq('${{parameters.waitForValidation}}','true')}}:
+    - template: ../steps/wait.yml
+      parameters:
+        environment: ${{ parameters.environment }}

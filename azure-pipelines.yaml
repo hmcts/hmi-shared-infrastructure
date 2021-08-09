@@ -10,14 +10,19 @@ parameters:
     default:
     - name: sbox
       subscription: DTS-SHAREDSERVICES-SBOX
+      dependency: ''
     - name: dev
       subscription: DTS-SHAREDSERVICES-DEV
+      dependency: 'sbox'
     - name: test
       subscription: DTS-SHAREDSERVICES-TEST
+      dependency: 'dev'
     - name: stg
       subscription: DTS-SHAREDSERVICES-STG
+      dependency: 'test'
     - name: prod
       subscription: DTS-SHAREDSERVICES-PROD
+      dependency: 'stg'
 
 variables:
   - group: HMI-APIM-Common
@@ -34,24 +39,29 @@ stages:
 
 - ${{ each environment in parameters.environments }}:
 
-  - stage: ${{ environment.name }}
-    ${{ if environment.condition }}:
-      condition: ${{ environment.condition }}
-    displayName: Build ${{ environment.name }}
+  - stage: 'SharedInfra-${{ environment.name }}'
+    ${{ if eq(environment.dependency, '') }}:
+      dependsOn: []
+    ${{ if ne(environment.dependency, '') }}:
+      dependsOn: 'SharedInfra-${{ environment.dependency }}'
+    displayName: Build ${{ environment.name }} Shared Infrastructure
+    variables: 
+      - name: planOutputName
+        value: 'SharedInfra${{ environment.name }}'
 
     jobs:
     - template: pipeline/jobs/setup-infra.yaml
       parameters:
-        displayName: Set up infrastructure for APIM deployments
+        displayName: Set up  ${{ environment.name }} infrastructure for APIM deployments
         subscription: ${{ environment.subscription }}
         environment: ${{ environment.name }}
         builtFrom: ${{ variables.builtFrom }}
         businessArea: ${{ variables.businessArea }}
         application: ${{ variables.application }}
 
-    - template: pipeline/jobs/terraform.yaml
+    - template: pipeline/jobs/terraform-plan.yaml
       parameters:
-        displayName: Build Infrastructure with Terraform
+        displayName: "Plan ${{ environment.name }} Shared Infra"
         dependsOn: setupInfrastructure
         subscription: ${{ environment.subscription }}
         environment: ${{ environment.name }}
@@ -64,6 +74,28 @@ stages:
           resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
           storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
           containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+        outputName: ${{ variables.planOutputName }}
+        ${{ if eq(environment.name, 'sbox') }}:
+          waitForValidation: false
+        ${{ if ne(environment.name, 'sbox') }}:
+          waitForValidation: true
+
+    - template: pipeline/jobs/terraform-deploy.yaml
+      parameters:
+        displayName: "Deploy ${{ environment.name }} Shared Infra"
+        dependsOn: setupInfrastructure
+        subscription: ${{ environment.subscription }}
+        environment: ${{ environment.name }}
+        resourceGroup: $(resourceGroup)
+        storageAccount: $(storageAccount)
+        containerName: $(containerName)
+        builtFrom: ${{ variables.builtFrom }}
+        product: ${{ variables.product }}
+        variables:
+          resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
+          storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
+          containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
+        outputName: '${{ parameters.environment }}/${{ parameters.outputName }}.tfplan'
 
     - template: pipeline/jobs/setup-azmonlink.yaml
       parameters:
@@ -73,3 +105,4 @@ stages:
         environment: ${{ environment.name }}
         builtFrom: ${{ variables.builtFrom }}
         businessArea: ${{ variables.businessArea }}
+

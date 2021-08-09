@@ -16,6 +16,9 @@ parameters:
     type: string
     default: ''
 
+  - name: outputLocation
+    type: string
+
 steps:
 
   - task: TerraformCLI@0
@@ -27,7 +30,7 @@ steps:
       commandOptions: >
         -var-file="../../../environments/${{ parameters.environment }}.tfvars"
         -var-file="../../../environments/shared.tfvars"
-        -out="tfplan-${{ parameters.environment }}"
+        -out="${{ parameters.outputLocation }}"
         -var "resource_group=${{ parameters.resourceGroup }}"
         -var "environment=${{ parameters.environment }}"
         -var "la_nonprod_sub_id=$(la-nonprod-sub-id)"
