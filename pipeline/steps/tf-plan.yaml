@@ -25,7 +25,7 @@ steps:
     displayName: Terraform plan
     inputs:
       command: plan
-      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environment }}
+      workingDirectory: $(System.DefaultWorkingDirectory)/terraform
       environmentServiceName: ${{ parameters.subscription }}
       commandOptions: >
         -var-file="../../../environments/${{ parameters.environment }}.tfvars"

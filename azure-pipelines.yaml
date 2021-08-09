@@ -10,7 +10,7 @@ parameters:
     default:
     - name: sbox
       subscription: DTS-SHAREDSERVICES-SBOX
-      dependency: ''
+      dependency: 'TerraformValidate'
     - name: dev
       subscription: DTS-SHAREDSERVICES-DEV
       dependency: 'sbox'
@@ -36,6 +36,14 @@ variables:
     value: 'hearing-management-interface'
 
 stages:
+
+- template: pipeline/jobs/terraform-validate.yaml
+  parameters:
+    displayName: "Validate Terraform files"
+    variables:
+      resourceGroup: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.resourceGroup']]
+      storageAccount: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.storageAccount']]
+      containerName: $[dependencies.setupInfrastructure.outputs['setupResourceGroup.containerName']]
 
 - ${{ each environment in parameters.environments }}:
 
