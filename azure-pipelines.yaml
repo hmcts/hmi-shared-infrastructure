@@ -113,9 +113,19 @@ stages:
             workingDirectory: ${{ variables.workingDirectory }}
 
       - ${{ if eq(environment.name, 'sbox') }}:
-        - template: pipeline/steps/wait.yml
-          parameters:
-            environment: ${{ environment.name }}
+        - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
+          dependsOn: 'Plan_${{ service.name }}_${{ environment.dependency }}'
+          displayName: Wait ${{ environment.name }} ${{ service.displayName }}
+
+          jobs:
+            - job: Wait
+              displayName: "Wait for approval"
+              pool:
+                vmImage: 'ubuntu-20.04'
+              steps:
+                - template: pipeline/steps/wait.yml
+                  parameters:
+                    environment: ${{ environment.name }}
 
       - stage: 'Apply_${{ service.name }}_${{ environment.name }}'
         ${{ if eq(environment.name, 'sbox') }}:
