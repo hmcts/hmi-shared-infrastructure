@@ -83,7 +83,7 @@ jobs:
   - bash: |
       echo 'Should we wait? ${{parameters.waitForValidation}}'
     displayName: Should we wait
-  - ${{ if eq('${{parameters.waitForValidation}}','true')}}:
+  - ${{ if eq('${{parameters.waitForValidation}}','True')}}:
     - template: ../steps/wait.yml
       parameters:
         environment: ${{ parameters.environment }}
