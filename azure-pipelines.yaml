@@ -152,7 +152,6 @@ stages:
           - template: pipeline/jobs/terraform-deploy.yaml
             parameters:
               displayName: "Deploy ${{ environment.name }} Shared Infra"
-              dependsOn: '[]'
               subscription: ${{ environment.subscription }}
               environment: ${{ environment.name }}
               resourceGroup: $(resourceGroup)
