@@ -60,4 +60,4 @@ jobs:
     parameters:
       subscription: ${{ parameters.subscription }}
       environment: ${{ parameters.environment }}
-      planLocation: '$(Pipeline.Workspace)/${{parameters.outputName}}'
+      planLocation: '$(Pipeline.Workspace)/${{parameters.outputName}}/${{parameters.outputName}}.tfplan'
