@@ -56,6 +56,14 @@ jobs:
     artifact: '${{ parameters.outputName }}'
     displayName: 'Download ${{ parameters.outputName }}.tfplan'
   - template: ../steps/tf-install.yaml
+  - template: ../steps/tf-init.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      environment: ${{ parameters.environment }}
+      resourceGroup: $(resourceGroup)
+      storageAccount: $(storageAccount)
+      containerName: $(containerName)
+      workingDirectory: ${{ parameters.workingDirectory }}
   - template: ../steps/tf-apply.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
