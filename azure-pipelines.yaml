@@ -30,10 +30,12 @@ parameters:
         displayName: 'Shared Infrastructure'
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
+        terraformVersion: '0.13.3'
       - name: SharedServies
         displayName: 'Shared Services'
         resourceGroupName: 'sharedservices'
         resourcePrefix: 'hmiss'
+        terraformVersion: '0.15.4'
         
 
 variables:
@@ -79,6 +81,8 @@ stages:
             value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
           - name: containerName
             value: '${{ service.resourcePrefix }}terraform'
+          - name: terraformVersion
+            value: ${{ service.terraformVersion }}
 
         jobs:
         - template: pipeline/jobs/setup-infra.yaml
@@ -127,9 +131,9 @@ stages:
                     environment: ${{ environment.name }}
 
       - stage: 'Apply_${{ service.name }}_${{ environment.name }}'
-        ${{ if eq(environment.name, 'sbox') }}:
+        ${{ if and(eq(environment.name, 'sbox'), ne(service.name, 'SharedServies')) }}:
           dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
-        ${{ if ne(environment.name, 'sbox') }}:
+        ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
           dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
         displayName: Apply ${{ environment.name }} ${{ service.displayName }}
         variables: 
