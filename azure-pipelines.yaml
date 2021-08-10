@@ -30,10 +30,10 @@ parameters:
         displayName: 'Shared Infrastructure'
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
-      #- name: SharedServies
-      #  displayName: 'Shared Services'
-      #  resourceGroupName: 'sharedservices'
-      #  resourcePrefix: 'hmiss'
+      - name: SharedServies
+        displayName: 'Shared Services'
+        resourceGroupName: 'sharedservices'
+        resourcePrefix: 'hmiss'
         
 
 variables:
@@ -112,7 +112,7 @@ stages:
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
 
-      - ${{ if ne(environment.name, 'sbox') }}:
+      - ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
         - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
           dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
           displayName: Wait ${{ environment.name }} ${{ service.displayName }}
