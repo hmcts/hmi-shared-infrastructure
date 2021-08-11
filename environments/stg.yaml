@@ -1,0 +1,3 @@
+variables:
+  source_cert_name: 'wildcard-aat-platform-hmcts-net'
+  source_kv_name_prefix : 'cftapps'

@@ -22,6 +22,9 @@ parameters:
   - name: workingDirectory
     type: string
 
+  - name: pfx_path
+    type: string
+
 steps:
 
   - task: TerraformCLI@0
@@ -41,3 +44,4 @@ steps:
         -var "la_sbox_sub_id=$(la-sbox-sub-id)"
         -var "builtFrom=${{ parameters.builtFrom }} "
         -var "product=${{ parameters.product }}"
+        -var "pfx_path=${{ parameters.pfx_path }}"

@@ -83,6 +83,7 @@ stages:
             value: '${{ service.resourcePrefix }}terraform'
           - name: terraformVersion
             value: ${{ service.terraformVersion }}
+          - template: environments/${{ environment.name }}.yaml
 
         jobs:
         - template: pipeline/jobs/setup-infra.yaml
@@ -150,7 +151,8 @@ stages:
             value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
           - name: containerName
             value: '${{ service.resourcePrefix }}terraform'
-
+          - template: environments/${{ environment.name }}.yaml
+  
         jobs:
           - template: pipeline/jobs/terraform-deploy.yaml
             parameters:

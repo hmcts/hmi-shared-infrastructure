@@ -4,9 +4,13 @@ terraform {
     azurerm = {
       version = ">=2.0.0"
     }
+    random = {
+      version = ">= 2.2.0"
+    }
   }
 }
 
 provider "azurerm" {
   features {}
 }
+provider "random" {}

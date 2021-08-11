@@ -2,16 +2,23 @@ resource "azurerm_key_vault_certificate" "cert" {
   name         = var.cert_name
   key_vault_id = var.keyvault_id
 
+  dynamic "certificate" {
+    for_each = var.cert_content != "" ? [1] : []
+    content {
+      contents = var.cert_content
+    }
+  }
+
   certificate_policy {
     issuer_parameters {
-      name = "Self"
+      name = var.cert_issuer_name
     }
 
     key_properties {
-      exportable = true
-      key_size   = 2048
-      key_type   = "RSA"
-      reuse_key  = true
+      exportable = var.cert_key_properties.exportable
+      key_size   = var.cert_key_properties.key_size
+      key_type   = var.cert_key_properties.key_type
+      reuse_key  = var.cert_key_properties.reuse_key
     }
 
     lifetime_action {
@@ -31,22 +38,15 @@ resource "azurerm_key_vault_certificate" "cert" {
     x509_certificate_properties {
       # Server Authentication = 1.3.6.1.5.5.7.3.1
       # Client Authentication = 1.3.6.1.5.5.7.3.2
-      extended_key_usage = ["1.3.6.1.5.5.7.3.1"]
+      extended_key_usage = var.cert_extended_key_usage
 
-      key_usage = [
-        "cRLSign",
-        "dataEncipherment",
-        "digitalSignature",
-        "keyAgreement",
-        "keyCertSign",
-        "keyEncipherment",
-      ]
+      key_usage = var.cert_key_usage
 
       subject_alternative_names {
         dns_names = var.cert_dns_names
       }
 
-      subject            = "CN=${var.cert_subject}"
+      subject            = var.cert_subject
       validity_in_months = var.cert_validity_in_months
     }
   }

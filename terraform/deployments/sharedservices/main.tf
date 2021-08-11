@@ -1,9 +1,9 @@
 # Generic locals
 locals {
-  common_tags         = module.ctags.common_tags
-  resource_group_name = "${var.product}-sharedservices-${var.environment}-rg"
-  key_vault_name      = "${var.product}-shared-kv-${var.environment}"
-  casehqemulatorStorageName = "casehqemulator${var.environment}"
+  common_tags                      = module.ctags.common_tags
+  resource_group_name              = "${var.product}-sharedservices-${var.environment}-rg"
+  key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
+  casehqemulatorStorageName        = "casehqemulator${var.environment}"
   shared_infra_resource_group_name = "hmi-sharedinfra-${var.environment}-rg"
 }
 
@@ -37,8 +37,8 @@ module "kv" {
 module "aks-mi" {
   source = "../../modules/managed-identity/data"
 
-managed_identity_name = "aks-${var.environment}-mi"
-resource_group_name = "genesis-rg"
+  managed_identity_name = "aks-${var.environment}-mi"
+  resource_group_name   = "genesis-rg"
 }
 
 module "keyvault-policy" {
@@ -59,7 +59,7 @@ module "keyvault-policy" {
       tenant_id               = data.azurerm_client_config.current.tenant_id
       object_id               = module.aks-mi.principal_id
       key_permissions         = []
-      secret_permissions      = ["Get","List","Set","Delete","Recover","Backup","Restore"]
+      secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
       certificate_permissions = []
       storage_permissions     = []
     }
@@ -71,13 +71,13 @@ module "case-hq-emulator" {
   source = "../../modules/storage-account/data"
 
   storage_account_name = local.casehqemulatorStorageName
-  resource_group_name = local.shared_infra_resource_group_name
+  resource_group_name  = local.shared_infra_resource_group_name
 }
 module "hmidtu" {
   source = "../../modules/storage-account/data"
 
   storage_account_name = "hmidtu${var.environment}"
-  resource_group_name = local.shared_infra_resource_group_name
+  resource_group_name  = local.shared_infra_resource_group_name
 }
 # Generate a random password
 resource "random_password" "pact-db-password" {
@@ -91,28 +91,36 @@ resource "random_password" "pact-db-password" {
 module "keyvault-secrets" {
   source = "../../modules/key-vault/secret"
 
-  key_vault_id  = module.kv.key_vault_id
-  tags = local.common_tags
-  secrets =[
+  key_vault_id = module.kv.key_vault_id
+  tags         = local.common_tags
+  secrets = [
     {
-      name = "${local.casehqemulatorStorageName}-storageaccount-key"
+      name  = "${local.casehqemulatorStorageName}-storageaccount-key"
       value = module.case-hq-emulator.primary_access_key
     },
     {
-      name = "${local.casehqemulatorStorageName}-storageaccount-name"
+      name  = "${local.casehqemulatorStorageName}-storageaccount-name"
       value = local.casehqemulatorStorageName
     },
     {
-      name = "dtu-storage-account-key"
+      name  = "dtu-storage-account-key"
       value = module.hmidtu.primary_access_key
     },
     {
-      name = "pact-db-password"
-      value = random_password.pact-db-password
+      name  = "pact-db-password"
+      value = random_password.pact-db-password.result
     },
     {
-      name = "pact-db-user"
+      name  = "pact-db-user"
       value = "pactadmin"
     }
   ]
+}
+
+module "keyvault-certificate" {
+  source = "../../modules/key-vault/certificate"
+
+  keyvault_id  = module.kv.key_vault_id
+  cert_name    = "star-sandbox"
+  cert_content = filebase64(var.pfx_path)
 }

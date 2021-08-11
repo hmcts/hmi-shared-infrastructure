@@ -23,3 +23,8 @@ variable "active_directory_group" {
   description = "Active Directory Group Name"
   default     = "DTS HMI"
 }
+
+variable "pfx_path" {
+  type        = string
+  description = "Path to PFX to be uploaded"
+}
