@@ -14,6 +14,7 @@ variable "secrets" {
     name  = string
     value = string
     tags  = map(string)
+    content_type = string
   }))
   description = "Define Azure Key Vault secrets"
   default     = []

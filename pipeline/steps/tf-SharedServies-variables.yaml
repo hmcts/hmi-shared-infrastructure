@@ -1,0 +1,62 @@
+parameters:
+  - name: variableName
+    type: string
+  - name: environment
+    type: string
+  - name: subscriptionName
+    type: string
+  - name: outputLocation
+    type: string
+  - name: resourceGroup
+    type: string
+    default: ""
+  - name: builtFrom
+    type: string
+    default: ""
+  - name: product
+    type: string
+    default: ""
+
+steps:
+  - bash: |
+      mkdir '$(Build.SourcesDirectory)/certs'
+    displayName: Create Certificates directory
+
+  - template: az-download-pfx.yaml
+    parameters:
+      subscriptionName: ${{ parameters.subscription }}
+      sourceKvName: "$(source_kv_name_prefix)-${{ parameters.environment }}"
+      sourceCertName: $(source_cert_name)
+      environment: ${{ parameters.environment }}
+      targetpath: "$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx"
+
+  - template: get-secure-file.yaml
+    parameters:
+      fileName: "policy-variables-${{ parameters.environment }}.json"
+      variableName: "secure_file_json"
+
+  - template: templates\common\get-variable-group.yml@azTemplates 
+    parameters:
+      subscriptionName: ${{ parameters.subscriptionName }}
+      variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
+      variableName: "variable_group_json"
+
+  - bash: |
+      variableName="${{ parameters.variableName }}"
+
+      variables=""
+      variables="-var-file=\"$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars\""
+      variables="${variables} -var-file=\"$(System.DefaultWorkingDirectory)/environments/shared.tfvars\""
+      variables="${variables} -out=\"${{ parameters.outputLocation }}\""
+      variables="${variables} -var \"resource_group=${{ parameters.resourceGroup }}\""
+      variables="${variables} -var \"environment=${{ parameters.environment }}\""
+      variables="${variables} -var \"la_nonprod_sub_id=$(la-nonprod-sub-id)\""
+      variables="${variables} -var \"la_prod_sub_id=$(la-prod-sub-id)\""
+      variables="${variables} -var \"la_sbox_sub_id=$(la-sbox-sub-id)\""
+      variables="${variables} -var \"builtFrom=${{ parameters.builtFrom }} \""
+      variables="${variables} -var \"product=${{ parameters.product }}\""
+      variables="${variables} -var \"pfx_path=$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx\""
+      variables="${variables} -var \"secure_file_json=$(secure_file_json)\""
+      variables="${variables} -var \"variable_group_json=$(variable_group_json)\""
+
+      echo "##vso[task.setvariable variable=$variableName;isOutput=true]$variables"

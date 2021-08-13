@@ -124,21 +124,25 @@ module "keyvault-secrets" {
       name  = "appins-instrumentation-key"
       value = data.azurerm_application_insights.appin.instrumentation_key
       tags  = {}
+      content_type = ""
     },
     {
       name  = "${local.casehqemulatorStorageName}-storageaccount-key"
       value = module.case-hq-emulator.primary_access_key
       tags  = {}
+      content_type = ""
     },
     {
       name  = "${local.casehqemulatorStorageName}-storageaccount-name"
       value = local.casehqemulatorStorageName
       tags  = {}
+      content_type = ""
     },
     {
       name  = "dtu-storage-account-key"
       value = module.hmidtu.primary_access_key
       tags  = {}
+      content_type = ""
     },
     {
       name  = "pact-db-password"
@@ -147,6 +151,7 @@ module "keyvault-secrets" {
         "file-encoding" = "utf-8"
         "purpose"       = "pactbrokerdb"
       }
+      content_type = ""
     },
     {
       name  = "pact-db-user"
@@ -155,6 +160,23 @@ module "keyvault-secrets" {
         "file-encoding" = "utf-8"
         "purpose"       = "pactbrokerdb"
       }
+      content_type = ""
+    },
+    {
+      name = "HMI-APIM-BUILD-${upper(var.environment)}-json"
+      value = var.variable_group_json
+      tags = {
+        "source" = "https://dev.azure.com/hmcts/Shared$20Services/_library?itemType=VariableGroups&view=VariableGroupView&path=HMI-APIM-BUILD-${upper(var.environment)}"
+      }
+      content_type = "json"
+    },
+    {
+      name = "policy-variables-${var.environment}-json"
+      value = var.secure_file_json
+      tags = {
+        "source" = "https://dev.azure.com/hmcts/Shared%20Services/_library?itemType=SecureFiles"
+      }
+      content_type = "json"
     }
   ]
 }

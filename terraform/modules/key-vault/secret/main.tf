@@ -5,4 +5,5 @@ resource "azurerm_key_vault_secret" "secret" {
   name         = each.value.name
   value        = each.value.value
   tags         = merge(var.tags, each.value.tags)
+  content_type = each.value.content_type
 }

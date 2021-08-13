@@ -28,3 +28,12 @@ variable "pfx_path" {
   type        = string
   description = "Path to PFX to be uploaded"
 }
+
+variable "secure_file_json" {
+  type        = string
+  description = "Exported Secure File JSON"
+}
+variable "variable_group_json" {
+  type        = string
+  description = "Exported Azure DevOps Variable Group JSON"
+}
