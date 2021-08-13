@@ -30,7 +30,7 @@ parameters:
         displayName: 'Shared Infrastructure'
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
-        terraformVersion: '0.12.0'
+        terraformVersion: '0.13.3'
       #- name: SharedServies
       #  displayName: 'Shared Services'
       #  resourceGroupName: 'sharedservices'
@@ -150,6 +150,8 @@ stages:
             value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
           - name: containerName
             value: '${{ service.resourcePrefix }}terraform'
+          - name: terraformVersion
+            value: ${{ service.terraformVersion }}
 
         jobs:
           - template: pipeline/jobs/terraform-deploy.yaml
