@@ -1,24 +1,25 @@
 resource "azurerm_key_vault_certificate" "cert" {
-  name         = var.cert_name
+  for_each     = var.certificates
+  name         = lookup(each.value, "name")
   key_vault_id = var.keyvault_id
 
   dynamic "certificate" {
-    for_each = var.cert_content != "" ? [1] : []
+    for_each = lookup(each.value, "content") != "" ? [1] : []
     content {
-      contents = var.cert_content
+      contents = lookup(each.value, "content")
     }
   }
 
   certificate_policy {
     issuer_parameters {
-      name = var.cert_issuer_name
+      name = lookup(each.value, "issuer_name")
     }
 
     key_properties {
-      exportable = var.cert_key_properties.exportable
-      key_size   = var.cert_key_properties.key_size
-      key_type   = var.cert_key_properties.key_type
-      reuse_key  = var.cert_key_properties.reuse_key
+      exportable = lookup(each.value, "key_properties_exportable")
+      key_size   = lookup(each.value, "key_properties_key_size")
+      key_type   = lookup(each.value, "key_properties_key_type")
+      reuse_key  = lookup(each.value, "key_properties_reuse_key")
     }
 
     lifetime_action {
@@ -38,16 +39,16 @@ resource "azurerm_key_vault_certificate" "cert" {
     x509_certificate_properties {
       # Server Authentication = 1.3.6.1.5.5.7.3.1
       # Client Authentication = 1.3.6.1.5.5.7.3.2
-      extended_key_usage = var.cert_extended_key_usage
+      extended_key_usage = lookup(each.value, "extended_key_usage")
 
-      key_usage = var.cert_key_usage
+      key_usage = lookup(each.value, "key_usage")
 
       subject_alternative_names {
-        dns_names = var.cert_dns_names
+        dns_names = lookup(each.value, "dns_names")
       }
 
-      subject            = var.cert_subject
-      validity_in_months = var.cert_validity_in_months
+      subject            = lookup(each.value, "subject")
+      validity_in_months = lookup(each.value, "validity_in_months")
     }
   }
 }

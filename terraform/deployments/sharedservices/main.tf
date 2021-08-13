@@ -3,7 +3,7 @@ locals {
   common_tags                      = module.ctags.common_tags
   resource_group_name              = "${var.product}-sharedservices-${var.environment}-rg"
   key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
-  casehqemulatorStorageName        = "casehqemulator${var.environment}"
+  casehqemulatorStorageName        = "casehqemulator"
   shared_infra_resource_group_name = "hmi-sharedinfra-${var.environment}-rg"
 }
 
@@ -40,6 +40,12 @@ module "aks-mi" {
   managed_identity_name = "aks-${var.environment}-mi"
   resource_group_name   = "genesis-rg"
 }
+data "azuread_service_principal" "dcd_sp_ado" {
+  display_name = "dcd_sp_ado_${var.environment}_operations_v2"
+}
+data "azuread_service_principal" "hmi_apim_svc" {
+  display_name = "hmi-apim-svc-${var.environment}"
+}
 
 module "keyvault-policy" {
   source = "../../modules/key-vault/access-policy"
@@ -62,6 +68,22 @@ module "keyvault-policy" {
       secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
       certificate_permissions = []
       storage_permissions     = []
+    },
+    "${data.azuread_service_principal.dcd_sp_ado.display_name}" = {
+      tenant_id               = data.azurerm_client_config.current.tenant_id
+      object_id               = data.azuread_service_principal.dcd_sp_ado.object_id
+      key_permissions         = []
+      secret_permissions      = ["List", "Purge", "Restore", "Get", "Set", "Delete", "Backup", "Recover"]
+      certificate_permissions = []
+      storage_permissions     = []
+    },
+    "${data.azuread_service_principal.hmi_apim_svc.display_name}" = {
+      tenant_id               = data.azurerm_client_config.current.tenant_id
+      object_id               = data.azuread_service_principal.hmi_apim_svc.object_id
+      key_permissions         = []
+      secret_permissions      = ["Get", "Set", "List", "Delete"]
+      certificate_permissions = []
+      storage_permissions     = []
     }
   }
 }
@@ -70,7 +92,7 @@ module "keyvault-policy" {
 module "case-hq-emulator" {
   source = "../../modules/storage-account/data"
 
-  storage_account_name = local.casehqemulatorStorageName
+  storage_account_name = "${local.casehqemulatorStorageName}${var.environment}"
   resource_group_name  = local.shared_infra_resource_group_name
 }
 module "hmidtu" {
@@ -87,6 +109,10 @@ resource "random_password" "pact-db-password" {
   min_numeric = 2
   min_special = 2
 }
+data "azurerm_application_insights" "appin" {
+  name                = "hmi-sharedinfra-appins-${var.environment}"
+  resource_group_name = local.shared_infra_resource_group_name
+}
 
 module "keyvault-secrets" {
   source = "../../modules/key-vault/secret"
@@ -95,24 +121,40 @@ module "keyvault-secrets" {
   tags         = local.common_tags
   secrets = [
     {
+      name  = "appins-instrumentation-key"
+      value = data.azurerm_application_insights.appin.instrumentation_key
+      tags  = {}
+    },
+    {
       name  = "${local.casehqemulatorStorageName}-storageaccount-key"
       value = module.case-hq-emulator.primary_access_key
+      tags  = {}
     },
     {
       name  = "${local.casehqemulatorStorageName}-storageaccount-name"
       value = local.casehqemulatorStorageName
+      tags  = {}
     },
     {
       name  = "dtu-storage-account-key"
       value = module.hmidtu.primary_access_key
+      tags  = {}
     },
     {
       name  = "pact-db-password"
       value = random_password.pact-db-password.result
+      tags = {
+        "file-encoding" = "utf-8"
+        "purpose"       = "pactbrokerdb"
+      }
     },
     {
       name  = "pact-db-user"
       value = "pactadmin"
+      tags = {
+        "file-encoding" = "utf-8"
+        "purpose"       = "pactbrokerdb"
+      }
     }
   ]
 }
@@ -120,7 +162,33 @@ module "keyvault-secrets" {
 module "keyvault-certificate" {
   source = "../../modules/key-vault/certificate"
 
-  keyvault_id  = module.kv.key_vault_id
-  cert_name    = "star-sandbox"
-  cert_content = filebase64(var.pfx_path)
+  keyvault_id = module.kv.key_vault_id
+
+  certificates = {
+    "star-sandbox" = {
+      name               = "star-sandbox"
+      content            = filebase64(var.pfx_path)
+      validity_in_months = 13
+      key_usage = [
+        "digitalSignature",
+        "keyEncipherment"
+      ]
+      extended_key_usage = [
+        "1.3.6.1.5.5.7.3.1",
+        "1.3.6.1.5.5.7.3.2"
+      ]
+
+      key_properties_exportable = true
+      key_properties_key_size   = 4096
+      key_properties_key_type   = "RSA"
+      key_properties_reuse_key  = false
+
+      issuer_name = "Unknown"
+      dns_names = [
+        "*.sandbox.platform.hmcts.net",
+        "sandbox.platform.hmcts.net",
+      ]
+      subject = "CN=*.sandbox.platform.hmcts.net"
+    }
+  }
 }

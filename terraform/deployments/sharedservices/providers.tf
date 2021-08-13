@@ -7,6 +7,9 @@ terraform {
     random = {
       version = ">= 2.2.0"
     }
+    azuread = {
+      version = ">=1.6.0"
+    }
   }
 }
 
@@ -14,3 +17,4 @@ provider "azurerm" {
   features {}
 }
 provider "random" {}
+provider "azuread" {}

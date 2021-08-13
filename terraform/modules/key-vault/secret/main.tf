@@ -1,8 +1,8 @@
 
 resource "azurerm_key_vault_secret" "secret" {
-  count        = length(var.secrets)
+  for_each     = { for secret in var.secrets : secret.name => secret }
   key_vault_id = var.key_vault_id
-  name         = var.secrets[count.index].name
-  value        = var.secrets[count.index].value
-  tags         = var.tags
+  name         = each.value.name
+  value        = each.value.value
+  tags         = merge(var.tags, each.value.tags)
 }
