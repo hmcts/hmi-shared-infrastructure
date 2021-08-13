@@ -30,7 +30,7 @@ parameters:
         displayName: 'Shared Infrastructure'
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
-        terraformVersion: '0.13.3'
+        terraformVersion: '0.12.0'
       #- name: SharedServies
       #  displayName: 'Shared Services'
       #  resourceGroupName: 'sharedservices'
