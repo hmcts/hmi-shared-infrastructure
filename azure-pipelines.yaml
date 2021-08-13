@@ -31,11 +31,11 @@ parameters:
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
         terraformVersion: '0.13.3'
-      - name: SharedServies
-        displayName: 'Shared Services'
-        resourceGroupName: 'sharedservices'
-        resourcePrefix: 'hmiss'
-        terraformVersion: '0.15.4'
+      #- name: SharedServies
+      #  displayName: 'Shared Services'
+      #  resourceGroupName: 'sharedservices'
+      #  resourcePrefix: 'hmiss'
+      #  terraformVersion: '0.15.4'
         
 
 variables:
