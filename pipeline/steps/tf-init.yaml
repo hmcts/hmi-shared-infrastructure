@@ -22,6 +22,17 @@ parameters:
     type: string
 
 steps:
+
+- bash: |
+    debug="$(System.Debug)"
+    if [ "$debug" = "true"]
+    then
+      export TF_LOG="WARN"
+    else
+      export TF_LOG="DEBUG"
+    fi 
+  displayName: Set Logging Level for Terraform
+
 - task: TerraformCLI@0
   displayName: Terraform init
   inputs:
