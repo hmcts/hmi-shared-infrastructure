@@ -38,12 +38,12 @@ parameters:
         displayName: 'Shared Infrastructure'
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
-        terraformVersion: '0.12.16'
-      - name: SharedServies
-        displayName: 'Shared Services'
-        resourceGroupName: 'sharedservices-state'
-        resourcePrefix: 'hmiss'
-        terraformVersion: '0.15.4'
+        terraformVersion: '0.13.3'
+      #- name: SharedServies
+      #  displayName: 'Shared Services'
+      #  resourceGroupName: 'sharedservices'
+      #  resourcePrefix: 'hmiss'
+      #  terraformVersion: '0.15.4'
         
 
 variables:
@@ -160,7 +160,9 @@ stages:
           - name: containerName
             value: '${{ service.resourcePrefix }}terraform'
           - template: environments/${{ environment.name }}.yaml
-  
+          - name: terraformVersion
+            value: ${{ service.terraformVersion }}
+
         jobs:
           - template: pipeline/jobs/terraform-deploy.yaml
             parameters:
