@@ -54,7 +54,7 @@ jobs:
 
   - template: ../steps/tf-${{ parameters.serviceName }}-variables.yaml
     parameters:
-      variableName: "tf-variables"
+      variableName: "varValue"
       resourceGroup: $(resourceGroup)
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
@@ -65,7 +65,7 @@ jobs:
   - template: ../steps/tf-plan.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
-      tfVariables: $(tf-variables)
+      tfVariables: $(tfVariables.varValue)
       workingDirectory: ${{ parameters.workingDirectory }}
   
   - task: PublishPipelineArtifact@1

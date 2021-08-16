@@ -43,6 +43,8 @@ steps:
 
   - bash: |
       variableName="${{ parameters.variableName }}"
+      secureFileJson=$(printenv secure_file_json)
+      variableGroupJson=$(printenv variable_group_json)
 
       variables=""
       variables="-var-file=\"$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars\""
@@ -56,7 +58,12 @@ steps:
       variables="${variables} -var \"builtFrom=${{ parameters.builtFrom }} \""
       variables="${variables} -var \"product=${{ parameters.product }}\""
       variables="${variables} -var \"pfx_path=$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx\""
-      variables="${variables} -var \"secure_file_json=$(secure_file_json)\""
-      variables="${variables} -var \"variable_group_json=$(variable_group_json)\""
+      variables="${variables} -var \"secure_file_json=${secureFileJson}\""
+      variables="${variables} -var \"variable_group_json=${variableGroupJson}\""
 
       echo "##vso[task.setvariable variable=$variableName;isOutput=true]$variables"
+    displayName: 'Set Shared Services TF Variables'
+    name: tfVariables
+    env:
+      - secure_file_json: $(secureFileVariable.secure_file_json)
+      - variable_group_json: $(variable_group_json)
