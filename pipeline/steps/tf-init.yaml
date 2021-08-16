@@ -22,21 +22,6 @@ parameters:
     type: string
 
 steps:
-
-- bash: |
-    debug="$(System.Debug)"
-    echo "Azure DevOps Set to ${debug}"
-    tfLogLevel="WARN"
-    if [ "${debug}" = "true" ]; then
-      tfLogLevel="DEBUG"
-    else
-      tfLogLevel="WARN"
-    fi 
-    echo "Terraform Set to ${tfLogLevel}"
-    export TF_LOG="${tfLogLevel}"
-    echo "##vso[task.setvariable variable=TF_LOG;isOutput=true]$tfLogLevel"
-  displayName: Set Logging Level for Terraform
-
 - task: TerraformCLI@0
   displayName: Terraform init
   inputs:
