@@ -12,7 +12,8 @@ steps:
         secureFile: '${{ parameters.fileName }}'
   
   - bash: |
-      fileJson=$(jq -c . $(${{ parameters.fileName }}.secureFilePath))
+      fileJson=$(jq -c . $(secureFileDownload.secureFilePath))
 
       echo "${variableName} is ${fileJson}"
       echo "##vso[task.setvariable variable=$variableName;isOutput=true]$fileJson"
+    displayName: Set Secure File Variable
