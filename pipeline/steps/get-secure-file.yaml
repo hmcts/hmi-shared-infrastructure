@@ -12,6 +12,7 @@ steps:
         secureFile: '${{ parameters.fileName }}'
   
   - bash: |
+      variableName="${{ parameters.variableName }}"
       fileJson=$(jq -c . $(secureFileDownload.secureFilePath))
 
       echo "${variableName} is ${fileJson}"
