@@ -25,12 +25,15 @@ steps:
 
 - bash: |
     debug="$(System.Debug)"
-    if [ "$debug" = "true"]
-    then
-      export TF_LOG="WARN"
+    echo "Azure DevOps Set to ${debug}"
+    tfLogLevel="WARN"
+    if [ "${debug}" = "true"]; then
+      tfLogLevel="WARN"
     else
-      export TF_LOG="DEBUG"
+      tfLogLevel="DEBUG"
     fi 
+    echo "Terraform Set to ${tfLogLevel}"
+    export TF_LOG="${tfLogLevel}"
   displayName: Set Logging Level for Terraform
 
 - task: TerraformCLI@0
