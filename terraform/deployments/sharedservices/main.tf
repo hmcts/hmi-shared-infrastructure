@@ -23,7 +23,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 module "kv" {
-  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
   name                    = local.key_vault_name
   product                 = var.product
   env                     = var.environment
