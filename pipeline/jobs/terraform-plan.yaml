@@ -60,6 +60,7 @@ jobs:
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
       outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
+      subscriptionName: ${{ parameters.subscription }}
 
   - template: ../steps/tf-plan.yaml
     parameters:
