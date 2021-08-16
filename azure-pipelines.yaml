@@ -123,6 +123,7 @@ stages:
               storageAccount: ${{ variables.storageAccount }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
+            serviceName: ${{ service.name }}
 
       - ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
         - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
