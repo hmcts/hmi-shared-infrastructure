@@ -18,12 +18,15 @@ parameters:
   - name: containerName
     type: string
 
+  - name: workingDirectory
+    type: string
+
 steps:
 - task: TerraformCLI@0
   displayName: Terraform init
   inputs:
     command: init
-    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environment }}
+    workingDirectory: ${{ parameters.workingDirectory }}
     backendType: azurerm
     backendServiceArm: ${{ parameters.subscription }}
     backendAzureRmResourceGroupName: ${{ parameters.resourceGroup }}
@@ -36,4 +39,4 @@ steps:
   displayName: Terraform validate
   inputs:
     command: validate
-    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environment }}
+    workingDirectory: ${{ parameters.workingDirectory }}

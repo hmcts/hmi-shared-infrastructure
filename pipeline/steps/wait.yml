@@ -1,0 +1,10 @@
+parameters:
+  - name: environment
+    type: string
+
+steps:
+  - task: ManualValidation@0
+    timeoutInMinutes: 1440 # task times out in 1 day
+    inputs:
+      instructions: 'Please validate the Terraform Plan for ${{parameters.environment}} environment to resume'
+      onTimeout: 'reject'

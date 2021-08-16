@@ -5,12 +5,18 @@ parameters:
   - name: environment
     type: string
 
+  - name: planLocation
+    type: string
+
+  - name: workingDirectory
+    type: string
+
 steps:
 
 - task: TerraformCLI@0
   displayName: Terraform apply
   inputs:
+    workingDirectory: ${{parameters.workingDirectory}}
     command: apply
-    workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environment }}
     environmentServiceName: ${{ parameters.subscription }}
-    commandOptions: -auto-approve tfplan-${{ parameters.environment }}
+    commandOptions: -auto-approve "${{ parameters.planLocation }}"

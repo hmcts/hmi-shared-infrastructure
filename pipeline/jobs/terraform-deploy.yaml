@@ -1,0 +1,74 @@
+parameters:
+  - name: subscription
+    type: string
+
+  - name: dependsOn
+    type: string
+    default: '[]'
+
+  - name: resourceGroup
+    type: string
+
+  - name: location
+    type: string
+    default: uksouth
+
+  - name: storageAccount
+    type: string
+
+  - name: containerName
+    type: string
+
+  - name: variables
+    type: object
+
+  - name: displayName
+    type: string
+
+  - name: environment
+    type: string
+
+  - name: builtFrom
+    type: string
+    default: ''
+
+  - name: product
+    type: string
+    default: ''
+
+  - name: outputName
+    type: string
+
+  - name: workingDirectory
+    type: string
+
+jobs:
+- job: Terraform
+  displayName: ${{ parameters.displayName }}
+  pool:
+    vmImage: 'ubuntu-20.04'
+  variables:
+    ${{ insert }}: ${{ parameters.variables }}
+  steps:
+  - download: current
+    artifact: '${{ parameters.outputName }}'
+    displayName: 'Download ${{ parameters.outputName }}.tfplan'
+  - template: ../steps/tf-install.yaml
+  - bash: |
+      echo "Resource Group: ${{ variables.resourceGroup }}"
+      echo "Storage Account: ${{ variables.storageAccount }}"
+      echo "Container Name: ${{ variables.containerName }}"
+  - template: ../steps/tf-init.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      environment: ${{ parameters.environment }}
+      resourceGroup: ${{ variables.resourceGroup }}
+      storageAccount: ${{ variables.storageAccount }}
+      containerName: ${{ variables.containerName }}
+      workingDirectory: ${{ parameters.workingDirectory }}
+  - template: ../steps/tf-apply.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      environment: ${{ parameters.environment }}
+      workingDirectory: ${{ parameters.workingDirectory }}
+      planLocation: '$(Pipeline.Workspace)/${{parameters.outputName}}/${{parameters.outputName}}.tfplan'

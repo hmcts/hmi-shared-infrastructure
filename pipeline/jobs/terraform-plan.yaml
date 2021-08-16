@@ -1,42 +1,33 @@
 parameters:
   - name: subscription
     type: string
-
   - name: dependsOn
     type: string
-
   - name: resourceGroup
     type: string
-
-  - name: location
-    type: string
-    default: uksouth
-
   - name: storageAccount
     type: string
-
   - name: containerName
     type: string
-
   - name: variables
     type: object
-
   - name: displayName
     type: string
-
   - name: environment
     type: string
-
   - name: builtFrom
     type: string
     default: ''
-
   - name: product
     type: string
     default: ''
+  - name: outputName
+    type: string
+  - name: workingDirectory
+    type: string
 
 jobs:
-- job: Terraform
+- job: TerraformPlan
   dependsOn:
   - ${{ if parameters.dependsOn }}:
     - ${{ parameters.dependsOn }}
@@ -47,14 +38,17 @@ jobs:
     ${{ insert }}: ${{ parameters.variables }}
   steps:
   - template: ../steps/tf-install.yaml
-  - template: ../steps/tf-test.yaml
   - template: ../steps/tf-init.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
       environment: ${{ parameters.environment }}
-      resourceGroup: $(resourceGroup)
-      storageAccount: $(storageAccount)
-      containerName: $(containerName)
+      resourceGroup: ${{ variables.resourceGroup }}
+      storageAccount: ${{ variables.storageAccount }}
+      containerName: ${{ variables.containerName }}
+      workingDirectory: ${{ parameters.workingDirectory }}
+  - bash: |
+      mkdir '$(Build.SourcesDirectory)/plans'
+    displayName: Create plan directory
   - template: ../steps/tf-plan.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
@@ -62,7 +56,13 @@ jobs:
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
-  - template: ../steps/tf-apply.yaml
-    parameters:
-      subscription: ${{ parameters.subscription }}
-      environment: ${{ parameters.environment }}
+      outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
+      workingDirectory: ${{ parameters.workingDirectory }}
+  
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Terraform Plan'
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
+      artifact: '${{ parameters.outputName }}'
+
+  

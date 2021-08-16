@@ -1,0 +1,12 @@
+parameters:
+  - name: displayName
+    type: string
+
+jobs:
+- job: TerraformValidate
+  displayName: '${{ parameters.displayName }}'
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - template: ../steps/tf-install.yaml
+  - template: ../steps/tf-test.yaml

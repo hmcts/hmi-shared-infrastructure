@@ -16,18 +16,24 @@ parameters:
     type: string
     default: ''
 
+  - name: outputLocation
+    type: string
+
+  - name: workingDirectory
+    type: string
+
 steps:
 
   - task: TerraformCLI@0
     displayName: Terraform plan
     inputs:
       command: plan
-      workingDirectory: $(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environment }}
+      workingDirectory: ${{ parameters.workingDirectory }}
       environmentServiceName: ${{ parameters.subscription }}
       commandOptions: >
-        -var-file="../../../environments/${{ parameters.environment }}.tfvars"
-        -var-file="../../../environments/shared.tfvars"
-        -out="tfplan-${{ parameters.environment }}"
+        -var-file="$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars"
+        -var-file="$(System.DefaultWorkingDirectory)/environments/shared.tfvars"
+        -out="${{ parameters.outputLocation }}"
         -var "resource_group=${{ parameters.resourceGroup }}"
         -var "environment=${{ parameters.environment }}"
         -var "la_nonprod_sub_id=$(la-nonprod-sub-id)"
