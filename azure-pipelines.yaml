@@ -81,7 +81,7 @@ stages:
             ${{ if eq(service.name, 'SharedInfra') }}:
               value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
             ${{ if eq(service.name, 'SharedServies') }}:
-              value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
+              value: '$(System.DefaultWorkingDirectory)/terraform/deployments/sharedservices'
           - name: storageAccount
             value: '${{ service.resourcePrefix }}infra${{ environment.name }}sa'
           - name: resourceGroupName
