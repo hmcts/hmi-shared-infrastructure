@@ -24,7 +24,7 @@ steps:
 
   - template: az-download-pfx.yaml
     parameters:
-      subscriptionName: ${{ parameters.subscription }}
+      subscriptionName: ${{ parameters.subscriptionName }}
       sourceKvName: "$(source_kv_name_prefix)-${{ parameters.environment }}"
       sourceCertName: $(source_cert_name)
       environment: ${{ parameters.environment }}
