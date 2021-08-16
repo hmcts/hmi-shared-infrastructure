@@ -6,7 +6,7 @@ parameters:
 
 steps:
   - task: DownloadSecureFile@1
-    name: ${{ parameters.fileName }}
+    name: secureFileDownload
     displayName: 'Download ${{ parameters.fileName }}'
     inputs:
         secureFile: '${{ parameters.fileName }}'
