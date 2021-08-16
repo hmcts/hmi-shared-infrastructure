@@ -65,5 +65,5 @@ steps:
     displayName: 'Set Shared Services TF Variables'
     name: tfVariables
     env:
-      - secure_file_json: $(secureFileVariable.secure_file_json)
-      - variable_group_json: $(variable_group_json)
+      secure_file_json: $(secureFileVariable.secure_file_json)
+      variable_group_json: $(variable_group_json)
