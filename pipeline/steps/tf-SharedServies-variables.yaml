@@ -66,4 +66,4 @@ steps:
     name: tfVariables
     env:
       secure_file_json: $(secureFileVariable.secure_file_json_path)
-      variable_group_json: $(variableGroupDownload.variable_group_json)
+      variable_group_json: $(variableGroupDownload.variable_group_json_path)
