@@ -1,6 +1,5 @@
 # hmi-apim-infrastructure
-Repository for deploying support infrastructure for HMI APIM
-
+`terraform\deployments\{env}` is the path for the Shared APIM Infrastructure Terraform.
 
 ### Monitoring and Alerting:
 If you need to update web test endpoint, add or modify `var.ping_tests` in /environments/*env*.tfvars:
@@ -29,3 +28,6 @@ To change action group email, modify `var.support_email` in `/environments/share
 The password is now dynamically created by Terraform.
 The flow is to run the Shared Services Terraform, which creates the password and puts it into Key Vault.
 Then run the Shared Infrastructure Terraform, which will fetch the password and update PostgreSQL. (Can also just run this to update the password as is currently in Key Vault)
+
+# hmi-shared-services
+`terraform\deployments\sharedservices` is the path for the Shared Services Terraform.
