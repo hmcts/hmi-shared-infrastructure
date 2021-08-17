@@ -15,4 +15,4 @@ variables:
     value: '${{ parameters.service.resourcePrefix }}terraform'
   - name: terraformVersion
     value: ${{ parameters.service.terraformVersion }}
-  - template: environments/${{ parameters.environment.name }}.yaml
+  - template: ../../environments/${{ parameters.environment.name }}.yaml
