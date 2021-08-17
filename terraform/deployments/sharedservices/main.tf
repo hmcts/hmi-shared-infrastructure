@@ -164,7 +164,7 @@ module "keyvault-secrets" {
     },
     {
       name = "HMI-APIM-BUILD-${upper(var.environment)}-json"
-      value = var.variable_group_json
+      value = file(var.variable_group_json_path)
       tags = {
         "source" = "https://dev.azure.com/hmcts/Shared$20Services/_library?itemType=VariableGroups&view=VariableGroupView&path=HMI-APIM-BUILD-${upper(var.environment)}"
       }
@@ -172,7 +172,7 @@ module "keyvault-secrets" {
     },
     {
       name = "policy-variables-${var.environment}-json"
-      value = var.secure_file_json
+      value = file(var.secure_file_json_path)
       tags = {
         "source" = "https://dev.azure.com/hmcts/Shared%20Services/_library?itemType=SecureFiles"
       }
