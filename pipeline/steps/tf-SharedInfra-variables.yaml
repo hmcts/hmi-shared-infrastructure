@@ -3,6 +3,8 @@ parameters:
     type: string
   - name: environment
     type: string
+  - name: subscriptionName
+    type: string
   - name: outputLocation
     type: string
   - name: resourceGroup
