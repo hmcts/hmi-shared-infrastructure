@@ -17,12 +17,12 @@ stages:
         variables: 
           - template: ../variables/Shared.yaml
             parameters:
-              environment: ${environment}
-              service: ${service}
+              environment: ${{ environment }}
+              service: ${{ service }}
           - template: ../variables/${{ service.name }}.yaml
             parameters:
-              environment: ${environment}
-              service: ${service}
+              environment: ${{ environment }}
+              service: ${{ service }}
 
         jobs:
           - template: ../jobs/terraform-deploy.yaml
