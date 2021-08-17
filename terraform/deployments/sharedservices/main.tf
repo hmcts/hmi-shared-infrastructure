@@ -53,14 +53,6 @@ module "keyvault-policy" {
   key_vault_id = module.kv.key_vault_id
 
   policies = {
-    "tf-access" = { # This Access is for Terraform to correctly create and destroy
-      tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = data.azurerm_client_config.current.object_id
-      key_permissions         = ["backup", "create", "decrypt", "delete", "encrypt", "get", "import", "list", "purge", "recover", "restore", "sign", "unwrapKey", "update", "verify", "wrapKey"]
-      secret_permissions      = ["backup", "delete", "get", "list", "purge", "recover", "restore", "set"]
-      certificate_permissions = ["create", "delete", "deleteissuers", "get", "getissuers", "import", "list", "listissuers","managecontacts", "manageissuers", "purge", "recover", "setissuers", "update", "backup", "restore"]
-      storage_permissions     = ["backup", "delete", "deletesas", "get", "getsas", "list", "listsas","purge", "recover", "regeneratekey", "restore", "set", "setsas", "update"]
-    },
     "cft-client" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
       object_id               = "e7214bce-c8df-4d67-b081-1def53db25a7" #TODO: get id from data source
@@ -82,7 +74,7 @@ module "keyvault-policy" {
       object_id               = data.azuread_service_principal.dcd_sp_ado.object_id
       key_permissions         = []
       secret_permissions      = ["List", "Purge", "Restore", "Get", "Set", "Delete", "Backup", "Recover"]
-      certificate_permissions = ["create", "delete", "deleteissuers", "get", "getissuers", "import", "list", "listissuers","managecontacts", "manageissuers", "purge", "recover", "setissuers", "update", "backup", "restore"]
+      certificate_permissions = []
       storage_permissions     = []
     },
     "${data.azuread_service_principal.hmi_apim_svc.display_name}" = {
