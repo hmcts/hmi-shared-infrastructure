@@ -1,0 +1,24 @@
+parameters:
+  - name: fileName
+    type: string
+  - name: variableName
+    type: string
+
+steps:
+  - task: DownloadSecureFile@1
+    name: secureFileDownload
+    displayName: 'Download ${{ parameters.fileName }}'
+    inputs:
+        secureFile: '${{ parameters.fileName }}'
+  
+  - bash: |
+      variableName="${{ parameters.variableName }}"
+      filePath="$(secureFileDownload.secureFilePath)"
+      fileJson=$(jq -c . ${filePath})
+
+      echo "${variableName} is ${fileJson}"
+      echo "##vso[task.setvariable variable=$variableName;isOutput=true]$fileJson"
+      echo "##vso[task.setvariable variable=${variableName}_path;isOutput=true]${filePath}"
+    displayName: Set Secure File Variable
+    name: secureFileVariable
+    

@@ -1,8 +1,15 @@
----
 trigger:
   - master
 pr:
   - none
+
+resources:
+  repositories:
+    - repository: azTemplates
+      type: github
+      name: hmcts/azure-devops-templates
+      ref: refs/heads/group-fixes
+      endpoint: hmcts
 
 parameters:
   - name: environments
@@ -30,10 +37,12 @@ parameters:
         displayName: 'Shared Infrastructure'
         resourceGroupName: 'sharedinfra'
         resourcePrefix: 'hmiapim'
-      #- name: SharedServies
-      #  displayName: 'Shared Services'
-      #  resourceGroupName: 'sharedservices'
-      #  resourcePrefix: 'hmiss'
+        terraformVersion: '0.13.3'
+      - name: SharedServies
+        displayName: 'Shared Services'
+        resourceGroupName: 'sharedservices-state'
+        resourcePrefix: 'hmiss'
+        terraformVersion: '0.15.4'
         
 
 variables:
@@ -72,13 +81,16 @@ stages:
             ${{ if eq(service.name, 'SharedInfra') }}:
               value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
             ${{ if eq(service.name, 'SharedServies') }}:
-              value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
+              value: '$(System.DefaultWorkingDirectory)/terraform/deployments/sharedservices'
           - name: storageAccount
             value: '${{ service.resourcePrefix }}infra${{ environment.name }}sa'
           - name: resourceGroupName
             value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
           - name: containerName
             value: '${{ service.resourcePrefix }}terraform'
+          - name: terraformVersion
+            value: ${{ service.terraformVersion }}
+          - template: environments/${{ environment.name }}.yaml
 
         jobs:
         - template: pipeline/jobs/setup-infra.yaml
@@ -111,26 +123,26 @@ stages:
               storageAccount: ${{ variables.storageAccount }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
+            serviceName: ${{ service.name }}
 
-      - ${{ if eq(environment.name, 'sbox') }}:
+      - ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
         - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
-          dependsOn: 'Plan_${{ service.name }}_${{ environment.dependency }}'
+          dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
           displayName: Wait ${{ environment.name }} ${{ service.displayName }}
 
           jobs:
             - job: Wait
               displayName: "Wait for approval"
-              pool:
-                vmImage: 'ubuntu-20.04'
+              pool: server
               steps:
                 - template: pipeline/steps/wait.yml
                   parameters:
                     environment: ${{ environment.name }}
 
       - stage: 'Apply_${{ service.name }}_${{ environment.name }}'
-        ${{ if eq(environment.name, 'sbox') }}:
-          dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
-        ${{ if ne(environment.name, 'sbox') }}:
+        ${{ if and(eq(environment.name, 'sbox'), ne(service.name, 'SharedServies')) }}:
+          dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
+        ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
           dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
         displayName: Apply ${{ environment.name }} ${{ service.displayName }}
         variables: 
@@ -147,31 +159,34 @@ stages:
             value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
           - name: containerName
             value: '${{ service.resourcePrefix }}terraform'
+          - template: environments/${{ environment.name }}.yaml
+          - name: terraformVersion
+            value: ${{ service.terraformVersion }}
 
-        - template: pipeline/jobs/terraform-deploy.yaml
-          parameters:
-            displayName: "Deploy ${{ environment.name }} Shared Infra"
-            dependsOn: TerraformPlan
-            subscription: ${{ environment.subscription }}
-            environment: ${{ environment.name }}
-            resourceGroup: $(resourceGroup)
-            storageAccount: $(storageAccount)
-            containerName: $(containerName)
-            builtFrom: ${{ variables.builtFrom }}
-            product: ${{ variables.product }}
-            variables:
-              resourceGroup: ${{ variables.resourceGroupName }}
-              containerName: ${{ variables.containerName }}
-              storageAccount: ${{ variables.storageAccount }}
-            outputName: '${{ variables.planOutputName }}'
-            workingDirectory: ${{ variables.workingDirectory }}
-
-        - ${{ if eq('${{ service.name }}','SharedInfra') }}:
-          - template: pipeline/jobs/setup-azmonlink.yaml
+        jobs:
+          - template: pipeline/jobs/terraform-deploy.yaml
             parameters:
-              displayName: Set up Azure Monitor Link to Log Analytics
-              dependsOn: TerraformDeploy
+              displayName: "Deploy ${{ environment.name }} Shared Infra"
               subscription: ${{ environment.subscription }}
               environment: ${{ environment.name }}
+              resourceGroup: $(resourceGroup)
+              storageAccount: $(storageAccount)
+              containerName: $(containerName)
               builtFrom: ${{ variables.builtFrom }}
-              businessArea: ${{ variables.businessArea }}
+              product: ${{ variables.product }}
+              variables:
+                resourceGroup: ${{ variables.resourceGroupName }}
+                containerName: ${{ variables.containerName }}
+                storageAccount: ${{ variables.storageAccount }}
+              outputName: '${{ variables.planOutputName }}'
+              workingDirectory: ${{ variables.workingDirectory }}
+
+          - ${{ if eq('${{ service.name }}','SharedInfra') }}:
+            - template: pipeline/jobs/setup-azmonlink.yaml
+              parameters:
+                displayName: Set up Azure Monitor Link to Log Analytics
+                dependsOn: TerraformDeploy
+                subscription: ${{ environment.subscription }}
+                environment: ${{ environment.name }}
+                builtFrom: ${{ variables.builtFrom }}
+                businessArea: ${{ variables.businessArea }}

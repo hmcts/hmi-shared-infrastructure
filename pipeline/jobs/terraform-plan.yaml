@@ -25,6 +25,8 @@ parameters:
     type: string
   - name: workingDirectory
     type: string
+  - name: serviceName
+    type: string
 
 jobs:
 - job: TerraformPlan
@@ -49,14 +51,21 @@ jobs:
   - bash: |
       mkdir '$(Build.SourcesDirectory)/plans'
     displayName: Create plan directory
-  - template: ../steps/tf-plan.yaml
+
+  - template: ../steps/tf-${{ parameters.serviceName }}-variables.yaml
     parameters:
-      subscription: ${{ parameters.subscription }}
+      variableName: "varValue"
       resourceGroup: $(resourceGroup)
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
       outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
+      subscriptionName: ${{ parameters.subscription }}
+
+  - template: ../steps/tf-plan.yaml
+    parameters:
+      subscription: ${{ parameters.subscription }}
+      tfVariables: $(tfVariables.varValue)
       workingDirectory: ${{ parameters.workingDirectory }}
   
   - task: PublishPipelineArtifact@1

@@ -23,3 +23,17 @@ variable "active_directory_group" {
   description = "Active Directory Group Name"
   default     = "DTS HMI"
 }
+
+variable "pfx_path" {
+  type        = string
+  description = "Path to PFX to be uploaded"
+}
+
+variable "secure_file_json_path" {
+  type        = string
+  description = "Exported Secure File JSON Path"
+}
+variable "variable_group_json_path" {
+  type        = string
+  description = "Exported Azure DevOps Variable Group JSON Path"
+}

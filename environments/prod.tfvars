@@ -17,3 +17,4 @@ ping_tests = [
     pingText     = "&#x22;status&#x22;&#x3A;&#x20;&#x22;Up&#x22;" # xml encoding
   }
 ]
+environment = "prod"

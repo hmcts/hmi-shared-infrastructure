@@ -1,0 +1,31 @@
+parameters:
+  - name: subscriptionName
+    type: string
+  - name: sourceKvName
+    type: string
+  - name: sourceCertName
+    type: string
+  - name: environment
+    type: string
+  - name: targetpath
+    type: string
+  
+steps:
+  - task: AzureCLI@2
+    displayName: 'Export ${{ parameters.sourceKvName }}:${{ parameters.sourceCertName }}'
+    inputs:
+      azureSubscription: '${{ parameters.subscriptionName }}'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        env="${{ parameters.environment }}"
+        sourceCertName="${{ parameters.sourceCertName }}"
+        sourceKvName="${{ parameters.sourceKvName }}"
+
+        echo "Copy wildcard cert from $sourceKvName"
+        az keyvault secret download --id https://$sourceKvName.vault.azure.net/secrets/$sourceCertName -f cert-source.pfx
+        echo "Source Cert Version $sourceVersionId"
+
+        base64 -d cert-source.pfx > cert-up.pfx
+
+        mv cert-up.pfx ${{ parameters.targetpath }}
