@@ -41,6 +41,11 @@ stages:
         parameters:
           displayName: 'Validate Terraform files'
 
+## NOTE: 
+## The Environments and Services parameters below are duplicated
+## This is due to limitations on AzDO Pipelines setting parameter templates and/or non-runtime parameters and/or object type variables.
+## If you change one, be sure to change all others below.
+
   - template: pipeline/stages/plan.yaml
     parameters:
       environments:
