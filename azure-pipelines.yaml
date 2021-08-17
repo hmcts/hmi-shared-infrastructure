@@ -60,13 +60,13 @@ stages:
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
       services: 
-        - ${{ if or(eq(parameters.deployTo, "all-services"}), eq(parameters.deployTo, "SharedInfra"}))}}:
+        - ${{ if or(eq(parameters.deployTo, "all-services"), eq(parameters.deployTo, "SharedInfra"))}}:
           - name: SharedInfra
             displayName: 'Shared Infrastructure'
             resourceGroupName: 'sharedinfra'
             resourcePrefix: 'hmiapim'
             terraformVersion: '0.13.3'
-        - ${{ if or(eq(parameters.deployTo, "all-services"}), eq(parameters.deployTo, "SharedServies"}))}}:
+        - ${{ if or(eq(parameters.deployTo, "all-services"), eq(parameters.deployTo, "SharedServies"))}}:
           - name: SharedServies
             displayName: 'Shared Services'
             resourceGroupName: 'sharedservices-state'
@@ -92,13 +92,13 @@ stages:
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
       services: 
-        - ${{ if or(eq(parameters.deployTo, "all-services"}), eq(parameters.deployTo, "SharedInfra"}))}}:
+        - ${{ if or(eq(parameters.deployTo, "all-services"), eq(parameters.deployTo, "SharedInfra"))}}:
           - name: SharedInfra
             displayName: 'Shared Infrastructure'
             resourceGroupName: 'sharedinfra'
             resourcePrefix: 'hmiapim'
             terraformVersion: '0.13.3'
-        - ${{ if or(eq(parameters.deployTo, "all-services"}), eq(parameters.deployTo, "SharedServies"}))}}:
+        - ${{ if or(eq(parameters.deployTo, "all-services"), eq(parameters.deployTo, "SharedServies"))}}:
           - name: SharedServies
             displayName: 'Shared Services'
             resourceGroupName: 'sharedservices-state'
@@ -124,13 +124,13 @@ stages:
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
       services: 
-        - ${{ if or(eq(parameters.deployTo, "all-services"}), eq(parameters.deployTo, "SharedInfra"}))}}:
+        - ${{ if or(eq(parameters.deployTo, "all-services"), eq(parameters.deployTo, "SharedInfra"))}}:
           - name: SharedInfra
             displayName: 'Shared Infrastructure'
             resourceGroupName: 'sharedinfra'
             resourcePrefix: 'hmiapim'
             terraformVersion: '0.13.3'
-        - ${{ if or(eq(parameters.deployTo, "all-services"}), eq(parameters.deployTo, "SharedServies"}))}}:
+        - ${{ if or(eq(parameters.deployTo, "all-services"), eq(parameters.deployTo, "SharedServies"))}}:
           - name: SharedServies
             displayName: 'Shared Services'
             resourceGroupName: 'sharedservices-state'
