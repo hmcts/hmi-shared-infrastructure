@@ -75,22 +75,8 @@ stages:
           dependsOn: 'Apply_${{ service.name }}_${{ environment.dependency }}'
         displayName: Plan ${{ environment.name }} ${{ service.displayName }}
         variables: 
-          - name: planOutputName
-            value: '${{ service.name }}_${{ environment.name }}'
-          - name: workingDirectory          
-            ${{ if eq(service.name, 'SharedInfra') }}:
-              value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
-            ${{ if eq(service.name, 'SharedServies') }}:
-              value: '$(System.DefaultWorkingDirectory)/terraform/deployments/sharedservices'
-          - name: storageAccount
-            value: '${{ service.resourcePrefix }}infra${{ environment.name }}sa'
-          - name: resourceGroupName
-            value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
-          - name: containerName
-            value: '${{ service.resourcePrefix }}terraform'
-          - name: terraformVersion
-            value: ${{ service.terraformVersion }}
-          - template: environments/${{ environment.name }}.yaml
+          - template: pipeline/variables/Shared.yaml
+          - template: pipeline/variables/${{ service.name }}.yaml
 
         jobs:
         - template: pipeline/jobs/setup-infra.yaml
@@ -146,22 +132,8 @@ stages:
           dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
         displayName: Apply ${{ environment.name }} ${{ service.displayName }}
         variables: 
-          - name: planOutputName
-            value: '${{ service.name }}_${{ environment.name }}'
-          - name: workingDirectory          
-            ${{ if eq(service.name, 'SharedInfra') }}:
-              value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ environment.name }}'
-            ${{ if eq(service.name, 'SharedServies') }}:
-              value: '$(System.DefaultWorkingDirectory)/terraform/sharedservices'
-          - name: storageAccount
-            value: '${{ service.resourcePrefix }}infra${{ environment.name }}sa'
-          - name: resourceGroupName
-            value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
-          - name: containerName
-            value: '${{ service.resourcePrefix }}terraform'
-          - template: environments/${{ environment.name }}.yaml
-          - name: terraformVersion
-            value: ${{ service.terraformVersion }}
+          - template: pipeline/variables/Shared.yaml
+          - template: pipeline/variables/${{ service.name }}.yaml
 
         jobs:
           - template: pipeline/jobs/terraform-deploy.yaml

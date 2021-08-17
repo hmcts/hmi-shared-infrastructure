@@ -1,0 +1,12 @@
+variables: 
+  - name: planOutputName
+    value: '${{ service.name }}_${{ environment.name }}'
+  - name: storageAccount
+    value: '${{ service.resourcePrefix }}infra${{ environment.name }}sa'
+  - name: resourceGroupName
+    value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
+  - name: containerName
+    value: '${{ service.resourcePrefix }}terraform'
+  - name: terraformVersion
+    value: ${{ service.terraformVersion }}
+  - template: environments/${{ environment.name }}.yaml

@@ -1,0 +1,3 @@
+variables: 
+  - name: workingDirectory
+    value: '$(System.DefaultWorkingDirectory)/terraform/deployments/sharedservices'
