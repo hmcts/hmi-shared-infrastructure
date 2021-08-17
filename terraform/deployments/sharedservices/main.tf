@@ -82,7 +82,7 @@ module "keyvault-policy" {
       object_id               = data.azuread_service_principal.dcd_sp_ado.object_id
       key_permissions         = []
       secret_permissions      = ["List", "Purge", "Restore", "Get", "Set", "Delete", "Backup", "Recover"]
-      certificate_permissions = []
+      certificate_permissions = ["create", "delete", "deleteissuers", "get", "getissuers", "import", "list", "listissuers","managecontacts", "manageissuers", "purge", "recover", "setissuers", "update", "backup", "restore"]
       storage_permissions     = []
     },
     "${data.azuread_service_principal.hmi_apim_svc.display_name}" = {
