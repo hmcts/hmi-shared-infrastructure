@@ -6,13 +6,13 @@ parameters:
 
 variables: 
   - name: planOutputName
-    value: '${{ service.name }}_${{ environment.name }}'
+    value: '${{ parameters.service.name }}_${{ parameters.environment.name }}'
   - name: storageAccount
-    value: '${{ service.resourcePrefix }}infra${{ environment.name }}sa'
+    value: '${{ parameters.service.resourcePrefix }}infra${{ parameters.environment.name }}sa'
   - name: resourceGroupName
-    value: 'hmi-${{ service.resourceGroupName }}-${{ environment.name }}-rg'
+    value: 'hmi-${{ parameters.service.resourceGroupName }}-${{ parameters.environment.name }}-rg'
   - name: containerName
-    value: '${{ service.resourcePrefix }}terraform'
+    value: '${{ parameters.service.resourcePrefix }}terraform'
   - name: terraformVersion
-    value: ${{ service.terraformVersion }}
-  - template: environments/${{ environment.name }}.yaml
+    value: ${{ parameters.service.terraformVersion }}
+  - template: environments/${{ parameters.environment.name }}.yaml
