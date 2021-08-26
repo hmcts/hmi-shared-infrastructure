@@ -7,8 +7,12 @@ module "aks-mi" {
 data "azuread_service_principal" "dcd_sp_ado" {
   display_name = "dcd_sp_ado_${var.environment}_operations_v2"
 }
-data "azuread_service_principal" "hmi_apim_svc" {
-  display_name = "hmi-apim-svc-${var.environment}"
+locals {
+  apimName = "hmi-apim-svc-${var.environment}"
+}
+data "azurerm_api_management" "hmi_apim_svc" {
+  name                = local.apimName
+  resource_group_name = "hmi-apim-${var.environment}-rg"
 }
 
 data "azuread_application" "cft_client" {
@@ -45,9 +49,9 @@ module "keyvault-policy" {
       certificate_permissions = []
       storage_permissions     = []
     },
-    "${data.azuread_service_principal.hmi_apim_svc.display_name}" = {
+    "${local.apimName}" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = data.azuread_service_principal.hmi_apim_svc.object_id
+      object_id               = data.azurerm_api_management.hmi_apim_svc.identity.principal_id
       key_permissions         = []
       secret_permissions      = ["Get", "Set", "List", "Delete"]
       certificate_permissions = []
