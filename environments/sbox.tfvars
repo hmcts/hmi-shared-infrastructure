@@ -33,3 +33,4 @@ ping_tests = [
     pingText     = ""
   }
 ]
+environment = "sbox"

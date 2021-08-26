@@ -1,17 +1,25 @@
 resource "azurerm_key_vault_certificate" "cert" {
-  name         = var.cert_name
+  for_each     = var.certificates
+  name         = lookup(each.value, "name")
   key_vault_id = var.keyvault_id
+
+  dynamic "certificate" {
+    for_each = lookup(each.value, "content") != "" ? [1] : []
+    content {
+      contents = lookup(each.value, "content")
+    }
+  }
 
   certificate_policy {
     issuer_parameters {
-      name = "Self"
+      name = lookup(each.value, "issuer_name")
     }
 
     key_properties {
-      exportable = true
-      key_size   = 2048
-      key_type   = "RSA"
-      reuse_key  = true
+      exportable = lookup(each.value, "key_properties_exportable")
+      key_size   = lookup(each.value, "key_properties_key_size")
+      key_type   = lookup(each.value, "key_properties_key_type")
+      reuse_key  = lookup(each.value, "key_properties_reuse_key")
     }
 
     lifetime_action {
@@ -31,23 +39,16 @@ resource "azurerm_key_vault_certificate" "cert" {
     x509_certificate_properties {
       # Server Authentication = 1.3.6.1.5.5.7.3.1
       # Client Authentication = 1.3.6.1.5.5.7.3.2
-      extended_key_usage = ["1.3.6.1.5.5.7.3.1"]
+      extended_key_usage = lookup(each.value, "extended_key_usage")
 
-      key_usage = [
-        "cRLSign",
-        "dataEncipherment",
-        "digitalSignature",
-        "keyAgreement",
-        "keyCertSign",
-        "keyEncipherment",
-      ]
+      key_usage = lookup(each.value, "key_usage")
 
       subject_alternative_names {
-        dns_names = var.cert_dns_names
+        dns_names = lookup(each.value, "dns_names")
       }
 
-      subject            = "CN=${var.cert_subject}"
-      validity_in_months = var.cert_validity_in_months
+      subject            = lookup(each.value, "subject")
+      validity_in_months = lookup(each.value, "validity_in_months")
     }
   }
 }

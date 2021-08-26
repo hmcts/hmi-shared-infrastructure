@@ -1,0 +1,58 @@
+parameters:
+  - name: environments
+    type: object
+  - name: services
+    type: object
+
+stages:
+ - ${{ each service in parameters.services }}:
+    - ${{ each environment in parameters.environments }}:
+
+      - stage: 'Plan_${{ service.name }}_${{ environment.name }}'
+        ${{ if eq(environment.dependency, 'CIBuild') }}:
+          dependsOn: '${{ environment.dependency }}'
+        ${{ if ne(environment.dependency, 'CIBuild') }}:
+          dependsOn: 'Apply_${{ service.name }}_${{ environment.dependency }}'
+        displayName: Plan ${{ environment.name }} ${{ service.displayName }}
+        variables: 
+          - template: ../variables/Shared.yaml
+            parameters:
+              environment: ${{ environment }}
+              service: ${{ service }}
+          - template: ../variables/${{ service.name }}.yaml
+            parameters:
+              environment: ${{ environment }}
+              service: ${{ service }}
+
+        jobs:
+        - template: ../jobs/setup-infra.yaml
+          parameters:
+            displayName: Set up ${{ environment.name }} infrastructure for APIM deployments
+            subscription: ${{ environment.subscription }}
+            environment: ${{ environment.name }}
+            builtFrom: ${{ variables.builtFrom }}
+            businessArea: ${{ variables.businessArea }}
+            application: ${{ variables.application }}
+            resourceGroupName: ${{ variables.resourceGroupName }}
+            containerName: ${{ variables.containerName }}
+            storageAccount: ${{ variables.storageAccount }}
+            resourcePrefix: ${{ service.resourcePrefix }}
+
+        - template: ../jobs/terraform-plan.yaml
+          parameters:
+            displayName: "Plan ${{ environment.name }} Shared Infra"
+            dependsOn: setupInfrastructure
+            subscription: ${{ environment.subscription }}
+            environment: ${{ environment.name }}
+            resourceGroup: $(resourceGroup)
+            storageAccount: $(storageAccount)
+            containerName: $(containerName)
+            builtFrom: ${{ variables.builtFrom }}
+            product: ${{ variables.product }}
+            variables:
+              resourceGroup: ${{ variables.resourceGroupName }}
+              containerName: ${{ variables.containerName }}
+              storageAccount: ${{ variables.storageAccount }}
+            outputName: ${{ variables.planOutputName }}
+            workingDirectory: ${{ variables.workingDirectory }}
+            serviceName: ${{ service.name }}

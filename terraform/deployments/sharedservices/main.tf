@@ -1,8 +1,11 @@
 # Generic locals
 locals {
-  common_tags         = module.ctags.common_tags
-  resource_group_name = "${var.product}-sharedservices-${var.environment}-rg"
-  key_vault_name      = "${var.product}-shared-kv-${var.environment}"
+  common_tags                      = module.ctags.common_tags
+  resource_group_name              = "${var.product}-sharedservices-${var.environment}-rg"
+  key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
+  casehqemulatorStorageName        = "casehqemulator"
+  shared_infra_resource_group_name = "hmi-sharedinfra-${var.environment}-rg"
+  certificate_name = "star-sandbox"
 }
 
 module "ctags" {
@@ -12,6 +15,8 @@ module "ctags" {
   builtFrom   = var.builtFrom
 }
 
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_resource_group" "rg" {
   name     = local.resource_group_name
   location = var.location
@@ -19,7 +24,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 module "kv" {
-  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
   name                    = local.key_vault_name
   product                 = var.product
   env                     = var.environment

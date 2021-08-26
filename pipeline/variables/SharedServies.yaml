@@ -1,0 +1,9 @@
+parameters:
+  - name: environment
+    type: object
+  - name: service
+    type: object
+
+variables:
+  - name: workingDirectory
+    value: '$(System.DefaultWorkingDirectory)/terraform/deployments/sharedservices'

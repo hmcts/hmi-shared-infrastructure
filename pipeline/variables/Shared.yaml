@@ -1,0 +1,18 @@
+parameters:
+  - name: environment
+    type: object
+  - name: service
+    type: object
+
+variables: 
+  - name: planOutputName
+    value: '${{ parameters.service.name }}_${{ parameters.environment.name }}'
+  - name: storageAccount
+    value: '${{ parameters.service.resourcePrefix }}infra${{ parameters.environment.name }}sa'
+  - name: resourceGroupName
+    value: 'hmi-${{ parameters.service.resourceGroupName }}-${{ parameters.environment.name }}-rg'
+  - name: containerName
+    value: '${{ parameters.service.resourcePrefix }}terraform'
+  - name: terraformVersion
+    value: ${{ parameters.service.terraformVersion }}
+  - template: ../../environments/${{ parameters.environment.name }}.yaml

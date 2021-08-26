@@ -1,0 +1,37 @@
+parameters:
+  - name: variableName
+    type: string
+  - name: environment
+    type: string
+  - name: subscriptionName
+    type: string
+  - name: outputLocation
+    type: string
+  - name: resourceGroup
+    type: string
+    default: ""
+  - name: builtFrom
+    type: string
+    default: ""
+  - name: product
+    type: string
+    default: ""
+
+steps:
+
+  - bash: |
+      variableName="${{ parameters.variableName }}"
+
+      variables=""
+      variables="-var-file=\"$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars\""
+      variables="${variables} -var-file=\"$(System.DefaultWorkingDirectory)/environments/shared.tfvars\""
+      variables="${variables} -out=\"${{ parameters.outputLocation }}\""
+      variables="${variables} -var \"resource_group=${{ parameters.resourceGroup }}\""
+      variables="${variables} -var \"environment=${{ parameters.environment }}\""
+      variables="${variables} -var \"la_nonprod_sub_id=$(la-nonprod-sub-id)\""
+      variables="${variables} -var \"la_prod_sub_id=$(la-prod-sub-id)\""
+      variables="${variables} -var \"la_sbox_sub_id=$(la-sbox-sub-id)\""
+      variables="${variables} -var \"builtFrom=${{ parameters.builtFrom }} \""
+      variables="${variables} -var \"product=${{ parameters.product }}\""
+
+      echo "##vso[task.setvariable variable=$variableName;isOutput=true]$variables"
