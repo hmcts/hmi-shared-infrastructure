@@ -73,7 +73,7 @@ jobs:
     displayName: Create Certificates directory
   - template: az-download-pfx.yaml
     parameters:
-      subscriptionName: ${{ parameters.subscriptionName }}
+      subscriptionName: ${{ parameters.subscription }}
       sourceKvName: "$(source_kv_name_prefix)-${{ parameters.environment }}"
       sourceCertName: $(source_cert_name)
       environment: ${{ parameters.environment }}
