@@ -51,7 +51,7 @@ module "keyvault-policy" {
     },
     "${local.apimName}" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = data.azurerm_api_management.hmi_apim_svc.identity.principal_id
+      object_id               = data.azurerm_api_management.hmi_apim_svc.identity.0.principal_id
       key_permissions         = []
       secret_permissions      = ["Get", "Set", "List", "Delete"]
       certificate_permissions = []
