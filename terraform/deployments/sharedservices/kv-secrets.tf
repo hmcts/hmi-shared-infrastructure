@@ -25,16 +25,6 @@ data "azurerm_application_insights" "appin" {
   resource_group_name = local.shared_infra_resource_group_name
 }
 
-data "azuread_service_principal" "ado_sp" {
-  display_name = "DTS Service Principal (ado:docmosis/docmosis-container-build)"
-}
-
-resource "azuread_service_principal_password" "ado_sp_password" {
-  #display_name = "HMI Shared Services"
-  service_principal_id = data.azuread_service_principal.ado_sp.id
-  #end_date = timeadd(timestamp(), "8760h")
-}
-
 data "azurerm_key_vault_certificate" "star_cert" {
   name         = local.certificate_name
   key_vault_id = module.kv.key_vault_id
@@ -103,14 +93,6 @@ module "keyvault_secrets" {
         "source" = "https://dev.azure.com/hmcts/Shared%20Services/_library?itemType=SecureFiles&s=policy-variables-${var.environment}-json"
       }
       content_type = "json"
-    },
-    {
-      name = "ado-sp-secret"
-      value = resource.azuread_service_principal_password.ado_sp_password.value
-      tags = {
-        "source" = "DTS Service Principal (ado:docmosis/docmosis-container-build)"
-      }
-      content_type = ""
     },
     {
       name = "apim-hostname-certificate"
