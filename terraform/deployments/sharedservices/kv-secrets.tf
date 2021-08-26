@@ -30,9 +30,9 @@ data "azuread_service_principal" "ado_sp" {
 }
 
 resource "azuread_service_principal_password" "ado_sp_password" {
-  display_name = "HMI Shared Services"
+  #display_name = "HMI Shared Services"
   service_principal_id = data.azuread_service_principal.ado_sp.id
-  end_date = timeadd(timestamp(), "8760h")
+  #end_date = timeadd(timestamp(), "8760h")
 }
 
 data "azurerm_key_vault_certificate" "star_cert" {
