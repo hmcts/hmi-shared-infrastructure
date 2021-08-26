@@ -16,3 +16,7 @@ variables:
   - name: terraformVersion
     value: ${{ parameters.service.terraformVersion }}
   - template: ../../environments/${{ parameters.environment.name }}.yaml
+  - name: builtFrom
+    value: hmcts/hmi-shared-infrastructure
+  - name: product
+    value: hmi
