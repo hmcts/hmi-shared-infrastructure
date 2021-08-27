@@ -6,7 +6,7 @@ parameters:
 
 variables: 
   - name: planOutputName
-    value: '${{ parameters.service.name }}_${{ parameters.environment.name }}_$(Build.BuildId)'
+    value: '${{ parameters.service.name }}_${{ parameters.environment.name }}_$(System.JobAttempt)'
   - name: storageAccount
     value: '${{ parameters.service.resourcePrefix }}infra${{ parameters.environment.name }}sa'
   - name: resourceGroupName
