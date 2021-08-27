@@ -27,4 +27,7 @@ module "keyvault_certificate" {
       subject = ""
     }
   }
+  depends_on = [
+    module.keyvault-policy
+  ]
 }

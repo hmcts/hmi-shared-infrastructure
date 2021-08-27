@@ -41,6 +41,14 @@ module "keyvault-policy" {
       certificate_permissions = []
       storage_permissions     = []
     },
+    "${data.azuread_service_principal.dcd_sp_ado.display_name}" = {
+      tenant_id               = data.azurerm_client_config.current.tenant_id
+      object_id               = data.azuread_service_principal.dcd_sp_ado.object_id
+      key_permissions         = []
+      secret_permissions      = ["backup", "delete", "get", "list", "purge", "recover", "restore", "set"]
+      certificate_permissions = ["purge", "backup", "create", "delete", "deleteissuers", "get", "getissuers", "import", "list", "listissuers", "managecontacts", "manageissuers", "setissuers", "update"]
+      storage_permissions     = []
+    },
     "${local.apimName}" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
       object_id               = data.azurerm_api_management.hmi_apim_svc.identity.0.principal_id
