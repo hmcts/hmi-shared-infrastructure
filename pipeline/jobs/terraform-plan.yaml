@@ -73,5 +73,6 @@ jobs:
     inputs:
       targetPath: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
       artifact: '${{ parameters.outputName }}'
+      FileCopyOptions: '/purge'
 
   
