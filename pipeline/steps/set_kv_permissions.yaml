@@ -29,5 +29,5 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       echo "Updating KeyVault Permissions"
-      az keyvault set-policy --name hmi-shared-kv-${{ parameters.environment }} --object-id $(getspid.spid) --secret-permissions backup delete get list purge recover restore set --certificate-permissions backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers setissuers update
+      az keyvault set-policy --name hmi-shared-kv-${{ parameters.environment }} --object-id $(getspid.spid) --secret-permissions backup delete get list purge recover restore set --certificate-permissions purge backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers setissuers update
       
