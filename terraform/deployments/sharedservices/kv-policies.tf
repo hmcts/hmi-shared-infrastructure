@@ -25,13 +25,13 @@ module "keyvault-policy" {
   policies = {
     "cft-client" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = data.azuread_application.cft_client.object_id #TODO: get id from data source e7214bce-c8df-4d67-b081-1def53db25a7
+      object_id               = data.azuread_application.cft_client.object_id 
       key_permissions         = []
       secret_permissions      = ["get"]
       certificate_permissions = []
       storage_permissions     = []
     },
-    "aks-sbox-mi" = {
+    "aks-${var.environment}-mi" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
       object_id               = module.aks-mi.principal_id
       key_permissions         = []
