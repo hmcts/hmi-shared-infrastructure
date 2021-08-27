@@ -78,6 +78,13 @@ jobs:
       sourceCertName: $(source_cert_name)
       environment: ${{ parameters.environment }}
       targetpath: "$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx"
+  - template: ../steps/az-purge-deleted-cert.yaml
+    parameters:
+      subscriptionName: ${{ parameters.subscription }}
+      kvName: "hmi-shared-kv-${{ parameters.environment }}"
+      certName: "star-sandbox"
+
+
 
   - template: ../steps/tf-apply.yaml
     parameters:
