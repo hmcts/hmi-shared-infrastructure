@@ -31,7 +31,7 @@ steps:
       targetpath: "$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx"
   - template: ../steps/az-purge-deleted-cert.yaml
     parameters:
-      subscriptionName: ${{ parameters.subscription }}
+      subscriptionName: ${{ parameters.subscriptionName }}
       kvName: "hmi-shared-kv-${{ parameters.environment }}"
       certName: "star-sandbox"
 
