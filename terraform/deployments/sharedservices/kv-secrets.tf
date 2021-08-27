@@ -96,7 +96,7 @@ module "keyvault_secrets" {
     },
     {
       name = "apim-hostname-certificate"
-      value = data.azurerm_key_vault_certificate.star_cert.certificate_data_base64
+      value = filebase64(var.pfx_path)
       tags = {
         "source" = "cftapps-${var.environment}"
       }
