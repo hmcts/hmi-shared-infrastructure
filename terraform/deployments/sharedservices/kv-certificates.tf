@@ -23,8 +23,8 @@ module "keyvault_certificate" {
       key_properties_reuse_key  = false
 
       issuer_name = "Self"
-      dns_names = []
-      subject = "CN=*.${var.environment}.platform.hmcts.net"
+      dns_names   = []
+      subject     = "CN=*.${var.environment}.platform.hmcts.net"
     }
   }
   depends_on = [

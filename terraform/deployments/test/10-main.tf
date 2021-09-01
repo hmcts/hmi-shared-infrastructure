@@ -35,3 +35,12 @@ module "app-insights" {
   ping_tests     = var.ping_tests
   tags           = local.common_tags
 }
+
+module "storage" {
+  source = "../../modules/storage-account"
+
+  env                 = var.environment
+  resource_group_name = var.resource_group
+  location            = var.location
+  common_tags         = local.common_tags
+}
