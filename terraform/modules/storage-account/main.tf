@@ -1,5 +1,3 @@
-data "azurerm_client_config" "current" {
-}
 
 module "sa" {
   source = "git::https://github.com/hmcts/cnp-module-storage-account.git?ref=master"
@@ -20,16 +18,4 @@ module "sa" {
 
   team_name    = "HMI DevOps"
   team_contact = "#vh-devops"
-
-  managed_identity_object_id = data.azurerm_client_config.current.object_id
-  role_assignments = [
-    "Storage Blob Data Contributor"
-  ]
-
-  containers = [
-    {
-      name        = "casehqemulator${var.env}"
-      access_type = "private"
-    }
-  ]
 }
