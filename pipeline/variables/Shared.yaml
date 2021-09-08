@@ -16,3 +16,4 @@ variables:
   - name: terraformVersion
     value: ${{ parameters.service.terraformVersion }}
   - template: ../../environments/${{ parameters.environment.name }}.yaml
+  - group: HMI-APIM-BUILD-${{ upper(parameters.environment.name) }}
