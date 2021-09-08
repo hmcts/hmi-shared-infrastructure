@@ -23,8 +23,8 @@ module "keyvault_certificate" {
       key_properties_reuse_key  = false
 
       issuer_name = "Self"
-      dns_names = []
-      subject = ""
+      dns_names   = []
+      subject     = ""
     }
   }
 }

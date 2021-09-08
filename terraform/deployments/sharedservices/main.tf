@@ -5,7 +5,7 @@ locals {
   key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
   casehqemulatorStorageName        = "casehqemulator"
   shared_infra_resource_group_name = "hmi-sharedinfra-${var.environment}-rg"
-  certificate_name = "star-sandbox"
+  certificate_name                 = "star-sandbox"
 }
 
 module "ctags" {
