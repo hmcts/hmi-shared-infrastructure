@@ -41,13 +41,11 @@ variable "variable_group_json_path" {
 variable "service_now_client" {
   type        = string
   description = "Service Now Client"
-  default     = ""
   sensitive   = true
 }
 variable "service_now_secret" {
   type        = string
   description = "Service Now Secret"
-  default     = ""
   sensitive   = true
 }
 
