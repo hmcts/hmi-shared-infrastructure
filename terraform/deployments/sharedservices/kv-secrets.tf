@@ -1,11 +1,4 @@
 
-module "case_hq_emulator" {
-  source = "../../modules/storage-account/data"
-
-  storage_account_name = "${local.casehqemulatorStorageName}${var.environment}"
-  resource_group_name  = local.shared_infra_resource_group_name
-}
-
 module "hmidtu" {
   source = "../../modules/storage-account/data"
 

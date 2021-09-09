@@ -1,0 +1,24 @@
+parameters:
+  - name: subscriptionName
+    type: string
+  - name: kvName
+    type: string
+  - name: certName
+    type: string
+  
+steps:
+  - task: AzureCLI@2
+    displayName: 'Purge ${{ parameters.kvName }}:${{ parameters.certName }}'
+    inputs:
+      azureSubscription: '${{ parameters.subscriptionName }}'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        certId=$(az keyvault certificate show-deleted --vault-name $kvName --name $certName --query "id" -o tsv)
+
+        if [[ $certId != "" ]]; then
+          az keyvault certificate purge --vault-name $kvName --name $certName
+        fi
+    env:
+      kvName: "${{ parameters.kvName }}"
+      certName: "${{ parameters.certName }}"

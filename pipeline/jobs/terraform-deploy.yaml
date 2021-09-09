@@ -41,6 +41,8 @@ parameters:
 
   - name: workingDirectory
     type: string
+  - name: serviceName
+    type: string
 
 jobs:
 - job: Terraform
@@ -67,17 +69,15 @@ jobs:
       containerName: ${{ variables.containerName }}
       workingDirectory: ${{ parameters.workingDirectory }}
 
-  
-  - bash: |
-      mkdir '$(Build.SourcesDirectory)/certs'
-    displayName: Create Certificates directory
-  - template: ../steps/az-download-pfx.yaml
+  - template: ../steps/tf-${{ parameters.serviceName }}-variables.yaml
     parameters:
-      subscriptionName: ${{ parameters.subscription }}
-      sourceKvName: "$(source_kv_name_prefix)-${{ parameters.environment }}"
-      sourceCertName: $(source_cert_name)
+      variableName: "varValue"
+      resourceGroup: $(resourceGroup)
       environment: ${{ parameters.environment }}
-      targetpath: "$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx"
+      builtFrom: ${{ parameters.builtFrom }}
+      product: ${{ parameters.product }}
+      outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
+      subscriptionName: ${{ parameters.subscription }}
 
   - template: ../steps/tf-apply.yaml
     parameters:

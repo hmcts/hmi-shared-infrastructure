@@ -24,7 +24,10 @@ module "keyvault_certificate" {
 
       issuer_name = "Self"
       dns_names   = []
-      subject     = ""
+      subject     = "CN=*.${var.environment}.platform.hmcts.net"
     }
   }
+  depends_on = [
+    module.keyvault-policy
+  ]
 }
