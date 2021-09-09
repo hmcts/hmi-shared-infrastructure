@@ -60,6 +60,8 @@ steps:
       variables="${variables} -var \"pfx_path=$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx\""
       variables="${variables} -var \"secure_file_json_path=${secureFileJson}\""
       variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
+      variables="${variables} -var \"service_now_client=${service_now_client}\""
+      variables="${variables} -var \"service_now_secret=${service_now_secret}\""
 
       echo "Variables set as: "
       echo "${variables}"
@@ -69,3 +71,5 @@ steps:
     env:
       secure_file_json: $(secureFileVariable.secure_file_json_path)
       variable_group_json: $(variableGroupDownload.variable_group_json_path)
+      service_now_client: $(service_now_client)
+      service_now_secret: $(service_now_secret)
