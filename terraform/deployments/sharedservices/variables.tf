@@ -38,12 +38,12 @@ variable "variable_group_json_path" {
   description = "Exported Azure DevOps Variable Group JSON Path"
 }
 
-variable "service_now_client" {
+variable "SERVICE_NOW_CLIENT" {
   type        = string
   description = "Service Now Client"
   sensitive   = true
 }
-variable "service_now_secret" {
+variable "SERVICE_NOW_SECRET" {
   type        = string
   description = "Service Now Secret"
   sensitive   = true

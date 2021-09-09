@@ -103,13 +103,13 @@ module "keyvault_secrets" {
     },
     {
       name         = "hmi-servicenow-client"
-      value        = var.service_now_client
+      value        = var.SERVICE_NOW_CLIENT
       tags         = {}
       content_type = ""
     },
     {
       name         = "hmi-servicenow-secret"
-      value        = var.service_now_secret
+      value        = var.SERVICE_NOW_SECRET
       tags         = {}
       content_type = ""
     }
