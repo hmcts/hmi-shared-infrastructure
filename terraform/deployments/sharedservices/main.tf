@@ -3,9 +3,9 @@ locals {
   common_tags                      = module.ctags.common_tags
   resource_group_name              = "${var.product}-sharedservices-${var.environment}-rg"
   key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
-  casehqemulatorStorageName        = "casehqemulator"
+  shared_storage_name              = "hmisharedinfrasa"
   shared_infra_resource_group_name = "hmi-sharedinfra-${var.environment}-rg"
-  certificate_name = "star-sandbox"
+  certificate_name                 = "star-sandbox"
 }
 
 module "ctags" {

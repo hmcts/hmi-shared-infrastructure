@@ -41,6 +41,7 @@ stages:
                 storageAccount: ${{ variables.storageAccount }}
               outputName: '${{ variables.planOutputName }}'
               workingDirectory: ${{ variables.workingDirectory }}
+              serviceName: ${{ service.name }}
 
           - ${{ if eq('${{ service.name }}','SharedInfra') }}:
             - template: ../jobs/setup-azmonlink.yaml

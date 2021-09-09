@@ -1,8 +1,8 @@
 
-module "case_hq_emulator" {
+module "shared_storage" {
   source = "../../modules/storage-account/data"
 
-  storage_account_name = "${local.casehqemulatorStorageName}${var.environment}"
+  storage_account_name = "${local.shared_storage_name}${var.environment}"
   resource_group_name  = local.shared_infra_resource_group_name
 }
 
@@ -37,27 +37,27 @@ module "keyvault_secrets" {
   tags         = local.common_tags
   secrets = [
     {
-      name  = "appins-instrumentation-key"
-      value = data.azurerm_application_insights.appin.instrumentation_key
-      tags  = {}
+      name         = "appins-instrumentation-key"
+      value        = data.azurerm_application_insights.appin.instrumentation_key
+      tags         = {}
       content_type = ""
     },
     {
-      name  = "${local.casehqemulatorStorageName}-storageaccount-key"
-      value = module.case_hq_emulator.primary_access_key
-      tags  = {}
+      name         = "${local.shared_storage_name}-storageaccount-key"
+      value        = module.shared_storage.primary_access_key
+      tags         = {}
       content_type = ""
     },
     {
-      name  = "${local.casehqemulatorStorageName}-storageaccount-name"
-      value = local.casehqemulatorStorageName
-      tags  = {}
+      name         = "${local.shared_storage_name}-storageaccount-name"
+      value        = local.shared_storage_name
+      tags         = {}
       content_type = ""
     },
     {
-      name  = "dtu-storage-account-key"
-      value = module.hmidtu.primary_access_key
-      tags  = {}
+      name         = "dtu-storage-account-key"
+      value        = module.hmidtu.primary_access_key
+      tags         = {}
       content_type = ""
     },
     {
@@ -79,7 +79,7 @@ module "keyvault_secrets" {
       content_type = ""
     },
     {
-      name = "HMI-APIM-BUILD-${upper(var.environment)}-json"
+      name  = "HMI-APIM-BUILD-${upper(var.environment)}-json"
       value = var.variable_group_json_path == "" ? "" : file(var.variable_group_json_path)
       tags = {
         "source" = "https://dev.azure.com/hmcts/Shared$20Services/_library?itemType=VariableGroups&view=VariableGroupView&path=HMI-APIM-BUILD-${upper(var.environment)}"
@@ -87,7 +87,7 @@ module "keyvault_secrets" {
       content_type = "json"
     },
     {
-      name = "policy-variables-${var.environment}-json"
+      name  = "policy-variables-${var.environment}-json"
       value = var.secure_file_json_path == "" ? "" : file(var.secure_file_json_path)
       tags = {
         "source" = "https://dev.azure.com/hmcts/Shared%20Services/_library?itemType=SecureFiles&s=policy-variables-${var.environment}-json"
@@ -95,8 +95,8 @@ module "keyvault_secrets" {
       content_type = "json"
     },
     {
-      name = "apim-hostname-certificate"
-      value = data.azurerm_key_vault_certificate.star_cert.certificate_data_base64
+      name  = "apim-hostname-certificate"
+      value = filebase64(var.pfx_path)
       tags = {
         "source" = "cftapps-${var.environment}"
       }
