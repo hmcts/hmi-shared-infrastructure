@@ -1,4 +1,3 @@
-
 module "shared_storage" {
   source = "../../modules/storage-account/data"
 
@@ -101,6 +100,18 @@ module "keyvault_secrets" {
         "source" = "cftapps-${var.environment}"
       }
       content_type = "application/x-pkcs12"
+    },
+    {
+      name         = "hmi-servicenow-client"
+      value        = var.service_now_client
+      tags         = {}
+      content_type = ""
+    },
+    {
+      name         = "hmi-servicenow-secret"
+      value        = var.service_now_secret
+      tags         = {}
+      content_type = ""
     }
   ]
 
