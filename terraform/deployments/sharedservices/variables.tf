@@ -24,11 +24,6 @@ variable "active_directory_group" {
   default     = "DTS HMI"
 }
 
-variable "pfx_path" {
-  type        = string
-  description = "Path to PFX to be uploaded"
-}
-
 variable "secure_file_json_path" {
   type        = string
   description = "Exported Secure File JSON Path"
