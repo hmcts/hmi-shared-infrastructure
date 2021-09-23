@@ -24,11 +24,6 @@ data "azurerm_application_insights" "appin" {
   resource_group_name = local.shared_infra_resource_group_name
 }
 
-data "azurerm_key_vault_certificate" "star_cert" {
-  name         = local.certificate_name
-  key_vault_id = module.kv.key_vault_id
-}
-
 module "keyvault_secrets" {
   source = "../../modules/key-vault/secret"
 
@@ -92,14 +87,6 @@ module "keyvault_secrets" {
         "source" = "https://dev.azure.com/hmcts/Shared%20Services/_library?itemType=SecureFiles&s=policy-variables-${var.environment}-json"
       }
       content_type = "json"
-    },
-    {
-      name  = "apim-hostname-certificate"
-      value = filebase64(var.pfx_path)
-      tags = {
-        "source" = "cftapps-${var.environment}"
-      }
-      content_type = "application/x-pkcs12"
     },
     {
       name         = "hmi-servicenow-client"

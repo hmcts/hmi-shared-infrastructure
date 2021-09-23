@@ -1,3 +1,1 @@
 variables:
-  source_cert_name: 'STAR-sandbox-platform-hmcts-net'
-  source_kv_name_prefix : 'cftapps'

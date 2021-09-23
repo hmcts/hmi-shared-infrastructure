@@ -18,23 +18,6 @@ parameters:
     default: ""
 
 steps:
-  - bash: |
-      mkdir '$(Build.SourcesDirectory)/certs'
-    displayName: Create Certificates directory
-
-  - template: az-download-pfx.yaml
-    parameters:
-      subscriptionName: ${{ parameters.subscriptionName }}
-      sourceKvName: "$(source_kv_name_prefix)-${{ parameters.environment }}"
-      sourceCertName: $(source_cert_name)
-      environment: ${{ parameters.environment }}
-      targetpath: "$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx"
-  - template: ../steps/az-purge-deleted-cert.yaml
-    parameters:
-      subscriptionName: ${{ parameters.subscriptionName }}
-      kvName: "hmi-shared-kv-${{ parameters.environment }}"
-      certName: "star-sandbox"
-
   - template: get-secure-file.yaml
     parameters:
       fileName: "policy-variables-${{ parameters.environment }}.json"
@@ -57,7 +40,6 @@ steps:
       variables="${variables} -out=\"${{ parameters.outputLocation }}\""
       variables="${variables} -var \"builtFrom=${{ parameters.builtFrom }} \""
       variables="${variables} -var \"product=${{ parameters.product }}\""
-      variables="${variables} -var \"pfx_path=$(Build.SourcesDirectory)/certs/${{ parameters.environment }}.pfx\""
       variables="${variables} -var \"secure_file_json_path=${secureFileJson}\""
       variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
       variables="${variables} -var \"service_now_client=${service_now_client}\""
