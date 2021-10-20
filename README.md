@@ -1,5 +1,5 @@
 # hmi-apim-infrastructure
-`terraform\deployments\{env}` is the path for the Shared APIM Infrastructure Terraform.
+`terraform\deployments\sharedinfra` is the path for the Shared APIM Infrastructure Terraform.
 
 ### Monitoring and Alerting:
 If you need to update web test endpoint, add or modify `var.ping_tests` in /environments/*env*.tfvars:
