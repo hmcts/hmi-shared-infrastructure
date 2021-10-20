@@ -70,13 +70,13 @@ stages:
             displayName: 'Shared Infrastructure'
             resourceGroupName: 'sharedinfra'
             resourcePrefix: 'hmiapim'
-            terraformVersion: '0.13.3'
+            terraformVersion: '0.14.0'
         - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
           - name: SharedServies
             displayName: 'Shared Services'
             resourceGroupName: 'sharedservices-state'
             resourcePrefix: 'hmiss'
-            terraformVersion: '0.15.4'
+            terraformVersion: '1.0.4'
 
   - template: pipeline/stages/wait.yaml
     parameters:
