@@ -70,7 +70,7 @@ stages:
             displayName: 'Shared Infrastructure'
             resourceGroupName: 'sharedinfra'
             resourcePrefix: 'hmiapim'
-            terraformVersion: '0.14.0'
+            terraformVersion: '1.0.4'
         - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
           - name: SharedServies
             displayName: 'Shared Services'
@@ -102,13 +102,13 @@ stages:
             displayName: 'Shared Infrastructure'
             resourceGroupName: 'sharedinfra'
             resourcePrefix: 'hmiapim'
-            terraformVersion: '0.13.3'
+            terraformVersion: '1.0.4'
         - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
           - name: SharedServies
             displayName: 'Shared Services'
             resourceGroupName: 'sharedservices-state'
             resourcePrefix: 'hmiss'
-            terraformVersion: '0.15.4'
+            terraformVersion: '1.0.4'
 
   - template: pipeline/stages/apply.yaml
     parameters:
@@ -134,11 +134,11 @@ stages:
             displayName: 'Shared Infrastructure'
             resourceGroupName: 'sharedinfra'
             resourcePrefix: 'hmiapim'
-            terraformVersion: '0.13.3'
+            terraformVersion: '1.0.4'
         - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
           - name: SharedServies
             displayName: 'Shared Services'
             resourceGroupName: 'sharedservices-state'
             resourcePrefix: 'hmiss'
-            terraformVersion: '0.15.4'
+            terraformVersion: '1.0.4'
 
