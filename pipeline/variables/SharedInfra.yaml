@@ -6,4 +6,4 @@ parameters:
 
 variables: 
   - name: workingDirectory
-    value: '$(System.DefaultWorkingDirectory)/terraform/deployments/${{ parameters.environment.name }}'
+    value: '$(System.DefaultWorkingDirectory)/terraform/deployments/sharedinfra'
