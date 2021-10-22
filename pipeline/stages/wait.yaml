@@ -12,6 +12,8 @@ stages:
         - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
           dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
           displayName: Wait ${{ environment.name }} ${{ service.displayName }}
+          pool:
+            vmImage: 'ubuntu-latest'
 
           jobs:
             - job: Wait

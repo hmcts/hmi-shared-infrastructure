@@ -14,6 +14,8 @@ stages:
         ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
           dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
         displayName: Apply ${{ environment.name }} ${{ service.displayName }}
+        pool:
+          vmImage: 'ubuntu-latest'
         variables: 
           - template: ../variables/Shared.yaml
             parameters:

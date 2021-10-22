@@ -33,5 +33,5 @@ jobs:
       azureSubscription: ${{ parameters.subscription }}
       ScriptType: 'FilePath'
       ScriptPath: '$(System.DefaultWorkingDirectory)/pipeline/scripts/azmonlink.ps1'
-      ScriptArguments: '-businessArea ${{ parameters.businessArea }} -builtFrom ${{ parameters.builtFrom }} -environment ${{ parameters.environment }} -larg $(la-rg) -lasboxsubid $(la-sbox-sub-id) -lanonprodsubid $(la-nonprod-sub-id) -laprodsubid $(la-prod-sub-id)'
+      ScriptArguments: '-businessArea ${{ parameters.businessArea }} -builtFrom ${{ parameters.builtFrom }} -environment ${{ parameters.environment }} -larg $(la-rg) -lasubid $(log_analytics_subscription_id)'
       azurePowerShellVersion: 'LatestVersion'

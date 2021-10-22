@@ -7,13 +7,7 @@ Param (
 [string] $larg,
 
 [Parameter(Mandatory=$true)]
-[string] $lasboxsubid,
-
-[Parameter(Mandatory=$true)]
-[string] $lanonprodsubid,
-
-[Parameter(Mandatory=$true)]
-[string] $laprodsubid,
+[string] $lasubid,
 
 [Parameter(Mandatory=$true)]
 [string] $businessArea,
@@ -42,11 +36,11 @@ if($environment -ieq "sbox"){ $env = "sandbox" } elseif($environment -ieq "dev")
 $tags += @{"environment"=$env}
 
 if($environment -ieq "sbox")
-    { $workspaceName = "hmcts-sandbox"; $workspaceId = "/subscriptions/$lasboxsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-sandbox" }
+    { $workspaceName = "hmcts-sandbox"; $workspaceId = "/subscriptions/$lasubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-sandbox" }
     elseif($environment -ieq "dev" -or $environment -ieq "test")
-    { $workspaceName = "hmcts-nonprod"; $workspaceId = "/subscriptions/$lanonprodsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-nonprod" }
+    { $workspaceName = "hmcts-nonprod"; $workspaceId = "/subscriptions/$lasubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-nonprod" }
     elseif($environment -ieq "stg" -or $environment -ieq "prod")
-    { $workspaceName = "hmcts-prod" ; $workspaceId = "/subscriptions/$laprodsubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-prod" }
+    { $workspaceName = "hmcts-prod" ; $workspaceId = "/subscriptions/$lasubid/resourcegroups/$larg/providers/microsoft.operationalinsights/workspaces/hmcts-prod" }
     else { Write-Host "Workspace not set." }
 
 Write-Host "Starting script"
