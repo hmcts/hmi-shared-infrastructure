@@ -1,3 +1,4 @@
+#tfsec:ignore:azure-storage-default-action-deny
 resource "azurerm_storage_account" "network_watcher_storage" {
   name                = "hmiapimwatcher${var.environment}"
   resource_group_name = var.resource_group
@@ -8,6 +9,7 @@ resource "azurerm_storage_account" "network_watcher_storage" {
   account_kind              = "StorageV2"
   account_replication_type  = "LRS"
   enable_https_traffic_only = true
+  min_tls_version           = "TLS1_2"
 }
 
 resource "azurerm_network_watcher_flow_log" "network_watcher_flow" {
@@ -21,7 +23,7 @@ resource "azurerm_network_watcher_flow_log" "network_watcher_flow" {
 
   retention_policy {
     enabled = true
-    days    = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 30 : 60
+    days    = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 30 : 90
   }
 
   traffic_analytics {

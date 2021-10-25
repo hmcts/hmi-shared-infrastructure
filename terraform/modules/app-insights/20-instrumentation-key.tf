@@ -4,8 +4,10 @@ data "azurerm_key_vault" "shared_keyvault" {
 }
 
 resource "azurerm_key_vault_secret" "instrumentation_key" {
-  name         = "appins-instrumentation-key"
-  value        = azurerm_application_insights.app_insights.instrumentation_key
-  key_vault_id = data.azurerm_key_vault.shared_keyvault.id
-  tags         = var.tags
+  name            = "appins-instrumentation-key"
+  value           = azurerm_application_insights.app_insights.instrumentation_key
+  key_vault_id    = data.azurerm_key_vault.shared_keyvault.id
+  tags            = var.tags
+  content_type    = "key"
+  expiration_date = timeadd(timestamp(), "8760h")
 }
