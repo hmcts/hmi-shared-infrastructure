@@ -39,7 +39,7 @@ stages:
     jobs:
       - template: pipeline/jobs/terraform-validate.yaml
         parameters:
-          displayName: 'Validate Terraform files'
+          terraformPath: $(Build.SourcesDirectory)/terraform
 
 ## NOTE: 
 ## The Environments and Services parameters below are duplicated
