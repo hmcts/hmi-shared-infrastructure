@@ -35,4 +35,4 @@ jobs:
         environment: ${{ parameters.environment }} 
         logAnalyticsResourceGroup: $(la-rg)
         logAnalyticsSubscriptionId: $(log_analytics_subscription_id)
-        resourceGroupName: 'pip-sharedinfra-${{ parameters.environment }}-rg'
+        resourceGroupName: 'hmi-sharedinfra-${{ parameters.environment }}-rg'
