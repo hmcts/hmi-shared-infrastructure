@@ -1,4 +1,4 @@
-
+#tfsec:ignore:azure-storage-use-secure-tls-policy
 module "sa" {
   source = "git::https://github.com/hmcts/cnp-module-storage-account.git?ref=master"
   #source = "../../../cnp-module-storage-account"
