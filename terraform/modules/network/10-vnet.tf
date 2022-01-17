@@ -10,7 +10,7 @@ locals {
   dns_zone_name = var.environment == "prod" ? "platform.hmcts.net" : "staging.platform.hmcts.net"
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "example" {
+resource "azurerm_private_dns_zone_virtual_network_link" "vnet_to_dns" {
   provider              = azurerm.private-dns-zone-subscription
   name                  = "${var.project}-vnet-${var.environment}"
   resource_group_name   = "core-infra-intsvc-rg"
