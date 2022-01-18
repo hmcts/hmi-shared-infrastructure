@@ -30,7 +30,7 @@ resource "azurerm_virtual_network_peering" "vnet_to_uks_prod_hub" {
   allow_forwarded_traffic   = true
 }
 resource "azurerm_virtual_network_peering" "uks_prod_hub_to_vnet" {
-  provider                  = azurerm.networking_client
+  provider                  = azurerm.networking_requester
   for_each                  = toset(local.peering_vnets)
   name                      = azurerm_virtual_network.vnet.name
   resource_group_name       = each.value
