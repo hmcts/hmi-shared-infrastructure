@@ -26,6 +26,7 @@ steps:
       azureSubscription: 'GlobalNetworkPeering'
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
+      addSpnToEnvironment: true
       inlineScript: |
         Write-Host "##vso[task.setvariable variable=GNP_CLIENT_ID;isOutput=true]$($env:servicePrincipalId)"
         Write-Host "Client ID: $($env:servicePrincipalId)"
