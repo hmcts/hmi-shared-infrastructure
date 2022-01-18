@@ -29,3 +29,12 @@ resource "azurerm_virtual_network_peering" "vnet_to_uks_prod_hub" {
   remote_virtual_network_id = "/subscriptions/${local.peering_subscription}/resourceGroups/${each.value}/providers/Microsoft.Network/virtualNetworks/${each.value}"
   allow_forwarded_traffic   = true
 }
+resource "azurerm_virtual_network_peering" "uks_prod_hub_to_vnet" {
+  provider                  = azurerm.networking_client
+  for_each                  = toset(local.peering_vnets)
+  name                      = azurerm_virtual_network.vnet.name
+  resource_group_name       = each.value
+  virtual_network_name      = each.value
+  remote_virtual_network_id = azurerm_virtual_network.vnet.id
+  allow_forwarded_traffic   = true
+}
