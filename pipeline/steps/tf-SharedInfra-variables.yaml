@@ -19,6 +19,19 @@ parameters:
 
 steps:
 
+  - task: AzureCLI@2
+    displayName: 'GlobalNetworkPeering Details'
+    inputs:
+      azureSubscription: '${{ parameters.subscriptionName }}'
+      scriptType: 'pscore'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        Write-Host "##vso[task.setvariable variable=GNP_CLIENT_ID;isOutput=true]$($env:servicePrincipalId)"
+        Write-Host "##vso[task.setvariable variable=GNP_CLIENT_SECRET;isOutput=true]$($env:servicePrincipalKey)"
+        Write-Host "##vso[task.setvariable variable=GNP_TENANT_ID;isOutput=true]$($env:tenantId)"
+        $subscriptionId = az account show --query id -o tsv
+        Write-Host "##vso[task.setvariable variable=GNP_SUBSCRIPTION_ID;isOutput=true]$subscriptionId"
+
   - bash: |
       variableName="${{ parameters.variableName }}"
 
@@ -29,6 +42,9 @@ steps:
       variables="${variables} -var \"resource_group=${{ parameters.resourceGroup }}\""
       variables="${variables} -var \"log_analytics_subscription_id=$(log_analytics_subscription_id)\""
       variables="${variables} -var \"builtFrom=${{ parameters.builtFrom }} \""
+      variables="${variables} -var \"network_client_id=$(GNP_CLIENT_ID) \""
+      variables="${variables} -var \"network_client_secret=$(GNP_CLIENT_SECRET) \""
+      variables="${variables} -var \"network_tenant_id=$(GNP_TENANT_ID) \""
 
       echo "Variables set as: "
       echo "${variables}"
