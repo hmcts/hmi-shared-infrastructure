@@ -1,5 +1,5 @@
 module "aks-mi" {
-  source = "../../modules/managed-identity/data"
+  source = "../modules/managed-identity/data"
 
   managed_identity_name = "aks-${var.environment}-mi"
   resource_group_name   = "genesis-rg"
@@ -18,7 +18,7 @@ data "azuread_application" "cft_client" {
 }
 
 module "keyvault-policy" {
-  source = "../../modules/key-vault/access-policy"
+  source = "../modules/key-vault/access-policy"
 
   key_vault_id = module.kv.key_vault_id
 

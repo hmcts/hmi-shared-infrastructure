@@ -1,31 +1,12 @@
-module "shared_storage" {
-  source = "../../modules/storage-account/data"
 
-  storage_account_name = "${local.shared_storage_name}${var.environment}"
-  resource_group_name  = local.shared_infra_resource_group_name
-}
 
-module "hmidtu" {
-  source = "../../modules/storage-account/data"
-
-  storage_account_name = "hmidtu${var.environment}"
-  resource_group_name  = local.shared_infra_resource_group_name
-}
-
-resource "random_password" "pact_db_password" {
-  length      = 20
-  min_upper   = 2
-  min_lower   = 2
-  min_numeric = 2
-  min_special = 2
-}
 data "azurerm_application_insights" "appin" {
   name                = "hmi-sharedinfra-appins-${var.environment}"
-  resource_group_name = local.shared_infra_resource_group_name
+  resource_group_name = azurerm_resource_group.rg.name
 }
 
 module "keyvault_secrets" {
-  source = "../../modules/key-vault/secret"
+  source = "../modules/key-vault/secret"
 
   key_vault_id = module.kv.key_vault_id
   tags         = local.common_tags
@@ -37,20 +18,20 @@ module "keyvault_secrets" {
       content_type = ""
     },
     {
-      name         = "${local.shared_storage_name}-storageaccount-key"
-      value        = module.shared_storage.primary_access_key
+      name         = "${module.sa_shared.storageaccount_name}-storageaccount-key"
+      value        = module.sa_shared.storageaccount_primary_access_key
       tags         = {}
       content_type = ""
     },
     {
-      name         = "${local.shared_storage_name}-storageaccount-name"
-      value        = local.shared_storage_name
+      name         = "${module.sa_shared.storageaccount_name}-storageaccount-name"
+      value        = module.sa_shared.storageaccount_name
       tags         = {}
       content_type = ""
     },
     {
       name         = "dtu-storage-account-key"
-      value        = module.hmidtu.primary_access_key
+      value        = module.sa_dtu.storageaccount_primary_access_key
       tags         = {}
       content_type = ""
     },
@@ -102,7 +83,4 @@ module "keyvault_secrets" {
     }
   ]
 
-  depends_on = [
-    module.keyvault_certificate
-  ]
 }

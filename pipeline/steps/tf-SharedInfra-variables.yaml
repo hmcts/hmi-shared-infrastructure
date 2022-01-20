@@ -19,6 +19,17 @@ parameters:
 
 steps:
 
+  - template: get-secure-file.yaml
+    parameters:
+      fileName: "policy-variables-${{ parameters.environment }}.json"
+      variableName: "secure_file_json"
+
+  - template: templates\common\get-variable-group.yml@azTemplates 
+    parameters:
+      subscriptionName: ${{ parameters.subscriptionName }}
+      variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
+      variableName: "variable_group_json"
+
   - task: AzureCLI@2
     displayName: 'GlobalNetworkPeering Details'
     name: GlobalNetworkPeering
@@ -39,6 +50,8 @@ steps:
 
   - bash: |
       variableName="${{ parameters.variableName }}"
+      secureFileJson=$(printenv secure_file_json)
+      variableGroupJson=$(printenv variable_group_json)
 
       variables=""
       variables="-var-file=\"$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars\""
@@ -50,6 +63,10 @@ steps:
       variables="${variables} -var \"network_client_id=${GNP_CLIENT_ID} \""
       variables="${variables} -var \"network_client_secret=${GNP_CLIENT_SECRET} \""
       variables="${variables} -var \"network_tenant_id=${GNP_TENANT_ID} \""
+      variables="${variables} -var \"secure_file_json_path=${secureFileJson}\""
+      variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
+      variables="${variables} -var \"service_now_client=${service_now_client}\""
+      variables="${variables} -var \"service_now_secret=${service_now_secret}\""
 
       echo "Variables set as: "
       echo "${variables}"
@@ -60,3 +77,7 @@ steps:
       GNP_CLIENT_ID: $(GlobalNetworkPeering.GNP_CLIENT_ID) 
       GNP_CLIENT_SECRET: $(GlobalNetworkPeering.GNP_CLIENT_SECRET) 
       GNP_TENANT_ID: $(GlobalNetworkPeering.GNP_TENANT_ID) 
+      secure_file_json: $(secureFileVariable.secure_file_json_path)
+      variable_group_json: $(variableGroupDownload.variable_group_json_path)
+      service_now_client: $(service_now_client)
+      service_now_secret: $(service_now_secret)
