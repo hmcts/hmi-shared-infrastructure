@@ -12,14 +12,19 @@ resources:
       endpoint: hmcts
 
 parameters:
-  - name: deployTo
-    displayName: Services to Deploy (All default)
-    type: string
-    default: all-services
-    values:
-      - all-services
-      - SharedInfra
-      - SharedServies        
+  - name: environments
+    displayName: Environements to deploy and dependencies
+    default:
+      - name: sbox
+        dependency: 'CIBuild'
+      - name: dev
+        dependency: 'sbox'
+      - name: test
+        dependency: 'dev'
+      - name: stg
+        dependency: 'test'
+      - name: prod
+        dependency: 'stg'
 
 variables:
   - group: HMI-APIM-Common
@@ -31,6 +36,14 @@ variables:
     value: $(Build.Repository.Name)
   - name: application
     value: 'hearing-management-interface'
+  - name: terraformVersion
+    value: '1.0.4'
+  - name: displayName
+    value: 'Shared Infrastructure'
+  - name: resourceGroupName
+    value: 'sharedinfra'
+  - name: resourcePrefix
+    value: 'hmiapim'
 
 stages:
 
@@ -41,104 +54,109 @@ stages:
         parameters:
           terraformPath: $(Build.SourcesDirectory)/terraform
 
-## NOTE: 
-## The Environments and Services parameters below are duplicated
-## This is due to limitations on AzDO Pipelines setting parameter templates and/or non-runtime parameters and/or object type variables.
-## If you change one, be sure to change all others below.
 
-  - template: pipeline/stages/plan.yaml
-    parameters:
-      environments:
-        - name: sbox
-          subscription: DTS-SHAREDSERVICES-SBOX
-          dependency: 'CIBuild'
-        - name: dev
-          subscription: DTS-SHAREDSERVICES-DEV
-          dependency: 'sbox'
-        - name: test
-          subscription: DTS-SHAREDSERVICES-TEST
-          dependency: 'dev'
-        - name: stg
-          subscription: DTS-SHAREDSERVICES-STG
-          dependency: 'test'
-        - name: prod
-          subscription: DTS-SHAREDSERVICES-PROD
-          dependency: 'stg'
-      services: 
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedInfra'))}}:
-          - name: SharedInfra
-            displayName: 'Shared Infrastructure'
-            resourceGroupName: 'sharedinfra'
-            resourcePrefix: 'hmiapim'
-            terraformVersion: '1.0.4'
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
-          - name: SharedServies
-            displayName: 'Shared Services'
-            resourceGroupName: 'sharedservices-state'
-            resourcePrefix: 'hmiss'
-            terraformVersion: '1.0.4'
+  - ${{ each environment in parameters.environments }}:
 
-  - template: pipeline/stages/wait.yaml
-    parameters:
-      environments:
-        - name: sbox
-          subscription: DTS-SHAREDSERVICES-SBOX
-          dependency: 'CIBuild'
-        - name: dev
-          subscription: DTS-SHAREDSERVICES-DEV
-          dependency: 'sbox'
-        - name: test
-          subscription: DTS-SHAREDSERVICES-TEST
-          dependency: 'dev'
-        - name: stg
-          subscription: DTS-SHAREDSERVICES-STG
-          dependency: 'test'
-        - name: prod
-          subscription: DTS-SHAREDSERVICES-PROD
-          dependency: 'stg'
-      services: 
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedInfra'))}}:
-          - name: SharedInfra
-            displayName: 'Shared Infrastructure'
-            resourceGroupName: 'sharedinfra'
-            resourcePrefix: 'hmiapim'
-            terraformVersion: '1.0.4'
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
-          - name: SharedServies
-            displayName: 'Shared Services'
-            resourceGroupName: 'sharedservices-state'
-            resourcePrefix: 'hmiss'
-            terraformVersion: '1.0.4'
+    - stage: 'Plan_sharedinfra_${{ environment.name }}'
+      ${{ if eq(environment.dependency, 'CIBuild') }}:
+        dependsOn: '${{ environment.dependency }}'
+      ${{ if ne(environment.dependency, 'CIBuild') }}:
+        dependsOn: 'Apply_sharedinfra_${{ environment.dependency }}'
+      displayName: Plan ${{ environment.name }} Shared Infrastructure
+      pool:
+        vmImage: 'ubuntu-latest'
+      variables: 
+        - template: pipeline/variables/Shared.yaml
+          parameters:
+            environment_name: ${{ environment.name }}
 
-  - template: pipeline/stages/apply.yaml
-    parameters:
-      environments:
-        - name: sbox
-          subscription: DTS-SHAREDSERVICES-SBOX
-          dependency: 'CIBuild'
-        - name: dev
-          subscription: DTS-SHAREDSERVICES-DEV
-          dependency: 'sbox'
-        - name: test
-          subscription: DTS-SHAREDSERVICES-TEST
-          dependency: 'dev'
-        - name: stg
-          subscription: DTS-SHAREDSERVICES-STG
-          dependency: 'test'
-        - name: prod
-          subscription: DTS-SHAREDSERVICES-PROD
-          dependency: 'stg'
-      services: 
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedInfra'))}}:
-          - name: SharedInfra
-            displayName: 'Shared Infrastructure'
-            resourceGroupName: 'sharedinfra'
-            resourcePrefix: 'hmiapim'
-            terraformVersion: '1.0.4'
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
-          - name: SharedServies
-            displayName: 'Shared Services'
-            resourceGroupName: 'sharedservices-state'
-            resourcePrefix: 'hmiss'
-            terraformVersion: '1.0.4'
+      jobs:
+        - template: ../jobs/setup-infra.yaml
+          parameters:
+            displayName: Set up ${{ environment.name }} infrastructure for APIM deployments
+            subscription: DTS-SHAREDSERVICES-${{ upper(environment.name) }}
+            environment: ${{ environment.name }}
+            builtFrom: ${{ variables.builtFrom }}
+            businessArea: ${{ variables.businessArea }}
+            application: ${{ variables.application }}
+            resourceGroupName: ${{ variables.resourceGroupName }}
+            containerName: ${{ variables.containerName }}
+            storageAccount: ${{ variables.storageAccount }}
+            resourcePrefix: ${{ variables.resourcePrefix }}
 
+        - template: ../jobs/terraform-plan.yaml
+          parameters:
+            displayName: "Plan ${{ environment.name }} Shared Infra"
+            dependsOn: setupInfrastructure
+            subscription: DTS-SHAREDSERVICES-${{ upper(environment.name) }}
+            environment: ${{ environment.name }}
+            resourceGroup: $(resourceGroup)
+            storageAccount: $(storageAccount)
+            containerName: $(containerName)
+            builtFrom: ${{ variables.builtFrom }}
+            product: ${{ variables.product }}
+            variables:
+              resourceGroup: ${{ variables.resourceGroupName }}
+              containerName: ${{ variables.containerName }}
+              storageAccount: ${{ variables.storageAccount }}
+            outputName: ${{ variables.planOutputName }}
+            workingDirectory: ${{ variables.workingDirectory }}
+            serviceName: sharedinfra
+
+    - ${{ if ne(environment.name, 'sbox') }}:
+      - stage: 'Wait_sharedinfra_${{ environment.name }}'
+        dependsOn: 'Plan_sharedinfra_${{ environment.name }}'
+        displayName: Wait ${{ environment.name }} Shared Infrastructure
+        pool:
+          vmImage: 'ubuntu-latest'
+
+        jobs:
+          - job: Wait
+            displayName: "Wait for approval"
+            pool: server
+            steps:
+              - template: ../steps/wait.yml
+                parameters:
+                  environment: ${{ environment.name }}
+
+    - stage: 'Apply_sharedinfra_${{ environment.name }}'
+      ${{ if eq(environment.name, 'sbox') }}:
+        dependsOn: 'Plan_sharedinfra_${{ environment.name }}'
+      ${{ else }}:
+        dependsOn: 'Wait_sharedinfra_${{ environment.name }}'
+      displayName: Apply ${{ environment.name }} Shared Infrastructure
+      pool:
+        vmImage: 'ubuntu-latest'
+      variables: 
+        - template: pipeline/variables/Shared.yaml
+          parameters:
+            environment_name: ${{ environment.name }}
+
+      jobs:
+        - template: ../jobs/terraform-deploy.yaml
+          parameters:
+            displayName: "Deploy ${{ environment.name }} Shared Infra"
+            subscription: DTS-SHAREDSERVICES-${{ upper(environment.name) }}
+            environment: ${{ environment.name }}
+            resourceGroup: $(resourceGroup)
+            storageAccount: $(storageAccount)
+            containerName: $(containerName)
+            builtFrom: ${{ variables.builtFrom }}
+            product: ${{ variables.product }}
+            variables:
+              resourceGroup: ${{ variables.resourceGroupName }}
+              containerName: ${{ variables.containerName }}
+              storageAccount: ${{ variables.storageAccount }}
+            outputName: '${{ variables.planOutputName }}'
+            workingDirectory: ${{ variables.workingDirectory }}
+            serviceName: sharedinfra
+
+        - ${{ if eq(service.name,'SharedInfra') }}:
+          - template: ../jobs/setup-azmonlink.yaml
+            parameters:
+              displayName: Set up Azure Monitor Link to Log Analytics
+              dependsOn: TerraformDeploy
+              subscription: DTS-SHAREDSERVICES-${{ upper(environment.name) }}
+              environment: ${{ environment.name }}
+              builtFrom: ${{ variables.builtFrom }}
+              businessArea: ${{ variables.businessArea }}
