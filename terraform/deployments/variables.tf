@@ -13,7 +13,7 @@ variable "builtFrom" {
   description = "Source of deployment"
   default     = "local"
 }
-variable "resource_group" {}
+
 variable "location" {
   type        = string
   description = "Resource Location"

@@ -2,16 +2,11 @@ parameters:
   - name: subscription
     type: string
 
-  - name: dependsOn
-    type: string
-    default: '[]'
-
-  - name: resourceGroup
+  - name: stateResourceGroup
     type: string
 
   - name: location
     type: string
-    default: uksouth
 
   - name: storageAccount
     type: string
@@ -19,60 +14,46 @@ parameters:
   - name: containerName
     type: string
 
-  - name: variables
-    type: object
-
-  - name: displayName
-    type: string
-
   - name: environment
     type: string
 
   - name: builtFrom
     type: string
-    default: ''
 
   - name: product
     type: string
-    default: ''
 
   - name: outputName
     type: string
 
   - name: workingDirectory
     type: string
-  - name: serviceName
-    type: string
 
 jobs:
 - job: Terraform
-  displayName: ${{ parameters.displayName }}
+  displayName: "Deploy ${{ parameters.environment }} Shared Infra"
   pool:
     vmImage: 'ubuntu-20.04'
-  variables:
-    ${{ insert }}: ${{ parameters.variables }}
   steps:
   - download: current
     artifact: '${{ parameters.outputName }}'
     displayName: 'Download ${{ parameters.outputName }}.tfplan'
+    
   - template: ../steps/tf-install.yaml
-  - bash: |
-      echo "Resource Group: ${{ variables.resourceGroup }}"
-      echo "Storage Account: ${{ variables.storageAccount }}"
-      echo "Container Name: ${{ variables.containerName }}"
+
   - template: ../steps/tf-init.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
       environment: ${{ parameters.environment }}
-      resourceGroup: ${{ variables.resourceGroup }}
-      storageAccount: ${{ variables.storageAccount }}
-      containerName: ${{ variables.containerName }}
+      resourceGroup: ${{ parameters.stateResourceGroup }}
+      storageAccount: ${{ parameters.storageAccount }}
+      containerName: ${{ parameters.containerName }}
       workingDirectory: ${{ parameters.workingDirectory }}
 
-  - template: ../steps/tf-${{ parameters.serviceName }}-variables.yaml
+  - template: ../steps/tf-variables.yaml
     parameters:
       variableName: "varValue"
-      resourceGroup: $(resourceGroup)
+      resourceGroup: ${{ parameters.stateResourceGroup }}
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}

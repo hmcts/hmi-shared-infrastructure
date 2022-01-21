@@ -1,61 +1,47 @@
 parameters:
   - name: subscription
     type: string
-  - name: dependsOn
-    type: string
-  - name: resourceGroup
+  - name: stateResourceGroup
     type: string
   - name: storageAccount
     type: string
   - name: containerName
     type: string
-  - name: variables
-    type: object
-  - name: displayName
-    type: string
   - name: environment
     type: string
   - name: builtFrom
     type: string
-    default: ''
   - name: product
     type: string
-    default: ''
   - name: outputName
     type: string
   - name: workingDirectory
     type: string
-  - name: serviceName
-    type: string
 
 jobs:
 - job: TerraformPlan
-  dependsOn:
-  - ${{ if parameters.dependsOn }}:
-    - ${{ parameters.dependsOn }}
-  displayName: ${{ parameters.displayName }}
+  dependsOn: setupInfrastructure
+  displayName: "Plan ${{ parameters.environment }} Shared Infra"
   pool:
     vmImage: 'ubuntu-20.04'
-  variables:
-    ${{ insert }}: ${{ parameters.variables }}
   steps:
   - template: ../steps/tf-install.yaml
   - template: ../steps/tf-init.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
       environment: ${{ parameters.environment }}
-      resourceGroup: ${{ variables.resourceGroup }}
-      storageAccount: ${{ variables.storageAccount }}
-      containerName: ${{ variables.containerName }}
+      stateResourceGroup: ${{ parameters.stateResourceGroup }}
+      storageAccount: ${{ parameters.storageAccount }}
+      containerName: ${{ parameters.containerName }}
       workingDirectory: ${{ parameters.workingDirectory }}
+
   - bash: |
       mkdir '$(Build.SourcesDirectory)/plans'
     displayName: Create plan directory
 
-  - template: ../steps/tf-${{ parameters.serviceName }}-variables.yaml
+  - template: ../steps/tf-variables.yaml
     parameters:
       variableName: "varValue"
-      resourceGroup: $(resourceGroup)
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}

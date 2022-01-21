@@ -28,7 +28,7 @@ parameters:
     type: string
     default: ''
   
-  - name: resourceGroupName
+  - name: stateResourceGroupName
     type: string
   - name: storageAccount
     type: string
@@ -49,10 +49,9 @@ jobs:
   - template: ../steps/create-rg.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
-      resourceGroup: ${{ parameters.resourceGroupName }}
+      resourceGroup: ${{ parameters.stateResourceGroupName }}
       storageAccount: ${{ parameters.storageAccount }}
       containerName: ${{ parameters.containerName }}
-      policiesAccount: ${{ parameters.resourcePrefix }}policies${{ parameters.environment }}sa
       location: ${{ parameters.location }}
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
