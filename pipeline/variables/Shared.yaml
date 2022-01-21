@@ -7,12 +7,8 @@ variables:
     value: 'sharedinfra_${{ parameters.environment_name }}'
   - name: storageAccount
     value: 'hmiapiminfra${{ parameters.environment_name }}sa'
-  - name: resourceGroupName
-    value: 'hmi-${{ parameters.service.resourceGroupName }}-${{ parameters.environment_name }}-rg'
   - name: containerName
     value: 'hmiapimterraform'
-  - name: terraformVersion
-    value: ${{ parameters.service.terraformVersion }}
   - template: ../../environments/${{ parameters.environment_name }}.yaml
   - group: HMI-APIM-BUILD-${{ upper(parameters.environment_name) }}
   - name: builtFrom
