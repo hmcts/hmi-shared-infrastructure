@@ -26,8 +26,6 @@ variables:
     value: $(Build.Repository.Name)
   - name: application
     value: 'hearing-management-interface'
-  - name: terraformVersion
-    value: '1.0.4'
   - name: displayName
     value: 'Shared Infrastructure'
   - name: stateResourceGroupName
