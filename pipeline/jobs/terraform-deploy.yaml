@@ -45,7 +45,7 @@ jobs:
     parameters:
       subscription: ${{ parameters.subscription }}
       environment: ${{ parameters.environment }}
-      resourceGroup: ${{ parameters.stateResourceGroup }}
+      stateResourceGroup: ${{ parameters.stateResourceGroup }}
       storageAccount: ${{ parameters.storageAccount }}
       containerName: ${{ parameters.containerName }}
       workingDirectory: ${{ parameters.workingDirectory }}
@@ -53,7 +53,6 @@ jobs:
   - template: ../steps/tf-variables.yaml
     parameters:
       variableName: "varValue"
-      resourceGroup: ${{ parameters.stateResourceGroup }}
       environment: ${{ parameters.environment }}
       builtFrom: ${{ parameters.builtFrom }}
       product: ${{ parameters.product }}
