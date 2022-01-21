@@ -77,7 +77,6 @@ stages:
             product: ${{ variables.product }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
-            location: ${{ variables.location }}
 
     - ${{ if ne(environment.name, 'sbox') }}:
       - stage: 'Wait_sharedinfra_${{ environment.name }}'
