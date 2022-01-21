@@ -11,10 +11,10 @@ module "sa_shared" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
-  account_tier             = "Cool"
+  access_tier              = "Cool"
+  account_tier             = "Standard"
   account_kind             = "BlobStorage"
-  account_replication_type = "Standard"
-  access_tier              = "RAGRS"
+  account_replication_type = "RAGRS"
 
   team_name    = "HMI DevOps"
   team_contact = "#vh-devops"
@@ -32,10 +32,10 @@ module "sa_dtu" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
-  account_tier             = "Cool"
+  access_tier              = "Cool"
+  account_tier             = "Standard"
   account_kind             = "StorageV2"
-  account_replication_type = "Standard"
-  access_tier              = "LRS"
+  account_replication_type = "LRS"
 
   team_name    = "HMI DevOps"
   team_contact = "#vh-devops"
