@@ -35,7 +35,7 @@ variable "route_table" {
   description = "Networking Route Table"
 }
 variable "address_space" {
-  type        =  list(string)
+  type        = list(string)
   description = "Virtual Network Address Spacing"
 }
 variable "subnet_address_prefixes" {
@@ -44,13 +44,13 @@ variable "subnet_address_prefixes" {
 }
 
 variable "apim_nsg_rules" {
-  type        = list(object({
+  type = list(object({
     name = string
   }))
   description = "Network Security Group Rules"
 }
 variable "apim_rules" {
-  type        = map
+  type        = map(any)
   description = "Network Security Group Rule Rules"
 }
 
