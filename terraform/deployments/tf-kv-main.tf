@@ -1,3 +1,4 @@
+#tfsec:ignore:azure-keyvault-no-purge tfsec:ignore:azure-keyvault-specify-network-acl
 module "kv" {
   source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
   name                    = local.key_vault_name
