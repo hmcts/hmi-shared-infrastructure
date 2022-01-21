@@ -27,25 +27,6 @@ parameters:
       - name: prod
         dependency: 'stg'
 
-variables:
-  - group: HMI-APIM-Common
-  - name: product
-    value: 'hmi'
-  - name: businessArea
-    value: 'Cross-Cutting'
-  - name: builtFrom
-    value: $(Build.Repository.Name)
-  - name: application
-    value: 'hearing-management-interface'
-  - name: terraformVersion
-    value: '1.0.4'
-  - name: displayName
-    value: 'Shared Infrastructure'
-  - name: stateResourceGroupName
-    value: 'hmi-sharedinfra-state-rg'
-  - name: resourcePrefix
-    value: 'hmiapim'
-
 stages:
 
   - stage: CIBuild
@@ -74,7 +55,6 @@ stages:
       jobs:
         - template: pipeline/jobs/setup-infra.yaml
           parameters:
-            displayName: Set up ${{ environment.name }} infrastructure
             subscription: DTS-SHAREDSERVICES-${{ upper(environment.name) }}
             environment: ${{ environment.name }}
             builtFrom: ${{ variables.builtFrom }}
@@ -84,6 +64,7 @@ stages:
             containerName: ${{ variables.containerName }}
             storageAccount: ${{ variables.storageAccount }}
             resourcePrefix: ${{ variables.resourcePrefix }}
+            location: ${{ variables.location }}
 
         - template: pipeline/jobs/terraform-plan.yaml
           parameters:
@@ -96,6 +77,7 @@ stages:
             product: ${{ variables.product }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
+            location: ${{ variables.location }}
 
     - ${{ if ne(environment.name, 'sbox') }}:
       - stage: 'Wait_sharedinfra_${{ environment.name }}'
@@ -129,7 +111,6 @@ stages:
       jobs:
         - template: pipeline/jobs/terraform-deploy.yaml
           parameters:
-            displayName: "Deploy ${{ environment.name }} Shared Infra"
             subscription: DTS-SHAREDSERVICES-${{ upper(environment.name) }}
             environment: ${{ environment.name }}
             stateResourceGroup: ${{ variables.stateResourceGroupName }}
@@ -139,13 +120,13 @@ stages:
             product: ${{ variables.product }}
             outputName: '${{ variables.planOutputName }}'
             workingDirectory: ${{ variables.workingDirectory }}
-            serviceName: sharedinfra
+            location: ${{ variables.location }}
 
         - template: pipeline/jobs/setup-azmonlink.yaml
           parameters:
-            displayName: Set up Azure Monitor Link to Log Analytics
             dependsOn: TerraformDeploy
             subscription: DTS-SHAREDSERVICES-${{ upper(environment.name) }}
             environment: ${{ environment.name }}
             builtFrom: ${{ variables.builtFrom }}
             businessArea: ${{ variables.businessArea }}
+            location: ${{ variables.location }}

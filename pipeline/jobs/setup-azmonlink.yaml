@@ -7,13 +7,8 @@ parameters:
 
   - name: builtFrom
     type: string
-    default: ''
 
   - name: businessArea
-    type: string
-    default: ''
-
-  - name: displayName
     type: string
 
   - name: dependsOn
@@ -21,7 +16,7 @@ parameters:
 
 jobs:
 - job: setupAzureMonitorLink
-  displayName: ${{ parameters.displayName }}
+  displayName: Set up Azure Monitor Link to Log Analytics
   pool:
     vmImage: 'ubuntu-20.04'
   steps:

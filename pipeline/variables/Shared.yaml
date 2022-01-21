@@ -17,3 +17,22 @@ variables:
     value: hmi
   - name: workingDirectory
     value: '$(System.DefaultWorkingDirectory)/terraform/deployments'
+  - group: HMI-APIM-Common
+  - name: product
+    value: 'hmi'
+  - name: businessArea
+    value: 'Cross-Cutting'
+  - name: builtFrom
+    value: $(Build.Repository.Name)
+  - name: application
+    value: 'hearing-management-interface'
+  - name: terraformVersion
+    value: '1.0.4'
+  - name: displayName
+    value: 'Shared Infrastructure'
+  - name: stateResourceGroupName
+    value: 'hmi-sharedinfra-state-rg'
+  - name: resourcePrefix
+    value: 'hmiapim'
+  - name: location
+    value: uksouth
