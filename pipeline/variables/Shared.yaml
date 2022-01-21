@@ -6,9 +6,9 @@ variables:
   - name: planOutputName
     value: 'sharedinfra_${{ parameters.environment_name }}'
   - name: storageAccount
-    value: 'hmiapiminfra${{ parameters.environment_name }}sa'
+    value: 'hmisharedinfra${{ parameters.environment_name }}sa'
   - name: containerName
-    value: 'hmiapimterraform'
+    value: 'hmisharedinfraterraform'
   - template: ../../environments/${{ parameters.environment_name }}.yaml
   - group: HMI-APIM-BUILD-${{ upper(parameters.environment_name) }}
   - name: builtFrom
