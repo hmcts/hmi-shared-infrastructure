@@ -28,8 +28,6 @@ variables:
     value: 'hearing-management-interface'
   - name: displayName
     value: 'Shared Infrastructure'
-  - name: stateResourceGroupName
-    value: 'hmi-sharedinfra-state-rg'
   - name: resourcePrefix
     value: 'hmiapim'
   - name: location

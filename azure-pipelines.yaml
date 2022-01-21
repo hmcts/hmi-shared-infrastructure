@@ -50,7 +50,9 @@ stages:
       variables: 
         - template: pipeline/variables/Shared.yaml
           parameters:
-            environment_name: ${{ environment.name }}
+            environment_name: ${{ environment.name }}           
+        - name: stateResourceGroupName
+          value: 'hmi-sharedinfra-state-${{ environment.name }}-rg'
 
       jobs:
         - template: pipeline/jobs/setup-infra.yaml
@@ -105,7 +107,9 @@ stages:
       variables: 
         - template: pipeline/variables/Shared.yaml
           parameters:
-            environment_name: ${{ environment.name }}
+            environment_name: ${{ environment.name }}           
+        - name: stateResourceGroupName
+          value: 'hmi-sharedinfra-state-${{ environment.name }}-rg'
 
       jobs:
         - template: pipeline/jobs/terraform-deploy.yaml
