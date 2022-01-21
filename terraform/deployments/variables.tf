@@ -1,4 +1,3 @@
-##TODO: clean naming and organisation and descriptions
 variable "environment" {
   type        = string
   description = "Deployment Environment"
@@ -18,18 +17,53 @@ variable "location" {
   type        = string
   description = "Resource Location"
 }
-variable "support_email" {}
-variable "ping_tests" {}
-variable "route_table" {
-  default = null
+variable "support_email" {
+  type        = string
+  description = "Email for Application insight alerts"
 }
-variable "address_space" {}
-variable "subnet_address_prefixes" {}
-variable "apim_nsg_rules" {}
-variable "apim_rules" {}
-variable "log_analytics_workspace_name" {}
-variable "log_analytics_workspace_rg" {}
-variable "log_analytics_subscription_id" {}
+variable "ping_tests" {
+  type = list(object({
+    pingTestName = string
+    pingTestURL  = string
+    pingText     = string
+  }))
+  description = "Ping Test Settings"
+}
+
+variable "route_table" {
+  default     = null
+  description = "Networking Route Table"
+}
+variable "address_space" {
+  type        = string
+  description = "Virtual Network Address Spacing"
+}
+variable "subnet_address_prefixes" {
+  type        = string
+  description = "Virtual Network Subnet Address Spacing"
+}
+
+variable "apim_nsg_rules" {
+  type        = string
+  description = "Network Security Group Rules"
+}
+variable "apim_rules" {
+  type        = string
+  description = "Network Security Group Rule Rules"
+}
+
+variable "log_analytics_workspace_name" {
+  type        = string
+  description = "Log Analaytice Workspace Name"
+}
+variable "log_analytics_workspace_rg" {
+  type        = string
+  description = "Log Analaytice Workspace Resource Group"
+}
+variable "log_analytics_subscription_id" {
+  type        = string
+  description = "Log Analaytice Workspace Subscription ID"
+}
 
 # Networking Client Details
 variable "network_client_id" {
