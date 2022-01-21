@@ -53,7 +53,7 @@ module "keyvault_secrets" {
       }
       content_type = ""
     },
-    {
+    /* {
       name  = "HMI-APIM-BUILD-${upper(var.environment)}-json"
       value = var.variable_group_json_path == "" ? "" : file(var.variable_group_json_path)
       tags = {
@@ -68,7 +68,7 @@ module "keyvault_secrets" {
         "source" = "https://dev.azure.com/hmcts/Shared%20Services/_library?itemType=SecureFiles&s=policy-variables-${var.environment}-json"
       }
       content_type = "json"
-    },
+    }, */
     {
       name         = "hmi-servicenow-client"
       value        = var.service_now_client
