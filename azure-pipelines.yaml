@@ -128,4 +128,3 @@ stages:
             environment: ${{ environment.name }}
             builtFrom: ${{ variables.builtFrom }}
             businessArea: ${{ variables.businessArea }}
-            location: ${{ variables.location }}
