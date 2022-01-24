@@ -6,7 +6,8 @@ route_table = [
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "10.11.72.36"
-  }, 
+  },
+  {
     name                   = "ss_stg_aks"
     address_prefix         = "10.148.0.0/18"
     next_hop_type          = "VirtualAppliance"
@@ -17,6 +18,16 @@ route_table = [
     address_prefix         = "51.145.56.125/32"
     next_hop_type          = "Internet"
     next_hop_in_ip_address = null
+  }
+]
+target_route_table_route_rules = [
+  {
+    route_table_name                = "aks-stg-appgw-route-table"
+    route_table_resource_group_name = "ss-stg-network-rg"
+    rule_name                       = "hmi-ss-dev-vnet"
+    address_prefix                  = "10.101.1.64/26"
+    next_hop_type                   = "VirtualAppliance"
+    next_hop_in_ip_address          = "10.11.8.36"
   }
 ]
 log_analytics_workspace_name = "hmcts-nonprod"

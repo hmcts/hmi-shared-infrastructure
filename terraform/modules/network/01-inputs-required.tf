@@ -28,3 +28,16 @@ variable "network_tenant_id" {
   description = "Client Tenant ID of the GlobalNetworkPeering SP"
   type        = string
 }
+
+variable "target_route_table_route_rules" {
+  description = "Target Route Table to add rules to it"
+  type = list(object({
+    route_table_name                = string
+    route_table_resource_group_name = string
+    rule_name                       = string
+    address_prefix                  = string
+    next_hop_type                   = string
+    next_hop_in_ip_address          = string
+  }))
+  default = []
+}
