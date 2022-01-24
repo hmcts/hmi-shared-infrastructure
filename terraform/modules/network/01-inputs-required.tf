@@ -39,5 +39,5 @@ variable "target_route_table_route_rules" {
     next_hop_type                   = string
     next_hop_in_ip_address          = string
   }))
-  default = []
+  default = {}
 }
