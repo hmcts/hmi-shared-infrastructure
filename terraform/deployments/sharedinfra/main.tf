@@ -23,9 +23,10 @@ module "network" {
   log_analytics_workspace_rg    = var.log_analytics_workspace_rg
   log_analytics_subscription_id = var.log_analytics_subscription_id
 
-  network_client_id     = var.network_client_id
-  network_client_secret = var.network_client_secret
-  network_tenant_id     = var.network_tenant_id
+  network_client_id              = var.network_client_id
+  network_client_secret          = var.network_client_secret
+  network_tenant_id              = var.network_tenant_id
+  target_route_table_route_rules = var.target_route_table_route_rules
 }
 
 module "postgresql" {
