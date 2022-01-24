@@ -23,7 +23,7 @@ resource "azurerm_subnet_route_table_association" "sub_rt" {
 
 
 resource "azurerm_route" "target_route_tables" {
-  for_each = toset(var.target_route_table_route_rules)
+  for_each = var.target_route_table_route_rules
 
   name                   = each.value.rule_name
   resource_group_name    = each.value.route_table_resource_group_name

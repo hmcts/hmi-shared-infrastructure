@@ -31,7 +31,7 @@ variable "network_tenant_id" {
 
 variable "target_route_table_route_rules" {
   description = "Target Route Table to add rules to it"
-  type = list(object({
+  type = map(object({
     route_table_name                = string
     route_table_resource_group_name = string
     rule_name                       = string
