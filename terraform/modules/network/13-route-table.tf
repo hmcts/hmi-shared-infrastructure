@@ -22,13 +22,14 @@ resource "azurerm_subnet_route_table_association" "sub_rt" {
 }
 
 
-resource "azurerm_route" "target_route_tables" {
-  for_each = var.target_route_table_route_rules
+resource "azurerm_route" "stg_aks_route_rule" {
+  count    = var.environment == "dev" || var.environment == "test" ? 1 : 0
+  provider = azurerm.networking_staging
 
-  name                   = each.value.rule_name
-  resource_group_name    = each.value.route_table_resource_group_name
-  route_table_name       = each.value.route_table_name
-  address_prefix         = each.value.address_prefix
-  next_hop_type          = each.value.next_hop_type
-  next_hop_in_ip_address = each.value.next_hop_in_ip_address
+  name                   = "hmi-ss-${var.environment}-vnet"
+  resource_group_name    = "ss-stg-network-rg"
+  route_table_name       = "aks-stg-appgw-route-table"
+  address_prefix         = var.address_space
+  next_hop_type          = "VirtualAppliance"
+  next_hop_in_ip_address = "10.11.8.36"
 }

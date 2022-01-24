@@ -20,16 +20,6 @@ route_table = [
     next_hop_in_ip_address = null
   }
 ]
-target_route_table_route_rules = {
-  "hmi-ss-test-vnet" = {
-    route_table_name                = "aks-stg-appgw-route-table"
-    route_table_resource_group_name = "ss-stg-network-rg"
-    rule_name                       = "hmi-ss-test-vnet"
-    address_prefix                  = "10.101.1.64/26"
-    next_hop_type                   = "VirtualAppliance"
-    next_hop_in_ip_address          = "10.11.8.36"
-  }
-}
 log_analytics_workspace_name = "hmcts-nonprod"
 log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
