@@ -29,7 +29,7 @@ resource "azurerm_route" "stg_aks_route_rule" {
   name                   = "hmi-ss-${var.environment}-vnet"
   resource_group_name    = "ss-stg-network-rg"
   route_table_name       = "aks-stg-appgw-route-table"
-  address_prefix         = var.address_space
+  address_prefix         = var.address_space[0]
   next_hop_type          = "VirtualAppliance"
   next_hop_in_ip_address = "10.11.8.36"
 }
