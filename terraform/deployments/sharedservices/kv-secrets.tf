@@ -54,7 +54,7 @@ module "keyvault_secrets" {
     },
     {
       name  = "pact-db-password"
-      value = data.pact_db_password.content
+      value = data.azurerm_storage_blob.pact_db_password.content
       tags = {
         "file-encoding" = "utf-8"
         "purpose"       = "pactbrokerdb"
