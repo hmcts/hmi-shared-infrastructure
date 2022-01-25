@@ -5,12 +5,14 @@ module "shared_storage" {
   resource_group_name  = local.shared_infra_resource_group_name
 }
 
+/* 
+Created and Added via the HMI APIM Pipeline... will need moving over
 module "hmidtu" {
   source = "../../modules/storage-account/data"
 
   storage_account_name = "hmidtu${var.environment}"
   resource_group_name  = local.shared_infra_resource_group_name
-}
+} */
 
 data "azurerm_storage_blob" "pact_db_password" {
   name                   = "pact_db_content"
@@ -46,12 +48,12 @@ module "keyvault_secrets" {
       tags         = {}
       content_type = ""
     },
-    {
+/*     {
       name         = "dtu-storage-account-key"
       value        = module.hmidtu.primary_access_key
       tags         = {}
       content_type = ""
-    },
+    }, */
     {
       name  = "pact-db-password"
       value = data.azurerm_storage_blob.pact_db_password.content_md5
