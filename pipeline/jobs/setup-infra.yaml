@@ -7,15 +7,12 @@ parameters:
 
   - name: builtFrom
     type: string
-    default: ''
 
   - name: businessArea
     type: string
-    default: ''
 
   - name: application
     type: string
-    default: ''
 
   - name: location
     type: string
