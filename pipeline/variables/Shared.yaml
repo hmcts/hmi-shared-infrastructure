@@ -5,6 +5,7 @@ parameters:
     type: object
 
 variables: 
+  - group: HMI-APIM-Common
   - name: planOutputName
     value: '${{ parameters.service.name }}_${{ parameters.environment.name }}'
   - name: storageAccount
@@ -21,3 +22,9 @@ variables:
     value: hmcts/hmi-shared-infrastructure
   - name: product
     value: hmi
+  - name: businessArea
+    value: 'cross-cutting'
+  - name: builtFrom
+    value: $(Build.Repository.Name)
+  - name: application
+    value: 'hearing-management-interface'

@@ -26,7 +26,7 @@ variables:
   - name: product
     value: 'hmi'
   - name: businessArea
-    value: 'Cross-Cutting'
+    value: 'cross-cutting'
   - name: builtFrom
     value: $(Build.Repository.Name)
   - name: application
@@ -49,9 +49,12 @@ stages:
   - template: pipeline/stages/plan.yaml
     parameters:
       environments:
+        - name: sbox
+          subscription: DTS-SHAREDSERVICES-SBOX
+          dependency: 'CIBuild'
         - name: dev
           subscription: DTS-SHAREDSERVICES-DEV
-          dependency: 'CIBuild'
+          dependency: 'sbox'
         - name: test
           subscription: DTS-SHAREDSERVICES-TEST
           dependency: 'dev'
@@ -78,9 +81,12 @@ stages:
   - template: pipeline/stages/wait.yaml
     parameters:
       environments:
+        - name: sbox
+          subscription: DTS-SHAREDSERVICES-SBOX
+          dependency: 'CIBuild'
         - name: dev
           subscription: DTS-SHAREDSERVICES-DEV
-          dependency: 'CIBuild'
+          dependency: 'sbox'
         - name: test
           subscription: DTS-SHAREDSERVICES-TEST
           dependency: 'dev'
@@ -107,9 +113,12 @@ stages:
   - template: pipeline/stages/apply.yaml
     parameters:
       environments:
+        - name: sbox
+          subscription: DTS-SHAREDSERVICES-SBOX
+          dependency: 'CIBuild'
         - name: dev
           subscription: DTS-SHAREDSERVICES-DEV
-          dependency: 'CIBuild'
+          dependency: 'sbox'
         - name: test
           subscription: DTS-SHAREDSERVICES-TEST
           dependency: 'dev'
