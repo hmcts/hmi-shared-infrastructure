@@ -12,12 +12,10 @@ module "hmidtu" {
   resource_group_name  = local.shared_infra_resource_group_name
 }
 
-resource "random_password" "pact_db_password" {
-  length      = 20
-  min_upper   = 2
-  min_lower   = 2
-  min_numeric = 2
-  min_special = 2
+data "azurerm_storage_blob" "pact_db_password" {
+  name                   = "pact_db_content"
+  storage_account_name   = "hmiapiminfra${var.environment}sa"
+  storage_container_name = "hmiapimterraform"
 }
 data "azurerm_application_insights" "appin" {
   name                = "hmi-sharedinfra-appins-${var.environment}"
@@ -56,7 +54,7 @@ module "keyvault_secrets" {
     },
     {
       name  = "pact-db-password"
-      value = random_password.pact_db_password.result
+      value = data.pact_db_password.content
       tags = {
         "file-encoding" = "utf-8"
         "purpose"       = "pactbrokerdb"
