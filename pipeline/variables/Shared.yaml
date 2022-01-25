@@ -26,3 +26,5 @@ variables:
     value: 'cross-cutting'
   - name: builtFrom
     value: $(Build.Repository.Name)
+  - name: application
+    value: 'hearing-management-interface'
