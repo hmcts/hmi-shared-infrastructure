@@ -102,7 +102,4 @@ module "keyvault_secrets" {
     }
   ]
 
-  depends_on = [
-    module.keyvault_certificate
-  ]
 }
