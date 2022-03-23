@@ -49,7 +49,7 @@ module "keyvault-policy" {
     },
     "sp-${var.environment}" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = var.sp_object_id
+      object_id               = data.azurerm_client_config.current.object_id
       key_permissions         = []
       secret_permissions      = ["Backup", "Get", "Set", "List", "Delete", "Purge", "Recover", "Restore"]
       certificate_permissions = ["Backup", "Create", "Delete", "DeleteIssuers", "Get", "GetIssuers", "Import", "List", "ListIssuers", "ManageContacts", "ManageIssuers", "Purge", "SetIssuers", "Update"]

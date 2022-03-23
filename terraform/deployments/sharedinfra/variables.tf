@@ -60,10 +60,6 @@ variable "variable_group_json_path" {
   type        = string
   description = "Exported Azure DevOps Variable Group JSON Path"
 }
-variable "sp_object_id" {
-  type        = string
-  description = "Service principal object id"
-}
 # Generic locals
 locals {
   common_tags                      = module.ctags.common_tags
