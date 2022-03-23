@@ -58,12 +58,9 @@ module "keyvault_secrets" {
       content_type = ""
     }, */
     {
-      name  = "pact-db-password"
-      value = random_password.pact_db_password.result
-      tags = {
-        "file-encoding" = "md5"
-        "purpose"       = "pactbrokerdb"
-      }
+      name         = "pact-db-password"
+      value        = random_password.pact_db_password.result
+      tags         = {}
       content_type = ""
     },
     {
