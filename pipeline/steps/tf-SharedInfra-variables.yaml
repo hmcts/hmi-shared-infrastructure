@@ -54,6 +54,7 @@ steps:
       variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
       variables="${variables} -var \"service_now_client=${service_now_client}\""
       variables="${variables} -var \"service_now_secret=${service_now_secret}\""
+      variables="${variables} -var \"sp_object_id=${sp_object_id}\""
 
       echo "Variables set as: "
       echo "${variables}"

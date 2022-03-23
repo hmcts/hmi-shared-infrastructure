@@ -35,6 +35,8 @@ steps:
       sp_id="$(getspid.spid) "
 
       kvId=$(az keyvault show --name $kv_name --query "id" -o tsv)
+      echo "sp_id: $sp_id"
+      echo "kvId: $kvId"
 
       if [[ $kvId != "" ]]; then
         echo "Updating KeyVault Permissions"
