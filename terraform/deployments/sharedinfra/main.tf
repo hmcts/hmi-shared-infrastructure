@@ -29,13 +29,14 @@ module "network" {
 }
 
 module "postgresql" {
-  source         = "../../modules/postgresql"
-  environment    = var.environment
-  resource_group = var.resource_group
-  location       = var.location
-  project        = var.project
-  tags           = local.common_tags
-  subnet_id      = module.network.apim_subnet_id
+  source           = "../../modules/postgresql"
+  environment      = var.environment
+  resource_group   = var.resource_group
+  location         = var.location
+  project          = var.project
+  tags             = local.common_tags
+  subnet_id        = module.network.apim_subnet_id
+  pact_db_password = random_password.pact_db_password.result
 }
 
 module "app-insights" {
