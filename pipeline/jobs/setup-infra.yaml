@@ -56,7 +56,7 @@ jobs:
       businessArea: ${{ parameters.businessArea }}
       application: ${{ parameters.application }}
 
-  - template: ../steps/set_kv_permissions.yaml
-    parameters:
-      subscription: ${{ parameters.subscription }}
-      environment: ${{ parameters.environment }}
+  # - template: ../steps/set_kv_permissions.yaml
+  #   parameters:
+  #     subscription: ${{ parameters.subscription }}
+  #     environment: ${{ parameters.environment }}
