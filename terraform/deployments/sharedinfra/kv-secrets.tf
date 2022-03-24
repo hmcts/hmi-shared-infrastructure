@@ -1,31 +1,31 @@
-# module "shared_storage" {
-#   source = "../../modules/storage-account/data"
+module "shared_storage" {
+  source = "../../modules/storage-account/data"
 
-#   storage_account_name = "${local.shared_storage_name}${var.environment}"
-#   resource_group_name  = local.shared_infra_resource_group_name
-# }
+  storage_account_name = "${local.shared_storage_name}${var.environment}"
+  resource_group_name  = local.shared_infra_resource_group_name
+}
 
-# /* 
-# Created and Added via the HMI APIM Pipeline... will need moving over
-# module "hmidtu" {
-#   source = "../../modules/storage-account/data"
+/* 
+Created and Added via the HMI APIM Pipeline... will need moving over
+module "hmidtu" {
+  source = "../../modules/storage-account/data"
 
-#   storage_account_name = "hmidtu${var.environment}"
-#   resource_group_name  = local.shared_infra_resource_group_name
-# } */
+  storage_account_name = "hmidtu${var.environment}"
+  resource_group_name  = local.shared_infra_resource_group_name
+} */
 
-# resource "random_password" "pact_db_password" {
-#   length      = 20
-#   min_upper   = 2
-#   min_lower   = 2
-#   min_numeric = 2
-#   min_special = 2
-# }
+resource "random_password" "pact_db_password" {
+  length      = 20
+  min_upper   = 2
+  min_lower   = 2
+  min_numeric = 2
+  min_special = 2
+}
 
-# data "azurerm_application_insights" "appin" {
-#   name                = "hmi-sharedinfra-appins-${var.environment}"
-#   resource_group_name = local.shared_infra_resource_group_name
-# }
+data "azurerm_application_insights" "appin" {
+  name                = "hmi-sharedinfra-appins-${var.environment}"
+  resource_group_name = local.shared_infra_resource_group_name
+}
 
 # module "keyvault_secrets" {
 #   source = "../../modules/key-vault/secret"
