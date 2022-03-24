@@ -8,7 +8,7 @@ stages:
   - ${{ each service in parameters.services }}:
     - ${{ each environment in parameters.environments }}:
 
-      - ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
+      - ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies'), eq(service.name, 'SharedInfra')) }}:
         - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
           dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
           displayName: Wait ${{ environment.name }} ${{ service.displayName }}
