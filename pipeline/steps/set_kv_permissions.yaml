@@ -38,7 +38,7 @@ steps:
 
       if [[ $kvId != "" ]]; then
         echo "Updating KeyVault Permissions"
-        # az keyvault set-policy --name $kv_name --object-id $sp_id  --secret-permissions backup delete get list purge recover restore set --certificate-permissions purge backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers setissuers update
+        az keyvault set-policy --name $kv_name --object-id $sp_id  --secret-permissions backup delete get list purge recover restore set --certificate-permissions purge backup create delete deleteissuers get getissuers import list listissuers managecontacts manageissuers setissuers update
         az keyvault delete-policy --name $kv_name  --object-id $sp_id 
         # note: this section should be removed after a full pipeline run. it has been replaced with an entry in kv-poicies.tf
       else 
