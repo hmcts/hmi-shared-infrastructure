@@ -31,14 +31,14 @@ module "keyvault-policy" {
     #   certificate_permissions = []
     #   storage_permissions     = []
     # },
-    "aks-${var.environment}-mi" = {
-      tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = module.aks-mi.principal_id
-      key_permissions         = []
-      secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
-      certificate_permissions = []
-      storage_permissions     = []
-    },
+    # "aks-${var.environment}-mi" = {
+    #   tenant_id               = data.azurerm_client_config.current.tenant_id
+    #   object_id               = module.aks-mi.principal_id
+    #   key_permissions         = []
+    #   secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
+    #   certificate_permissions = []
+    #   storage_permissions     = []
+    # },
     # "${local.apimName}" = {
     #   tenant_id               = data.azurerm_client_config.current.tenant_id
     #   object_id               = data.azurerm_api_management.hmi_apim_svc.identity.0.principal_id
