@@ -102,4 +102,7 @@ module "keyvault_secrets" {
     }
   ]
 
+  depends_on = [
+    module.keyvault-policy,
+  ]
 }
