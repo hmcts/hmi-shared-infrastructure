@@ -27,7 +27,7 @@ module "keyvault-policy" {
       tenant_id               = data.azurerm_client_config.current.tenant_id
       object_id               = data.azuread_application.cft_client.object_id
       key_permissions         = []
-      secret_permissions      = ["get"]
+      secret_permissions      = ["Get"]
       certificate_permissions = []
       storage_permissions     = []
     },
