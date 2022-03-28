@@ -26,17 +26,15 @@ module "sa_apim" {
 
   env = var.env
 
-  storage_account_name = "hmiapiminfra${var.env}sa"
-  common_tags          = var.common_tags
-
-  resource_group_name = var.resource_group_name
-  location            = var.location
-
-  account_tier             = "Standard"  # var.sa_account_tier
-  account_kind             = "StorageV2" # var.sa_account_kind
-  account_replication_type = "RAGRS"     # var.sa_account_replication_type
-  access_tier              = "Hot"       # var.sa_access_tier
-  default_action           = "Allow"
+  storage_account_name            = "hmiapiminfra${var.env}sa"
+  resource_group_name             = var.resource_group_name
+  allow_nested_items_to_be_public = "false"
+  location                        = var.location
+  account_tier                    = "Standard"  # var.sa_account_tier
+  account_kind                    = "StorageV2" # var.sa_account_kind
+  account_replication_type        = "RAGRS"     # var.sa_account_replication_type
+  access_tier                     = "Hot"       # var.sa_access_tier
+  default_action                  = "Allow"
   containers = [
     {
       name        = "test-results-01-29-22",
@@ -45,4 +43,6 @@ module "sa_apim" {
   ]
   team_name    = "HMI DevOps"
   team_contact = "#vh-devops"
+
+  common_tags = var.common_tags
 }
