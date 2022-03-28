@@ -72,7 +72,3 @@ module "kv" {
   common_tags             = local.common_tags
   create_managed_identity = true
 }
-
-output "key_vault_name123" {
-  value = module.kv.key_vault_name
-}
