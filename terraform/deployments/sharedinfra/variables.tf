@@ -30,7 +30,10 @@ variable "network_tenant_id" {
   description = "Client Tenant ID of the GlobalNetworkPeering SP"
   type        = string
 }
-
+variable "network_sa_allow_nested_items_to_be_public" {
+  description = "Client Tenant ID of the GlobalNetworkPeering SP"
+  type        = string
+}
 # KV
 variable "active_directory_group" {
   type        = string

@@ -39,4 +39,5 @@ ping_tests = [
     pingText     = ""
   }
 ]
-environment = "dev"
+environment                                = "dev"
+network_sa_allow_nested_items_to_be_public = false

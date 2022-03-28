@@ -33,4 +33,5 @@ ping_tests = [
     pingText     = ""
   }
 ]
-environment = "sbox"
+environment                                = "sbox"
+network_sa_allow_nested_items_to_be_public = false

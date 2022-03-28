@@ -3,7 +3,7 @@ resource "azurerm_storage_account" "network_watcher_storage" {
   name                            = "hmiapimwatcher${var.environment}"
   resource_group_name             = var.resource_group
   location                        = var.location
-  allow_nested_items_to_be_public = "false"
+  allow_nested_items_to_be_public = var.network_sa_allow_nested_items_to_be_public
   account_tier                    = "Standard"
   account_kind                    = "StorageV2"
   account_replication_type        = "LRS"
