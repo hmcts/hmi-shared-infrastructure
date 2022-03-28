@@ -45,11 +45,11 @@ steps:
       if [[ ${{ parameters.environment }} = "stg" ]]; then env="staging"; fi
       if [[ ${{ parameters.environment }} = "prod" ]]; then env="production"; fi
 
-      # az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }} --tags environment=$env businessArea=${{ parameters.businessArea }} application=${{ parameters.application }} builtFrom=${{ parameters.builtFrom }}
-      # az storage account create --name ${{ parameters.storageAccount }} --resource-group ${{ parameters.resourceGroup }} --tags environment=$env businessArea=${{ parameters.businessArea }} application=${{ parameters.application }} builtFrom=${{ parameters.builtFrom }}
-      # key=$(az storage account keys list -g ${{ parameters.resourceGroup }} --account-name ${{ parameters.storageAccount }} --query "[0].value" -o tsv)
-      # az storage container create --name ${{ parameters.containerName }} --account-name ${{ parameters.storageAccount }} --account-key $key
-      # az storage account blob-service-properties update --account-name ${{ parameters.storageAccount }} --enable-versioning true
+      az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }} --tags environment=$env businessArea=${{ parameters.businessArea }} application=${{ parameters.application }} builtFrom=${{ parameters.builtFrom }}
+      az storage account create --name ${{ parameters.storageAccount }} --resource-group ${{ parameters.resourceGroup }} --tags environment=$env businessArea=${{ parameters.businessArea }} application=${{ parameters.application }} builtFrom=${{ parameters.builtFrom }}
+      key=$(az storage account keys list -g ${{ parameters.resourceGroup }} --account-name ${{ parameters.storageAccount }} --query "[0].value" -o tsv)
+      az storage container create --name ${{ parameters.containerName }} --account-name ${{ parameters.storageAccount }} --account-key $key
+      az storage account blob-service-properties update --account-name ${{ parameters.storageAccount }} --enable-versioning true
 
       echo "##vso[task.setvariable variable=resourceGroup;isOutput=true;]${{ parameters.resourceGroup }}"
       echo "##vso[task.setvariable variable=storageAccount;isOutput=true;isSecret=true;]${{ parameters.storageAccount }}"
