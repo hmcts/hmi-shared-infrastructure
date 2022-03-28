@@ -1,17 +1,10 @@
-# data "azurerm_resource_group" "hmi" {
-#   name = "hmi-sharedinfra-${var.environment}-rg"
-# }
-
-resource "azurerm_resource_group" "hmi" {
-  name     = var.resource_group
-  location = var.location
-
-  tags           = local.common_tags
+data "azurerm_resource_group" "hmi" {
+  name = "hmi-sharedinfra-${var.environment}-rg"
 }
 
 data "azurerm_virtual_network" "hmi" {
   name                = "hmi-sharedinfra-vnet-${var.environment}"
-  resource_group_name = azurerm_resource_group.hmi.name
+  resource_group_name = data.azurerm_resource_group.hmi.name
 }
 
 module "network" {
@@ -74,7 +67,7 @@ module "kv" {
   product                 = var.product
   env                     = var.environment
   object_id               = "b085c529-1b29-4075-969c-32ebfaddb1e4" ##TODO: get from KV or other place 
-  resource_group_name     = azurerm_resource_group.hmi.name
+  resource_group_name     = data.azurerm_resource_group.hmi.name
   product_group_name      = var.active_directory_group #"DTS HMI"
   common_tags             = local.common_tags
   create_managed_identity = true
