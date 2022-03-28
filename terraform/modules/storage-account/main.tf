@@ -36,7 +36,7 @@ module "sa_apim" {
   default_action                  = "Allow"
   containers = [
     {
-      name        = "test-results-01-29-22",
+      name        = "hmiapimterraform",
       access_type = "private"
     }
   ]
