@@ -36,6 +36,7 @@ module "sa_apim" {
   account_kind             = "StorageV2" # var.sa_account_kind
   account_replication_type = "RAGRS"     # var.sa_account_replication_type
   access_tier              = "Hot"       # var.sa_access_tier
+  default_action           = "Allow"
   containers = [
     {
       name        = "test-results-01-29-22",
