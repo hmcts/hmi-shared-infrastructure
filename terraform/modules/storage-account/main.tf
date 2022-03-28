@@ -40,7 +40,7 @@ module "sa_apim" {
   containers = [
     {
       name        = "test-results-01-29-22",
-      access_type = "Day"
+      access_type = "private"
     }
   ]
   team_name    = "HMI DevOps"
