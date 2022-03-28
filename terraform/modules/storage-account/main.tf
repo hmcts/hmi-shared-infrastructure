@@ -26,17 +26,22 @@ module "sa_apim" {
 
   env = var.env
 
-  storage_account_name = "hmiapiminfra${var.env}sa" 
+  storage_account_name = "hmiapiminfra${var.env}sa"
   common_tags          = var.common_tags
 
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  account_tier             = "Standard" # var.sa_account_tier
+  account_tier             = "Standard"  # var.sa_account_tier
   account_kind             = "StorageV2" # var.sa_account_kind
-  account_replication_type = "RAGRS" # var.sa_account_replication_type
-  access_tier              = "Hot" # var.sa_access_tier
-
+  account_replication_type = "RAGRS"     # var.sa_account_replication_type
+  access_tier              = "Hot"       # var.sa_access_tier
+  containers = [
+    {
+      name        = "test-results-01-29-22",
+      access_type = "Day"
+    }
+  ]
   team_name    = "HMI DevOps"
   team_contact = "#vh-devops"
 }
