@@ -5,14 +5,14 @@ module "shared_storage" {
   resource_group_name  = data.azurerm_resource_group.hmi.name
 }
 
-/* 
-Created and Added via the HMI APIM Pipeline... will need moving over
+
+# Created and Added via the HMI APIM Pipeline... will need moving over
 module "hmidtu" {
   source = "../../modules/storage-account/data"
 
   storage_account_name = "hmidtu${var.environment}"
   resource_group_name  = local.data.azurerm_resource_group.hmi.name
-} */
+}
 
 resource "random_password" "pact_db_password" {
   length      = 20
