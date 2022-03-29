@@ -18,16 +18,6 @@ parameters:
     default: ""
 
 steps:
-  - template: get-secure-file.yaml
-    parameters:
-      fileName: "policy-variables-${{ parameters.environment }}.json"
-      variableName: "secure_file_json"
-
-  - template: templates\common\get-variable-group.yml@azTemplates 
-    parameters:
-      subscriptionName: ${{ parameters.subscriptionName }}
-      variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
-      variableName: "variable_group_json"
 
   - bash: |
       variableName="${{ parameters.variableName }}"

@@ -37,6 +37,17 @@ steps:
         Write-Host "##vso[task.setvariable variable=GNP_SUBSCRIPTION_ID;isOutput=true]$subscriptionId"
         Write-Host "Subscription ID: $subscriptionId"
 
+  - template: get-secure-file.yaml
+    parameters:
+      fileName: "policy-variables-${{ parameters.environment }}.json"
+      variableName: "secure_file_json"
+
+  - template: templates\common\get-variable-group.yml@azTemplates 
+    parameters:
+      subscriptionName: ${{ parameters.subscriptionName }}
+      variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
+      variableName: "variable_group_json"
+      
   - bash: |
       variableName="${{ parameters.variableName }}"
 
