@@ -17,5 +17,4 @@ ping_tests = [
     pingText     = "&#x22;status&#x22;&#x3A;&#x20;&#x22;Up&#x22;" # xml encoding
   }
 ]
-environment                                = "stg"
-network_sa_allow_nested_items_to_be_public = false
+environment = "stg"

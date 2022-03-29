@@ -1,14 +1,13 @@
 #tfsec:ignore:azure-storage-default-action-deny
 resource "azurerm_storage_account" "network_watcher_storage" {
-  name                            = "hmiapimwatcher${var.environment}"
-  resource_group_name             = var.resource_group
-  location                        = var.location
-  allow_nested_items_to_be_public = var.network_sa_allow_nested_items_to_be_public
-  account_tier                    = "Standard"
-  account_kind                    = "StorageV2"
-  account_replication_type        = "LRS"
-  enable_https_traffic_only       = true
-  min_tls_version                 = "TLS1_2"
+  name                      = "hmiapimwatcher${var.environment}"
+  resource_group_name       = var.resource_group
+  location                  = var.location
+  account_tier              = "Standard"
+  account_kind              = "StorageV2"
+  account_replication_type  = "LRS"
+  enable_https_traffic_only = true
+  min_tls_version           = "TLS1_2"
 
   tags = var.tags
 }
