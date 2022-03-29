@@ -24,7 +24,7 @@ resource "random_password" "pact_db_password" {
 
 data "azurerm_application_insights" "appin" {
   name                = "hmi-sharedinfra-appins-${var.environment}"
-  resource_group_name = local.shared_infra_resource_group_name
+  resource_group_name = data.azurerm_resource_group.hmi.name
 }
 
 module "keyvault_secrets" {
