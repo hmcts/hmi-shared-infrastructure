@@ -11,7 +11,7 @@ module "hmidtu" {
   source = "../../modules/storage-account/data"
 
   storage_account_name = "hmidtu${var.environment}"
-  resource_group_name  = local.data.azurerm_resource_group.hmi.name
+  resource_group_name  = data.azurerm_resource_group.hmi.name
 }
 
 resource "random_password" "pact_db_password" {
