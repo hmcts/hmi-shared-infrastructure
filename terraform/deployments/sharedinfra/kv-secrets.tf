@@ -1,8 +1,8 @@
 module "shared_storage" {
   source = "../../modules/storage-account/data"
 
-  storage_account_name = "${local.shared_storage_name}${var.environment}"
-  resource_group_name  = local.shared_infra_resource_group_name
+  storage_account_name = "hmisharedinfrasa${var.environment}"
+  resource_group_name  = data.azurerm_resource_group.hmi.name
 }
 
 /* 
@@ -11,7 +11,7 @@ module "hmidtu" {
   source = "../../modules/storage-account/data"
 
   storage_account_name = "hmidtu${var.environment}"
-  resource_group_name  = local.shared_infra_resource_group_name
+  resource_group_name  = local.data.azurerm_resource_group.hmi.name
 } */
 
 resource "random_password" "pact_db_password" {
@@ -40,14 +40,14 @@ module "keyvault_secrets" {
       content_type = ""
     },
     {
-      name         = "${local.shared_storage_name}-storageaccount-key"
+      name         = "hmisharedinfrasa-storageaccount-key"
       value        = module.shared_storage.primary_access_key
       tags         = {}
       content_type = ""
     },
     {
-      name         = "${local.shared_storage_name}-storageaccount-name"
-      value        = local.shared_storage_name
+      name         = "hmisharedinfrasa-storageaccount-name"
+      value        = "hmisharedinfrasa"
       tags         = {}
       content_type = ""
     },

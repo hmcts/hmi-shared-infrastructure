@@ -63,8 +63,6 @@ variable "variable_group_json_path" {
 locals {
   common_tags                      = module.ctags.common_tags
   key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
-  shared_storage_name              = "hmisharedinfrasa"
-  shared_infra_resource_group_name = "hmi-sharedinfra-${var.environment}-rg"
 }
 
 module "ctags" {
