@@ -10,7 +10,7 @@ stages:
 
       - stage: 'Apply_${{ service.name }}_${{ environment.name }}'
         ${{ if and(eq(environment.name, 'sbox'), ne(service.name, 'SharedServies')) }}:
-          dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
+          dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
         ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
           dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
         displayName: Apply ${{ environment.name }} ${{ service.displayName }}
