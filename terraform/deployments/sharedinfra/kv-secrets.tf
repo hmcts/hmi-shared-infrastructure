@@ -10,7 +10,7 @@ module "shared_storage" {
 module "hmidtu" {
   source = "../../modules/storage-account/data"
 
-  storage_account_name = "hmidtu${var.environment}"
+  storage_account_name = "hmisharedinfrasa${var.environment}"
   resource_group_name  = data.azurerm_resource_group.hmi.name
 }
 
