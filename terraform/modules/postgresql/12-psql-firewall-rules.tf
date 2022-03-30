@@ -1,5 +1,5 @@
-/*
- Remove Rule
+
+#  Remove Rule
   resource "azurerm_postgresql_firewall_rule" "allow_all_azure" {
     name                = "azure"
     resource_group_name = var.resource_group
@@ -7,4 +7,3 @@
     start_ip_address    = "0.0.0.0"
     end_ip_address      = "0.0.0.0"
   } 
-*/
