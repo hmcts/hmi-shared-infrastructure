@@ -67,7 +67,8 @@ steps:
       variables="${variables} -var \"network_tenant_id=${GNP_TENANT_ID} \""
       variables="${variables} -var \"secure_file_json_path=${secureFileJson}\""
       variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
-      variables="${variables} -var \"service_now_client=${parameters.serv_client}\""
+      variables="${variables} -var \"service_now_client=${serv_client}\""
+      # variables="${variables} -var \"service_now_client=${parameters.serv_client}\""
       variables="${variables} -var \"service_now_secret=${service_now_secret}\""
 
       echo "Variables set as: "
