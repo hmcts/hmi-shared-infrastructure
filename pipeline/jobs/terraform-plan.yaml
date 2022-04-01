@@ -61,7 +61,8 @@ jobs:
       product: ${{ parameters.product }}
       outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
       subscriptionName: ${{ parameters.subscription }}
-      serv_client: "serv_client1234asdgdas"
+      serv_client: $(service_now_client2)
+      serv_secret: $(service_now_secret)
 
   - template: ../steps/tf-plan.yaml
     parameters:
@@ -76,4 +77,3 @@ jobs:
       artifact: '${{ parameters.outputName }}'
       FileCopyOptions: '/xo'
 
-  

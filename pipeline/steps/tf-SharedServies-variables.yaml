@@ -19,6 +19,9 @@ parameters:
   - name: serv_client
     type: string
     default: ""
+  - name: serv_secret
+    type: string
+    default: ""
 
 steps:
 

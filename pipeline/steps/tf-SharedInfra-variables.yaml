@@ -18,6 +18,8 @@ parameters:
     default: ""
   - name: serv_client
     type: string
+  - name: serv_secret
+    type: string
 
 steps:
 
@@ -53,6 +55,8 @@ steps:
   - bash: |      
       variableName="${{ parameters.variableName }}"
       serv_client=${{ parameters.serv_client }} 
+      serv_secret=${{ parameters.serv_secret }}
+
       echo "service_now_client2.... $serv_client ...."
 
       variables=""
@@ -68,8 +72,7 @@ steps:
       variables="${variables} -var \"secure_file_json_path=${secureFileJson}\""
       variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
       variables="${variables} -var \"service_now_client=${serv_client}\""
-      # variables="${variables} -var service_now_client=${parameters.serv_client}"
-      variables="${variables} -var \"service_now_secret=${service_now_secret}\""
+      variables="${variables} -var \"service_now_secret=${serv_secret}\""
 
       echo "Variables set as: "
       echo "${variables}"
