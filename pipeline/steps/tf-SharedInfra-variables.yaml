@@ -70,7 +70,6 @@ steps:
       # variables="${variables} -var \"service_now_client=${serv_client}\""
       variables="${variables} -var service_now_client=${parameters.serv_client}"
       variables="${variables} -var \"service_now_secret=${service_now_secret}\""
--var-file="/home/vsts/work/1/s/environments/sbox.tfvars" -var-file="/home/vsts/work/1/s/environments/shared.tfvars" -out="/home/vsts/work/1/s/plans/SharedInfra_sbox.tfplan" -var "resource_group=hmi-sharedinfra-sbox-rg" -var "log_analytics_subscription_id=***" -var "builtFrom=hmcts/hmi-shared-infrastructure " -var "network_client_id=*** " -var "network_client_secret=*** " -var "network_tenant_id=*** " -var "secure_file_json_path=" -var "variable_group_json_path=" -var "service_now_client=" -var "service_now_secret="
 
       echo "Variables set as: "
       echo "${variables}"
