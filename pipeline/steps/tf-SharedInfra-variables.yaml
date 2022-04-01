@@ -16,6 +16,9 @@ parameters:
   - name: product
     type: string
     default: ""
+  - name: client
+    type: string
+    default: ""
 
 steps:
 
@@ -49,7 +52,7 @@ steps:
       variableName: "variable_group_json"
       
   - bash: |
-      echo "service_now_client2.... ${{ variables.service_now_client2 }} ...."
+      echo "service_now_client2.... ${{ parameters.client }} ...."
       
       variableName="${{ parameters.variableName }}"
 

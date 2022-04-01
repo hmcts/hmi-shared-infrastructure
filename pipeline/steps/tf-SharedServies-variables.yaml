@@ -16,6 +16,9 @@ parameters:
   - name: product
     type: string
     default: ""
+  - name: client
+    type: string
+    default: ""
 
 steps:
 
