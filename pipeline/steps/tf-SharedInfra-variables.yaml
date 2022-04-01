@@ -57,8 +57,6 @@ steps:
       serv_client=${{ parameters.serv_client }} 
       serv_secret=${{ parameters.serv_secret }}
 
-      echo "service_now_client2.... $serv_client ...."
-
       variables=""
       variables="-var-file=\"$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars\""
       variables="${variables} -var-file=\"$(System.DefaultWorkingDirectory)/environments/shared.tfvars\""

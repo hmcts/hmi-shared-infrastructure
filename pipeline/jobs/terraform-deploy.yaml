@@ -78,7 +78,7 @@ jobs:
       product: ${{ parameters.product }}
       outputLocation: '$(Build.SourcesDirectory)/plans/${{ parameters.outputName }}.tfplan'
       subscriptionName: ${{ parameters.subscription }}
-      serv_client: $(service_now_client2)
+      serv_client: $(service_now_client)
       serv_secret: $(service_now_secret)
 
   - template: ../steps/tf-apply.yaml

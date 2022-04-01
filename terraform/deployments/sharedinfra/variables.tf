@@ -44,12 +44,12 @@ variable "product" {
 variable "service_now_client" {
   type        = string
   description = "Service Now Client"
-  # sensitive   = true
+  sensitive   = true
 }
 variable "service_now_secret" {
   type        = string
   description = "Service Now Secret"
-  # sensitive   = true
+  sensitive   = true
 }
 variable "secure_file_json_path" {
   type        = string
