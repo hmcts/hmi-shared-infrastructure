@@ -16,7 +16,7 @@ parameters:
   - name: product
     type: string
     default: ""
-  - name: client
+  - name: serv_client
     type: string
     default: ""
 
