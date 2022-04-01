@@ -90,12 +90,12 @@ module "keyvault_secrets" {
       }
       content_type = "json"
     },
-    {
-      name         = "hmi-servicenow-client"
-      value        = var.service_now_client
-      tags         = {}
-      content_type = ""
-    },
+    # {
+    #   name         = "hmi-servicenow-client"
+    #   value        = var.service_now_client
+    #   tags         = {}
+    #   content_type = ""
+    # },
     {
       name         = "hmi-servicenow-secret"
       value        = var.service_now_secret
