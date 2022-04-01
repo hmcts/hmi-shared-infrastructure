@@ -49,7 +49,7 @@ variable "service_now_client" {
 variable "service_now_secret" {
   type        = string
   description = "Service Now Secret"
-  sensitive   = true
+  # sensitive   = true
 }
 variable "secure_file_json_path" {
   type        = string

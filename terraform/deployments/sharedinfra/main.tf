@@ -74,8 +74,3 @@ module "kv" {
   common_tags             = local.common_tags
   create_managed_identity = true
 }
-
-
-output "serviceNowExampleClient" {
-  value = var.service_now_client
-}
