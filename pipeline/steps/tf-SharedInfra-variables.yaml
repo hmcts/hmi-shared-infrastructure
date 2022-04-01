@@ -28,6 +28,9 @@ steps:
       scriptLocation: 'inlineScript'
       addSpnToEnvironment: true
       inlineScript: |
+
+        az keyvault secret purge --name service_now_client  --vault-name hmi-shared-kv-sbox
+
         Write-Host "##vso[task.setvariable variable=GNP_CLIENT_ID;isOutput=true]$($env:servicePrincipalId)"
         Write-Host "Client ID: $($env:servicePrincipalId)"
         Write-Host "##vso[task.setvariable variable=GNP_CLIENT_SECRET;isOutput=true]$($env:servicePrincipalKey)"
