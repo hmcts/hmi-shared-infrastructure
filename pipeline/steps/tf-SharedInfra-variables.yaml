@@ -49,6 +49,8 @@ steps:
       variableName: "variable_group_json"
       
   - bash: |
+      echo "service_now_client2 ${service_now_client2}"
+      
       variableName="${{ parameters.variableName }}"
 
       variables=""
