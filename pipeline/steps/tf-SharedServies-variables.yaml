@@ -16,10 +16,9 @@ parameters:
   - name: product
     type: string
     default: ""
-  - name: service_now_client
+  - name: client
     type: string
-  - name: service_now_secret
-    type: string
+    default: ""
 
 steps:
 

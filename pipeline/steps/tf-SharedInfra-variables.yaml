@@ -16,9 +16,7 @@ parameters:
   - name: product
     type: string
     default: ""
-  - name: service_now_client
-    type: string
-  - name: service_now_secret
+  - name: client
     type: string
 
 steps:
@@ -55,6 +53,8 @@ steps:
   - bash: |      
       variableName="${{ parameters.variableName }}"
 
+      echo "service_now_client=${parameters.client}"
+      
       variables=""
       variables="-var-file=\"$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars\""
       variables="${variables} -var-file=\"$(System.DefaultWorkingDirectory)/environments/shared.tfvars\""
@@ -67,8 +67,8 @@ steps:
       variables="${variables} -var \"network_tenant_id=${GNP_TENANT_ID} \""
       variables="${variables} -var \"secure_file_json_path=${secureFileJson}\""
       variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
-      variables="${variables} -var \"service_now_client=${parameters.service_now_client}\""
-      variables="${variables} -var \"service_now_secret=${parameters.service_now_secret}\""
+      variables="${variables} -var \"service_now_client=${parameters.client}\""
+      variables="${variables} -var \"service_now_secret=${service_now_secret}\""
 
       echo "Variables set as: "
       echo "${variables}"
