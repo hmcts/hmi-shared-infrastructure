@@ -37,5 +37,5 @@ steps:
     env:
       secure_file_json: $(secureFileVariable.secure_file_json_path)
       variable_group_json: $(variableGroupDownload.variable_group_json_path)
-      service_now_client: $(service_now_client)
+      service_now_client: $(service_now_client2)
       service_now_secret: $(service_now_secret)
