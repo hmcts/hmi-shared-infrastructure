@@ -53,7 +53,7 @@ steps:
   - bash: |      
       variableName="${{ parameters.variableName }}"
 
-      echo "serv_client=${parameters.serv_client}"
+      echo "service_now_client2.... ${{ parameters.serv_client }} ...."
 
       variables=""
       variables="-var-file=\"$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars\""
