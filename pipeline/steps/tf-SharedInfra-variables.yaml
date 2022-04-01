@@ -16,9 +16,10 @@ parameters:
   - name: product
     type: string
     default: ""
-  - name: client
+  - name: service_now_client
     type: string
-    default: ""
+  - name: service_now_secret
+    type: string
 
 steps:
 
@@ -51,9 +52,7 @@ steps:
       variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
       variableName: "variable_group_json"
       
-  - bash: |
-      echo "service_now_client2.... ${{ parameters.client }} ...."
-      
+  - bash: |      
       variableName="${{ parameters.variableName }}"
 
       variables=""
@@ -68,8 +67,8 @@ steps:
       variables="${variables} -var \"network_tenant_id=${GNP_TENANT_ID} \""
       variables="${variables} -var \"secure_file_json_path=${secureFileJson}\""
       variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
-      variables="${variables} -var \"service_now_client=${service_now_client2}\""
-      variables="${variables} -var \"service_now_secret=${service_now_secret}\""
+      variables="${variables} -var \"service_now_client=${parameters.service_now_client}\""
+      variables="${variables} -var \"service_now_secret=${parameters.service_now_secret}\""
 
       echo "Variables set as: "
       echo "${variables}"
