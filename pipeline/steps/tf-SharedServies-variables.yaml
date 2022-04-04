@@ -16,10 +16,10 @@ parameters:
   - name: product
     type: string
     default: ""
-  - name: serv_client
+  - name: service_now_client
     type: string
     default: ""
-  - name: serv_secret
+  - name: service_now_secret
     type: string
     default: ""
 
