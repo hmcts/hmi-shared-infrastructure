@@ -16,6 +16,10 @@ parameters:
   - name: product
     type: string
     default: ""
+  - name: service_now_client
+    type: string
+  - name: service_now_secret
+    type: string
 
 steps:
 
@@ -48,8 +52,10 @@ steps:
       variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
       variableName: "variable_group_json"
       
-  - bash: |
+  - bash: |      
       variableName="${{ parameters.variableName }}"
+      service_now_client=${{ parameters.service_now_client }} 
+      service_now_secret=${{ parameters.service_now_secret }}
 
       variables=""
       variables="-var-file=\"$(System.DefaultWorkingDirectory)/environments/${{ parameters.environment }}.tfvars\""
@@ -69,6 +75,7 @@ steps:
       echo "Variables set as: "
       echo "${variables}"
       echo "##vso[task.setvariable variable=$variableName;isOutput=true]${variables}"
+
     displayName: 'Set Shared Services TF Variables'
     name: tfVariables
     env:
