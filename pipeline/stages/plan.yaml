@@ -1,8 +1,6 @@
 parameters:
   - name: environments
     type: object
-  - name: services
-    type: object
 
 stages:
     - ${{ each environment in parameters.environments }}:
