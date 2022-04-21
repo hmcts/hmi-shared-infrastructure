@@ -40,7 +40,7 @@ stages:
               workingDirectory: ${{ variables.workingDirectory }}
               serviceName: ${{ variables.serviceName }}
 
-          - ${{ if eq(service.name,'SharedInfra') }}:
+          - ${{ if eq(variables.serviceName,'SharedInfra') }}:
             - template: ../jobs/setup-azmonlink.yaml
               parameters:
                 displayName: Set up Azure Monitor Link to Log Analytics
