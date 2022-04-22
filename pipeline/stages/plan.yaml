@@ -5,19 +5,19 @@ parameters:
 stages:
     - ${{ each environment in parameters.environments }}:
 
-      - stage: 'Plan_${{ variables.serviceName }}_${{ environment.name }}'
+      - stage: 'Plan_SharedInfra_${{ environment.name }}'
         ${{ if eq(environment.dependency, 'CIBuild') }}:
           dependsOn: '${{ environment.dependency }}'
         ${{ if ne(environment.dependency, 'CIBuild') }}:
-          dependsOn: 'Apply_${{ variables.serviceName }}_${{ environment.dependency }}'
-        displayName: Plan ${{ environment.name }} ${{ variables.serviceDisplayName }}
+          dependsOn: 'Apply_SharedInfra_${{ environment.dependency }}'
+        displayName: Plan ${{ environment.name }} Shared Infrastructure
         pool:
           vmImage: 'ubuntu-latest'
         variables: 
           - template: ../variables/Shared.yaml
             parameters:
               environment: ${{ environment }}
-          - template: ../variables/${{ variables.serviceName }}.yaml
+          - template: ../variables/SharedInfra.yaml
             parameters:
               environment: ${{ environment }}
 
