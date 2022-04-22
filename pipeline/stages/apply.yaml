@@ -5,19 +5,16 @@ parameters:
 stages:
     - ${{ each environment in parameters.environments }}:
 
-      - stage: 'Apply_${{ variables.serviceName }}_${{ environment.name }}'
-        ${{ if and(eq(environment.name, 'sbox'), ne(variables.serviceName, 'SharedServies')) }}:
-          dependsOn: 'Wait_${{ variables.serviceName }}_${{ environment.name }}'
-        ${{ if or(ne(environment.name, 'sbox'), eq(variables.serviceName, 'SharedServies')) }}:
-          dependsOn: 'Wait_${{ variables.serviceName }}_${{ environment.name }}'
-        displayName: Apply ${{ environment.name }} ${{ variables.serviceDisplayName}}
+      - stage: 'Apply_SharedInfra_${{ environment.name }}'
+        dependsOn: 'Wait_SharedInfra_${{ environment.name }}'
+        displayName: Apply ${{ environment.name }} 
         pool:
           vmImage: 'ubuntu-latest'
         variables: 
           - template: ../variables/Shared.yaml
             parameters:
               environment: ${{ environment }}
-          - template: ../variables/${{ variables.serviceName }}.yaml
+          - template: ../variables/SharedInfra.yaml
             parameters:
               environment: ${{ environment }}
 

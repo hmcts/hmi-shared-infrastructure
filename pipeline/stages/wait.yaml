@@ -5,10 +5,10 @@ parameters:
 stages:
     - ${{ each environment in parameters.environments }}:
 
-      - ${{ if or(ne(environment.name, 'sbox'), eq(variables.serviceName, 'SharedServies'), eq(variables.serviceName, 'SharedInfra')) }}:
-        - stage: 'Wait_${{ variables.serviceName }}_${{ environment.name }}'
-          dependsOn: 'Plan_${{ variables.serviceName }}_${{ environment.name }}'
-          displayName: Wait ${{ environment.name }} ${{ variables.serviceDisplayName }}
+      - ${{ if or(ne(environment.name, 'sbox'), eq('SharedInfra', 'SharedInfra')) }}:
+        - stage: 'Wait_SharedInfra_${{ environment.name }}'
+          dependsOn: 'Plan_SharedInfra_${{ environment.name }}'
+          displayName: Wait ${{ environment.name }} Shared Infrastructure
           pool:
             vmImage: 'ubuntu-latest'
 
