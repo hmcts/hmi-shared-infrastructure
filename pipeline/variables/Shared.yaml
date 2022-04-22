@@ -13,7 +13,7 @@ variables:
   - name: containerName
     value: '${{ variables.serviceResourcePrefix }}terraform'
   - name: terraformVersion
-    value: ${{ variables.serviceTerraformVersion }}
+    value: '1.0.4'
   - template: ../../environments/${{ parameters.environment.name }}.yaml
   - group: HMI-APIM-BUILD-${{ upper(parameters.environment.name) }}
   - name: builtFrom
