@@ -33,7 +33,7 @@ stages:
             resourceGroupName: ${{ variables.resourceGroupName }}
             containerName: ${{ variables.containerName }}
             storageAccount: ${{ variables.storageAccount }}
-            resourcePrefix: ${{ variables.serviceResourcePrefix }}
+            resourcePrefix: 'hmiapim'
 
         - template: ../jobs/terraform-plan.yaml
           parameters:
@@ -52,4 +52,4 @@ stages:
               storageAccount: ${{ variables.storageAccount }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
-            serviceName: ${{ variables.serviceName }}
+            serviceName: 'SharedInfra'

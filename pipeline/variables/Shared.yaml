@@ -5,13 +5,13 @@ parameters:
 variables: 
   - group: HMI-APIM-Common
   - name: planOutputName
-    value: '${{ variables.serviceName }}_${{ parameters.environment.name }}'
+    value: 'SharedInfra_${{ parameters.environment.name }}'
   - name: storageAccount
-    value: '${{ variables.serviceResourcePrefix }}infra${{ parameters.environment.name }}sa'
+    value: 'hmiapiminfra${{ parameters.environment.name }}sa'
   - name: resourceGroupName
-    value: 'hmi-${{ variables.serviceResourceGroupName }}-${{ parameters.environment.name }}-rg'
+    value: 'hmi-sharedinfra-${{ parameters.environment.name }}-rg'
   - name: containerName
-    value: '${{ variables.serviceResourcePrefix }}terraform'
+    value: 'hmiapimterraform'
   - name: terraformVersion
     value: '1.0.4'
   - template: ../../environments/${{ parameters.environment.name }}.yaml
@@ -26,13 +26,3 @@ variables:
     value: $(Build.Repository.Name)
   - name: application
     value: 'hearing-management-interface'
-  - name: serviceName
-    value: 'SharedInfra'
-  - name: serviceDisplayName
-    value: 'Shared Infrastructure'
-  - name: serviceResourceGroupName
-    value: 'sharedinfra'
-  - name:  serviceResourcePrefix
-    value: 'hmiapim'
-  - name: serviceTerraformVersion
-    value: '1.0.4'
