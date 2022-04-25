@@ -5,7 +5,7 @@ parameters:
 stages:
     - ${{ each environment in parameters.environments }}:
 
-      - ${{ if ne(environment, 'sbox') }}:
+      - ${{ if ne(environment.name, 'sbox') }}:
         - stage: 'Wait_SharedInfra_${{ environment.name }}'
           dependsOn: 'Plan_SharedInfra_${{ environment.name }}'
           displayName: Wait ${{ environment.name }} Shared Infrastructure
