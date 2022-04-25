@@ -12,11 +12,11 @@ stages:
           pool:
             vmImage: 'ubuntu-latest'
 
-        jobs:
-          - job: Wait
-            displayName: "Wait for approval"
-            pool: server
-            steps:
-              - template: ../steps/wait.yml
-                parameters:
-                  environment: ${{ environment.name }}
+          jobs:
+            - job: Wait
+              displayName: "Wait for approval"
+              pool: server
+              steps:
+                - template: ../steps/wait.yml
+                  parameters:
+                    environment: ${{ environment.name }}
