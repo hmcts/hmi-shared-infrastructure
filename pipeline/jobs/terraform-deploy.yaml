@@ -42,6 +42,9 @@ parameters:
   - name: workingDirectory
     type: string
 
+  - name: serviceName
+    type: string
+
 jobs:
 - job: Terraform
   displayName: ${{ parameters.displayName }}
@@ -67,7 +70,7 @@ jobs:
       containerName: ${{ variables.containerName }}
       workingDirectory: ${{ parameters.workingDirectory }}
 
-  - template: ../steps/tf-SharedInfra-variables.yaml
+  - template: ../steps/tf-${{ parameters.serviceName }}-variables.yaml
     parameters:
       variableName: "varValue"
       resourceGroup: $(resourceGroup)
