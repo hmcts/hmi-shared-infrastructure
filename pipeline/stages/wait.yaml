@@ -5,18 +5,17 @@ parameters:
 stages:
     - ${{ each environment in parameters.environments }}:
 
-      - ${{ if ne(environment.name, 'sbox') }}:
-        - stage: 'Wait_SharedInfra_${{ environment.name }}'
-          dependsOn: 'Plan_SharedInfra_${{ environment.name }}'
-          displayName: Wait ${{ environment.name }} Shared Infrastructure
-          pool:
-            vmImage: 'ubuntu-latest'
+      - stage: 'Wait_SharedInfra_${{ environment.name }}'
+        dependsOn: 'Plan_SharedInfra_${{ environment.name }}'
+        displayName: Wait ${{ environment.name }} Shared Infrastructure
+        pool:
+          vmImage: 'ubuntu-latest'
 
-          jobs:
-            - job: Wait
-              displayName: "Wait for approval"
-              pool: server
-              steps:
-                - template: ../steps/wait.yml
-                  parameters:
-                    environment: ${{ environment.name }}
+        jobs:
+          - job: Wait
+            displayName: "Wait for approval"
+            pool: server
+            steps:
+              - template: ../steps/wait.yml
+                parameters:
+                  environment: ${{ environment.name }}
