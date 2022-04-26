@@ -1,25 +1,21 @@
 parameters:
   - name: environments
     type: object
-  - name: services
-    type: object
 
 stages:
-  - ${{ each service in parameters.services }}:
     - ${{ each environment in parameters.environments }}:
 
-      - ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies'), eq(service.name, 'SharedInfra')) }}:
-        - stage: 'Wait_${{ service.name }}_${{ environment.name }}'
-          dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
-          displayName: Wait ${{ environment.name }} ${{ service.displayName }}
-          pool:
-            vmImage: 'ubuntu-latest'
+      - stage: 'Wait_SharedInfra_${{ environment.name }}'
+        dependsOn: 'Plan_SharedInfra_${{ environment.name }}'
+        displayName: Wait ${{ environment.name }} Shared Infrastructure
+        pool:
+          vmImage: 'ubuntu-latest'
 
-          jobs:
-            - job: Wait
-              displayName: "Wait for approval"
-              pool: server
-              steps:
-                - template: ../steps/wait.yml
-                  parameters:
-                    environment: ${{ environment.name }}
+        jobs:
+          - job: Wait
+            displayName: "Wait for approval"
+            pool: server
+            steps:
+              - template: ../steps/wait.yml
+                parameters:
+                  environment: ${{ environment.name }}

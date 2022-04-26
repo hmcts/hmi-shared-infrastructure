@@ -1,30 +1,25 @@
 parameters:
   - name: environments
     type: object
-  - name: services
-    type: object
 
 stages:
- - ${{ each service in parameters.services }}:
     - ${{ each environment in parameters.environments }}:
 
-      - stage: 'Plan_${{ service.name }}_${{ environment.name }}'
+      - stage: 'Plan_SharedInfra_${{ environment.name }}'
         ${{ if eq(environment.dependency, 'CIBuild') }}:
           dependsOn: '${{ environment.dependency }}'
         ${{ if ne(environment.dependency, 'CIBuild') }}:
-          dependsOn: 'Apply_${{ service.name }}_${{ environment.dependency }}'
-        displayName: Plan ${{ environment.name }} ${{ service.displayName }}
+          dependsOn: 'Apply_SharedInfra_${{ environment.dependency }}'
+        displayName: Plan ${{ environment.name }} Shared Infrastructure
         pool:
           vmImage: 'ubuntu-latest'
         variables: 
           - template: ../variables/Shared.yaml
             parameters:
               environment: ${{ environment }}
-              service: ${{ service }}
-          - template: ../variables/${{ service.name }}.yaml
+          - template: ../variables/SharedInfra.yaml
             parameters:
               environment: ${{ environment }}
-              service: ${{ service }}
 
         jobs:
         - template: ../jobs/setup-infra.yaml
@@ -38,7 +33,7 @@ stages:
             resourceGroupName: ${{ variables.resourceGroupName }}
             containerName: ${{ variables.containerName }}
             storageAccount: ${{ variables.storageAccount }}
-            resourcePrefix: ${{ service.resourcePrefix }}
+            resourcePrefix: 'hmiapim'
 
         - template: ../jobs/terraform-plan.yaml
           parameters:
@@ -57,4 +52,4 @@ stages:
               storageAccount: ${{ variables.storageAccount }}
             outputName: ${{ variables.planOutputName }}
             workingDirectory: ${{ variables.workingDirectory }}
-            serviceName: ${{ service.name }}
+            serviceName: 'SharedInfra'
