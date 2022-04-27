@@ -14,3 +14,7 @@ variable "log_analytics_workspace_rg" {
 }
 
 variable "log_analytics_subscription_id" {}
+
+locals {
+  network_watcher_storage_repl_type = var.environment == "sandbox" || var.environment == "stg" ? "LRS" : "ZRS"
+}
