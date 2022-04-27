@@ -32,5 +32,5 @@ variable "network_tenant_id" {
 }
 
 locals {
-  network_watcher_storage_repl_type = var.environment == "sandbox" || var.environment == "stg" ? "LRS" : "ZRS"
+  network_watcher_storage_repl_type = var.environment == "sbox" || var.environment == "stg" ? "LRS" : "ZRS"
 }
