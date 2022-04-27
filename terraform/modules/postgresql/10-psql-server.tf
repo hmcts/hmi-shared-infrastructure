@@ -12,7 +12,7 @@ resource "azurerm_postgresql_server" "hmi_pact" {
   auto_grow_enabled            = false
 
   administrator_login              = "pactadmin"
-  administrator_login_password     = data.azurerm_key_vault_secret.pact_password.value
+  administrator_login_password     = var.pact_db_password
   version                          = "10"
   ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"

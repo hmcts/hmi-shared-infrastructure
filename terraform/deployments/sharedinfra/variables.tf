@@ -16,10 +16,53 @@ variable "log_analytics_workspace_name" {}
 variable "log_analytics_workspace_rg" {}
 variable "log_analytics_subscription_id" {}
 
-
+# Networking Client Details
+variable "network_client_id" {
+  description = "Client ID of the GlobalNetworkPeering SP"
+  type        = string
+}
+variable "network_client_secret" {
+  description = "Client Secret of the GlobalNetworkPeering SP"
+  type        = string
+  sensitive   = true
+}
+variable "network_tenant_id" {
+  description = "Client Tenant ID of the GlobalNetworkPeering SP"
+  type        = string
+}
+# KV
+variable "active_directory_group" {
+  type        = string
+  description = "Active Directory Group Name"
+  default     = "DTS HMI"
+}
+variable "product" {
+  type        = string
+  description = "Product Name"
+  default     = "hmi"
+}
+variable "service_now_client" {
+  type        = string
+  description = "Service Now Client"
+  sensitive   = true
+}
+variable "service_now_secret" {
+  type        = string
+  description = "Service Now Secret"
+  sensitive   = true
+}
+variable "secure_file_json_path" {
+  type        = string
+  description = "Exported Secure File JSON Path"
+}
+variable "variable_group_json_path" {
+  type        = string
+  description = "Exported Azure DevOps Variable Group JSON Path"
+}
 # Generic locals
 locals {
-  common_tags = module.ctags.common_tags
+  common_tags                      = module.ctags.common_tags
+  key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
 }
 
 module "ctags" {

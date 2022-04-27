@@ -5,12 +5,9 @@ module "sa" {
 
   env = var.env
 
-  storage_account_name = "hmisharedinfrasa${var.env}"
-  common_tags          = var.common_tags
-
-  resource_group_name = var.resource_group_name
-  location            = var.location
-
+  storage_account_name     = "hmisharedinfrasa${var.env}"
+  resource_group_name      = var.resource_group_name
+  location                 = var.location
   account_tier             = var.sa_account_tier
   account_kind             = var.sa_account_kind
   account_replication_type = var.sa_account_replication_type
@@ -18,4 +15,6 @@ module "sa" {
 
   team_name    = "HMI DevOps"
   team_contact = "#vh-devops"
+
+  common_tags = var.common_tags
 }

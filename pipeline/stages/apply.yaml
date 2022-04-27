@@ -1,30 +1,22 @@
 parameters:
   - name: environments
     type: object
-  - name: services
-    type: object
 
 stages:
-  - ${{ each service in parameters.services }}:
     - ${{ each environment in parameters.environments }}:
 
-      - stage: 'Apply_${{ service.name }}_${{ environment.name }}'
-        ${{ if and(eq(environment.name, 'sbox'), ne(service.name, 'SharedServies')) }}:
-          dependsOn: 'Plan_${{ service.name }}_${{ environment.name }}'
-        ${{ if or(ne(environment.name, 'sbox'), eq(service.name, 'SharedServies')) }}:
-          dependsOn: 'Wait_${{ service.name }}_${{ environment.name }}'
-        displayName: Apply ${{ environment.name }} ${{ service.displayName }}
+      - stage: 'Apply_SharedInfra_${{ environment.name }}'
+        dependsOn: 'Wait_SharedInfra_${{ environment.name }}'
+        displayName: Apply ${{ environment.name }} 
         pool:
           vmImage: 'ubuntu-latest'
         variables: 
           - template: ../variables/Shared.yaml
             parameters:
               environment: ${{ environment }}
-              service: ${{ service }}
-          - template: ../variables/${{ service.name }}.yaml
+          - template: ../variables/SharedInfra.yaml
             parameters:
               environment: ${{ environment }}
-              service: ${{ service }}
 
         jobs:
           - template: ../jobs/terraform-deploy.yaml
@@ -43,14 +35,13 @@ stages:
                 storageAccount: ${{ variables.storageAccount }}
               outputName: '${{ variables.planOutputName }}'
               workingDirectory: ${{ variables.workingDirectory }}
-              serviceName: ${{ service.name }}
+              serviceName: 'SharedInfra'
 
-          - ${{ if eq(service.name,'SharedInfra') }}:
-            - template: ../jobs/setup-azmonlink.yaml
-              parameters:
-                displayName: Set up Azure Monitor Link to Log Analytics
-                dependsOn: TerraformDeploy
-                subscription: ${{ environment.subscription }}
-                environment: ${{ environment.name }}
-                builtFrom: ${{ variables.builtFrom }}
-                businessArea: ${{ variables.businessArea }}
+          - template: ../jobs/setup-azmonlink.yaml
+            parameters:
+              displayName: Set up Azure Monitor Link to Log Analytics
+              dependsOn: TerraformDeploy
+              subscription: ${{ environment.subscription }}
+              environment: ${{ environment.name }}
+              builtFrom: ${{ variables.builtFrom }}
+              businessArea: ${{ variables.businessArea }}

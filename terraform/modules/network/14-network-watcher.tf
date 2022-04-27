@@ -1,20 +1,22 @@
 #tfsec:ignore:azure-storage-default-action-deny
 resource "azurerm_storage_account" "network_watcher_storage" {
-  name                = "hmiapimwatcher${var.environment}"
-  resource_group_name = var.resource_group
-  location            = var.location
-  tags                = var.tags
-
+  name                      = "hmiapimwatcher${var.environment}"
+  resource_group_name       = var.resource_group
+  location                  = var.location
   account_tier              = "Standard"
   account_kind              = "StorageV2"
   account_replication_type  = local.network_watcher_storage_repl_type
   enable_https_traffic_only = true
   min_tls_version           = "TLS1_2"
+
+  tags = var.tags
 }
 
 resource "azurerm_network_watcher_flow_log" "network_watcher_flow" {
   network_watcher_name = data.azurerm_network_watcher.network_watcher.name
   resource_group_name  = data.azurerm_network_watcher.network_watcher.resource_group_name
+  name                 = "Microsoft.Networkhmi-sharedinfra-${var.environment}-rghmi-sharedinfra-nsg-${var.environment}"
+  location             = var.location
 
   network_security_group_id = azurerm_network_security_group.apim_nsg.id
   storage_account_id        = azurerm_storage_account.network_watcher_storage.id

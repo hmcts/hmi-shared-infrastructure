@@ -9,24 +9,14 @@ resources:
       type: github
       name: hmcts/azure-devops-templates
       ref: refs/heads/master
-      endpoint: hmcts
-
-parameters:
-  - name: deployTo
-    displayName: Services to Deploy (All default)
-    type: string
-    default: all-services
-    values:
-      - all-services
-      - SharedInfra
-      - SharedServies        
+      endpoint: hmcts      
 
 variables:
   - group: HMI-APIM-Common
   - name: product
     value: 'hmi'
   - name: businessArea
-    value: 'Cross-Cutting'
+    value: 'cross-cutting'
   - name: builtFrom
     value: $(Build.Repository.Name)
   - name: application
@@ -64,19 +54,6 @@ stages:
         - name: prod
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
-      services: 
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedInfra'))}}:
-          - name: SharedInfra
-            displayName: 'Shared Infrastructure'
-            resourceGroupName: 'sharedinfra'
-            resourcePrefix: 'hmiapim'
-            terraformVersion: '1.0.4'
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
-          - name: SharedServies
-            displayName: 'Shared Services'
-            resourceGroupName: 'sharedservices-state'
-            resourcePrefix: 'hmiss'
-            terraformVersion: '1.0.4'
 
   - template: pipeline/stages/wait.yaml
     parameters:
@@ -96,19 +73,6 @@ stages:
         - name: prod
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
-      services: 
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedInfra'))}}:
-          - name: SharedInfra
-            displayName: 'Shared Infrastructure'
-            resourceGroupName: 'sharedinfra'
-            resourcePrefix: 'hmiapim'
-            terraformVersion: '1.0.4'
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
-          - name: SharedServies
-            displayName: 'Shared Services'
-            resourceGroupName: 'sharedservices-state'
-            resourcePrefix: 'hmiss'
-            terraformVersion: '1.0.4'
 
   - template: pipeline/stages/apply.yaml
     parameters:
@@ -128,17 +92,4 @@ stages:
         - name: prod
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
-      services: 
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedInfra'))}}:
-          - name: SharedInfra
-            displayName: 'Shared Infrastructure'
-            resourceGroupName: 'sharedinfra'
-            resourcePrefix: 'hmiapim'
-            terraformVersion: '1.0.4'
-        - ${{ if or(eq(parameters.deployTo, 'all-services'), eq(parameters.deployTo, 'SharedServies'))}}:
-          - name: SharedServies
-            displayName: 'Shared Services'
-            resourceGroupName: 'sharedservices-state'
-            resourcePrefix: 'hmiss'
-            terraformVersion: '1.0.4'
 

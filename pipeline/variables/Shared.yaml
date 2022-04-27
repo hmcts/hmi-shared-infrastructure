@@ -1,23 +1,28 @@
 parameters:
   - name: environment
     type: object
-  - name: service
-    type: object
 
 variables: 
+  - group: HMI-APIM-Common
   - name: planOutputName
-    value: '${{ parameters.service.name }}_${{ parameters.environment.name }}'
+    value: 'SharedInfra_${{ parameters.environment.name }}'
   - name: storageAccount
-    value: '${{ parameters.service.resourcePrefix }}infra${{ parameters.environment.name }}sa'
+    value: 'hmiapiminfra${{ parameters.environment.name }}sa'
   - name: resourceGroupName
-    value: 'hmi-${{ parameters.service.resourceGroupName }}-${{ parameters.environment.name }}-rg'
+    value: 'hmi-sharedinfra-${{ parameters.environment.name }}-rg'
   - name: containerName
-    value: '${{ parameters.service.resourcePrefix }}terraform'
+    value: 'hmiapimterraform'
   - name: terraformVersion
-    value: ${{ parameters.service.terraformVersion }}
+    value: '1.0.4'
   - template: ../../environments/${{ parameters.environment.name }}.yaml
   - group: HMI-APIM-BUILD-${{ upper(parameters.environment.name) }}
   - name: builtFrom
     value: hmcts/hmi-shared-infrastructure
   - name: product
     value: hmi
+  - name: businessArea
+    value: 'cross-cutting'
+  - name: builtFrom
+    value: $(Build.Repository.Name)
+  - name: application
+    value: 'hearing-management-interface'
