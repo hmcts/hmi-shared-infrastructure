@@ -28,7 +28,7 @@ jobs:
     - template: templates\Azure\Monitor\link.yaml@azTemplates
       parameters:
         subscription: ${{ parameters.subscription }}
-        appName: "hearing-management-interface"
+        appName: "hearings-management-interface"
         appPrefix: "hmi"
         businessArea: ${{ parameters.businessArea }}
         builtFrom: ${{ parameters.builtFrom }}

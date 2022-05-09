@@ -56,8 +56,8 @@ resource "azurerm_template_deployment" "web-test" {
       "location": "[parameters('location')]",
       "tags": {
         "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource",
-        "application": "hearing-management-interface",
-        "businessarea": "cross-cuttting",
+        "application": "hearings-management-interface",
+        "businessarea": "cross-cutting",
         "environment": "[parameters('environment')]"
       },
       "properties": {
