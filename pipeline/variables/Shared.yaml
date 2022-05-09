@@ -25,4 +25,4 @@ variables:
   - name: builtFrom
     value: $(Build.Repository.Name)
   - name: application
-    value: 'hearing-management-interface'
+    value: 'hearings-management-interface'
