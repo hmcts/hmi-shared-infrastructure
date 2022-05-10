@@ -58,7 +58,8 @@ resource "azurerm_template_deployment" "web-test" {
         "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource",
         "application": "hearings-management-interface",
         "businessarea": "cross-cutting",
-        "environment": "[parameters('environment')]"
+        "environment": "[parameters('environment')]",
+		"builtFrom": "hmcts/hmi-shared-infrastructure"
       },
       "properties": {
         "Name": "[variables('pingTestName')]",
@@ -104,7 +105,8 @@ resource "azurerm_template_deployment" "web-test" {
         "[concat('hidden-link:', resourceId('Microsoft.Insights/webtests', variables('pingTestName')))]": "Resource",
 		"application": "hearings-management-interface",
 		"businessarea": "cross-cutting",
-		"environment": "[parameters('environment')]"
+		"environment": "[parameters('environment')]",
+		"builtFrom": "hmcts/hmi-shared-infrastructure"
       },
       "properties": {
         "description": "Alert for web test",
