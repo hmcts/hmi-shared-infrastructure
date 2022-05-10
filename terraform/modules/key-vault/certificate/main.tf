@@ -3,6 +3,8 @@ resource "azurerm_key_vault_certificate" "cert" {
   name         = lookup(each.value, "name")
   key_vault_id = var.keyvault_id
 
+  tags = var.tags
+
   dynamic "certificate" {
     for_each = lookup(each.value, "content") != "" ? [1] : []
     content {

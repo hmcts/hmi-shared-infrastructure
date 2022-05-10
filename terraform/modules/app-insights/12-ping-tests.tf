@@ -101,7 +101,10 @@ resource "azurerm_template_deployment" "web-test" {
       ],
       "tags": {
         "[concat('hidden-link:', resourceId('Microsoft.Insights/components', parameters('appInsightsName')))]": "Resource",
-        "[concat('hidden-link:', resourceId('Microsoft.Insights/webtests', variables('pingTestName')))]": "Resource"
+        "[concat('hidden-link:', resourceId('Microsoft.Insights/webtests', variables('pingTestName')))]": "Resource",
+		"application": "hearings-management-interface",
+		"businessarea": "cross-cutting",
+		"environment": "[parameters('environment')]"
       },
       "properties": {
         "description": "Alert for web test",
