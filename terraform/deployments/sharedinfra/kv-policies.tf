@@ -5,14 +5,6 @@ module "aks-mi" {
   resource_group_name   = "genesis-rg"
 }
 
-locals {
-  apimName = "hmi-apim-svc-${var.environment}"
-}
-data "azurerm_api_management" "hmi_apim_svc" {
-  name                = local.apimName
-  resource_group_name = "hmi-apim-${var.environment}-rg"
-}
-
 data "azuread_application" "cft_client" {
   display_name = "cft-client"
 }
@@ -36,14 +28,6 @@ module "keyvault-policy" {
       object_id               = module.aks-mi.principal_id
       key_permissions         = []
       secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
-      certificate_permissions = []
-      storage_permissions     = []
-    },
-    "${local.apimName}" = {
-      tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = data.azurerm_api_management.hmi_apim_svc.identity.0.principal_id
-      key_permissions         = []
-      secret_permissions      = ["Get", "Set", "List", "Delete"]
       certificate_permissions = []
       storage_permissions     = []
     },
