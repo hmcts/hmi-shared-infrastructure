@@ -2,6 +2,13 @@ variable "keyvault_id" {
   type        = string
   description = "Parent Key Vault ID"
 }
+
+variable "tags" {
+  description = "A mapping of tags to assign to the resource"
+  type        = map(string)
+  default     = {}
+}
+
 variable "certificates" {
   type = map(object({
     name                      = string

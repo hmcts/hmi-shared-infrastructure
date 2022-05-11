@@ -23,6 +23,8 @@ resource "azurerm_network_watcher_flow_log" "network_watcher_flow" {
   enabled                   = true
   version                   = 2
 
+  tags = var.tags
+
   retention_policy {
     enabled = true
     days    = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 30 : 90

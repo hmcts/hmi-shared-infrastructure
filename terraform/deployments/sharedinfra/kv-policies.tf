@@ -3,6 +3,8 @@ module "aks-mi" {
 
   managed_identity_name = "aks-${var.environment}-mi"
   resource_group_name   = "genesis-rg"
+
+  tags = local.common_tags
 }
 
 locals {
