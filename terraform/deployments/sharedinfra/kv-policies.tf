@@ -1,6 +1,6 @@
 data "azurerm_user_assigned_identity" "aks_mi" {
-  name                = var.managed_identity_name
-  resource_group_name = var.resource_group_name
+  name                = "aks-${var.environment}-mi"
+  resource_group_name = "genesis-rg"
 }
 
 # DTS SDS Developers Group
@@ -57,7 +57,7 @@ module "keyvault-policy" {
 resource "azurerm_key_vault_access_policy" "client_access" {
   for_each = var.client_kv_mi_access
 
-  key_vault_id = module.kv_apim.key_vault_id
+  key_vault_id = module.kv.key_vault_id
 
   object_id = each.value
   tenant_id = data.azurerm_client_config.current.tenant_id
