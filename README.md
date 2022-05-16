@@ -15,19 +15,3 @@ ping_tests = [
 ```
 
 To change action group email, modify `var.support_email` in `/environments/shared.tfvars`
-
-### Changing password on pact-broker database:
-~~If you need to change pact-broker database password:~~
-
-~~- navigate to Azure Database for PostgreSQL server `hmi-pact-broker-*env*` and click "Reset password"~~
-
-~~- update the secret `pact-db-password` in Key Vault `hmi-sharedinfra-kv-*env*`~~
-
-~~IMPORTANT! - if you don't update the keyvault secret, AKS cluster won't be able to read it and will fail to start Pact on the pod.~~
-
-The password is now dynamically created by Terraform.
-The flow is to run the Shared Services Terraform, which creates the password and puts it into Key Vault.
-Then run the Shared Infrastructure Terraform, which will fetch the password and update PostgreSQL. (Can also just run this to update the password as is currently in Key Vault)
-
-# hmi-shared-services
-`terraform\deployments\sharedservices` is the path for the Shared Services Terraform.
