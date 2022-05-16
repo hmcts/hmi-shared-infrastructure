@@ -52,3 +52,19 @@ module "keyvault-policy" {
     }
   }
 }
+
+
+resource "azurerm_key_vault_access_policy" "client_access" {
+  for_each = var.client_kv_mi_access
+
+  key_vault_id = module.kv_apim.key_vault_id
+
+  object_id = each.value
+  tenant_id = data.azurerm_client_config.current.tenant_id
+
+  certificate_permissions = []
+  key_permissions         = []
+  secret_permissions = [
+    "Get",
+  ]
+}
