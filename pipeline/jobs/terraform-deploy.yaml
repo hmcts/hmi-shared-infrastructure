@@ -88,3 +88,8 @@ jobs:
       environment: ${{ parameters.environment }}
       workingDirectory: ${{ parameters.workingDirectory }}
       planLocation: '$(Pipeline.Workspace)/${{parameters.outputName}}/${{parameters.outputName}}.tfplan'
+
+  - template: ../steps/az-pip-secrets.yaml
+    parameters:
+      subscriptionName: ${{ parameters.subscription }}
+      environment: ${{ parameters.environment }}
