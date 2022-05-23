@@ -41,7 +41,11 @@ jobs:
   steps:
   - template: ../steps/az-pip-secrets.yaml
     parameters:
-      subscriptionName: ${{ parameters.subscription }}
+      targetSubscription: ${{ parameters.subscription }}
+      ${{ if eq(parameters.environment, 'prod') }}:
+        sourceSubscription: ${{ parameters.subscription }}
+      ${{ else }}:
+        sourceSubscription: "DTS-SHAREDSERVICES-STG"
       environment: ${{ parameters.environment }}
   - template: ../steps/tf-install.yaml
   - template: ../steps/tf-init.yaml
