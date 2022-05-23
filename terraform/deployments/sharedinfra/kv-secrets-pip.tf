@@ -1,6 +1,7 @@
 locals {
-  pip_rg_name = "pip-ss-${var.environment}-rg"
-  pip_kv_name = "pip-ss-apim-kv-${var.environment}"
+  pip_env     = var.environment != "prod" ? "stg" : var.environment
+  pip_rg_name = "pip-ss-${local.pip_env}-rg"
+  pip_kv_name = "pip-ss-apim-kv-${local.pip_env}"
 }
 
 
