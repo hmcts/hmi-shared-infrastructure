@@ -5,7 +5,7 @@ data "azurerm_user_assigned_identity" "aks_mi" {
 
 # DTS SDS Developers Group
 data "azuread_group" "sds_dev" {
-  object_id      = "7bde62e7-b39f-487c-95c9-b4c794fdbb96"
+  object_id = "7bde62e7-b39f-487c-95c9-b4c794fdbb96"
 }
 
 data "azuread_application" "cft_client" {

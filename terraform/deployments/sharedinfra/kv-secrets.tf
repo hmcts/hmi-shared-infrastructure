@@ -50,7 +50,7 @@ module "keyvault_secrets" {
       value        = module.hmidtu.primary_access_key
       tags         = {}
       content_type = ""
-    }, 
+    },
     {
       name  = "HMI-APIM-BUILD-${upper(var.environment)}-json"
       value = var.variable_group_json_path == "" ? "" : file(var.variable_group_json_path)
