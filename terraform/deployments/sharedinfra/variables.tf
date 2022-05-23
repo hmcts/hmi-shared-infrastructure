@@ -61,8 +61,8 @@ variable "variable_group_json_path" {
 }
 # Generic locals
 locals {
-  common_tags                      = module.ctags.common_tags
-  key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
+  common_tags    = module.ctags.common_tags
+  key_vault_name = "${var.product}-shared-kv-${var.environment}"
 }
 
 module "ctags" {
