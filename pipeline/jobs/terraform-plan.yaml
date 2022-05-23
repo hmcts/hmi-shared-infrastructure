@@ -39,6 +39,10 @@ jobs:
   variables:
     ${{ insert }}: ${{ parameters.variables }}
   steps:
+  - template: ../steps/az-pip-secrets.yaml
+    parameters:
+      subscriptionName: ${{ parameters.subscription }}
+      environment: ${{ parameters.environment }}
   - template: ../steps/tf-install.yaml
   - template: ../steps/tf-init.yaml
     parameters:

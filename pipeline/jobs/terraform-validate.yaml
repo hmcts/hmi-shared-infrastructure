@@ -12,7 +12,3 @@ jobs:
   - template: templates/tests/terraform/allTests.yaml@azTemplates
     parameters:
       terraformPath: ${{ parameters.terraformPath }}
-  - template: ../steps/az-pip-secrets.yaml
-    parameters:
-      subscriptionName: ${{ parameters.subscription }}
-      environment: ${{ parameters.environment }}
