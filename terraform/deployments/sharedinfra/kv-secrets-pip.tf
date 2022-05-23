@@ -6,26 +6,31 @@ locals {
 
 
 data "azurerm_key_vault" "pip_kv" {
+  provider            = azurerm.pip_stg
   name                = local.pip_kv_name
   resource_group_name = local.pip_rg_name
 }
 
 
 data "azurerm_key_vault_secret" "pip_tenant_id" {
+  provider     = azurerm.pip_stg
   name         = "app-tenat-id"
   key_vault_id = data.azurerm_key_vault.pip_kv.id
 }
 
 data "azurerm_key_vault_secret" "hmi_client_pwd" {
+  provider     = azurerm.pip_stg
   name         = "app-pip-apim-hmi-pwd"
   key_vault_id = data.azurerm_key_vault.pip_kv.id
 }
 data "azurerm_key_vault_secret" "hmi_client_id" {
+  provider     = azurerm.pip_stg
   name         = "app-pip-apim-hmi-id"
   key_vault_id = data.azurerm_key_vault.pip_kv.id
 }
 
 data "azurerm_key_vault_secret" "data_client_scope" {
+  provider     = azurerm.pip_stg
   name         = "app-pip-data-management-scope"
   key_vault_id = data.azurerm_key_vault.pip_kv.id
 }
