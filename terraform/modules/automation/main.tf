@@ -58,18 +58,6 @@ module "automation_runbook_sas_token_renewal" {
 
   automation_account_name = azurerm_automation_account.hmi_automation.name
 
-  target_tenant_id          = var.B2C_TENANT_ID
-  target_application_id     = var.B2C_CLIENT_ID
-  target_application_secret = var.B2C_CLIENT_SECRET
-
-  source_managed_identity_id = var.jenkins_mi_client_id
-
   tags = var.common_tags
 
-  depends_on = [
-    module.kv,
-    module.kv_apim,
-    azuread_application.frontend_apps,
-    azuread_application.backend_apps
-  ]
 }
