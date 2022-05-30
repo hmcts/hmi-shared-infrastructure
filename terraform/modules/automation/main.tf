@@ -1,5 +1,5 @@
 locals {
-	app_list = ["cft", "crime", "dtu", "snl"]
+	app_list = toset( ["cft", "crime", "dtu", "snl"] )
 	key_vault_name = "hmi-shared-kv-${var.environment}"
 }
 
@@ -54,7 +54,12 @@ module "automation_runbook_sas_token_renewal" {
   environment = var.env
   product     = var.product
 
+  storage_account_name = "hmi-dtu-${var.env}"
+  container_name = "rota"
+  blob_name = ""
+
   key_vault_name = local.key_vault_name
+  secret_name = "hmi-${local.applist.key}-sas-${var.env}"
 
   automation_account_name = azurerm_automation_account.hmi_automation.name
 
