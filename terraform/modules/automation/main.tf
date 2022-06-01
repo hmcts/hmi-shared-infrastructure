@@ -54,7 +54,7 @@ module "automation_runbook_sas_token_renewal" {
   environment = var.env
   product     = var.product
 
-  storage_account_name = "hmi-dtu-${var.env}"
+  storage_account_name = "hmidtu${var.env}"
   container_name = "rota"
   blob_name = ""
 
