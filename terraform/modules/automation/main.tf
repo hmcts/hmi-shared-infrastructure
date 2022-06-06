@@ -22,7 +22,7 @@ resource "azurerm_automation_account" "hmi_automation" {
 
 module "automation_runbook_sas_token_renewal" {
   for_each = local.app_list
-  source   = "git@hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
+  source   = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
   name                = each.value.name
   resource_group_name = azurerm_resource_group.rg.name
