@@ -41,7 +41,7 @@ module "automation_runbook_sas_token_renewal" {
   blob_name = ""
 
   key_vault_name = local.key_vault_name
-  secret_name = "hmi-${local.app_list.key}-sas-${var.env}"
+  secret_name = "hmi-${each.key}-sas-${var.env}"
 
   expiry_date = timeadd(timestamp(), "2160h")
 
