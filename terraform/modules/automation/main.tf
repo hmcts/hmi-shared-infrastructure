@@ -37,6 +37,8 @@ module "automation_runbook_sas_token_renewal" {
   key_vault_name = local.key_vault_name
   secret_name = "hmi-${local.applist.key}-sas-${var.env}"
 
+  expiry_date = timeadd(timestamp(), "2160h")
+
   automation_account_name = azurerm_automation_account.hmi_automation.name
 
   tags = var.common_tags
