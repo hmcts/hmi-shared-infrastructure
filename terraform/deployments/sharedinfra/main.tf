@@ -68,7 +68,7 @@ module "automation" {
 	source = "../../modules/automation"
 	name = "hmi-automation-${var.environment}"
 	env = var.environment
-	resource_group_name = var.resource_group
+	resource_group = var.resource_group
 	location = var.location
 	common_tags         = local.common_tags
 	application_names = ["cft", "crime", "dtu", "snl"]
