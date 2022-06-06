@@ -1,6 +1,6 @@
 locals {
 	app_list = toset( var.application_names )
-	key_vault_name = "hmi-shared-kv-${var.environment}"
+	key_vault_name = "hmi-shared-kv-${var.env}"
 }
 
 resource "azurerm_automation_account" "hmi_automation" {
@@ -10,14 +10,21 @@ resource "azurerm_automation_account" "hmi_automation" {
 	sku_name = var.automation_account_sku_name
 
 	identity {
-    type = "SystemAssigned, UserAssigned"
-    identity_ids = [
-      data.azurerm_user_assigned_identity.app_mi.id,
-      data.azurerm_user_assigned_identity.apim_mi.id
-    ]
+    type = "SystemAssigned"
   }
   
 	tags = var.common_tags
+}
+
+data "azurerm_storage_account" "sa" {
+  name                = "hmidtua${var.environment}"
+  resource_group_name = var.resource_group
+}
+
+resource "azurerm_role_assignment" "aa_to_sa" {
+  scope                = data.azurerm_storage_account.sa.id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_automation_account.hmi_automation.identity.0.principal_id
 }
 
 module "automation_runbook_sas_token_renewal" {
@@ -28,14 +35,13 @@ module "automation_runbook_sas_token_renewal" {
   resource_group_name = azurerm_resource_group.rg.name
 
   environment = var.env
-  product     = var.product
 
   storage_account_name = "hmidtu${var.env}"
   container_name = "rota"
   blob_name = ""
 
   key_vault_name = local.key_vault_name
-  secret_name = "hmi-${local.applist.key}-sas-${var.env}"
+  secret_name = "hmi-${local.app_list.key}-sas-${var.env}"
 
   expiry_date = timeadd(timestamp(), "2160h")
 
