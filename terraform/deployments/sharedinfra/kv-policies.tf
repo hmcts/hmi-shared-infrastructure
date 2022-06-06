@@ -1,18 +1,11 @@
-module "aks-mi" {
-  source = "../../modules/managed-identity/data"
-
-  managed_identity_name = "aks-${var.environment}-mi"
-  resource_group_name   = "genesis-rg"
-
-  tags = local.common_tags
+data "azurerm_user_assigned_identity" "aks_mi" {
+  name                = "aks-${var.environment}-mi"
+  resource_group_name = "genesis-rg"
 }
 
-locals {
-  apimName = "hmi-apim-svc-${var.environment}"
-}
-data "azurerm_api_management" "hmi_apim_svc" {
-  name                = local.apimName
-  resource_group_name = "hmi-apim-${var.environment}-rg"
+# DTS SDS Developers Group
+data "azuread_group" "sds_dev" {
+  object_id = "7bde62e7-b39f-487c-95c9-b4c794fdbb96"
 }
 
 data "azuread_application" "cft_client" {
@@ -33,19 +26,19 @@ module "keyvault-policy" {
       certificate_permissions = []
       storage_permissions     = []
     },
-    "aks-${var.environment}-mi" = {
+    "${replace(data.azuread_group.sds_dev.display_name, " ", "-")}" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = module.aks-mi.principal_id
+      object_id               = data.azuread_group.sds_dev.object_id
       key_permissions         = []
       secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
       certificate_permissions = []
       storage_permissions     = []
     },
-    "${local.apimName}" = {
+    "aks-${var.environment}-mi" = {
       tenant_id               = data.azurerm_client_config.current.tenant_id
-      object_id               = data.azurerm_api_management.hmi_apim_svc.identity.0.principal_id
+      object_id               = data.azurerm_user_assigned_identity.aks_mi.principal_id
       key_permissions         = []
-      secret_permissions      = ["Get", "Set", "List", "Delete"]
+      secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
       certificate_permissions = []
       storage_permissions     = []
     },
@@ -58,4 +51,20 @@ module "keyvault-policy" {
       storage_permissions     = []
     }
   }
+}
+
+
+resource "azurerm_key_vault_access_policy" "client_access" {
+  for_each = var.client_kv_mi_access
+
+  key_vault_id = module.kv.key_vault_id
+
+  object_id = each.value
+  tenant_id = data.azurerm_client_config.current.tenant_id
+
+  certificate_permissions = []
+  key_permissions         = []
+  secret_permissions = [
+    "Get",
+  ]
 }

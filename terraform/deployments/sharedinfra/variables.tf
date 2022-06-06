@@ -61,8 +61,8 @@ variable "variable_group_json_path" {
 }
 # Generic locals
 locals {
-  common_tags                      = module.ctags.common_tags
-  key_vault_name                   = "${var.product}-shared-kv-${var.environment}"
+  common_tags    = module.ctags.common_tags
+  key_vault_name = "${var.product}-shared-kv-${var.environment}"
 }
 
 module "ctags" {
@@ -70,4 +70,10 @@ module "ctags" {
   environment = var.environment
   product     = "hmi"
   builtFrom   = var.builtFrom
+}
+
+variable "client_kv_mi_access" {
+  type        = map(any)
+  description = "Map of Managed Identities that should have GET access on Key Vault. name = app_name, value = mi client ID"
+  default     = {}
 }

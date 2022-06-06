@@ -5,7 +5,7 @@ resource "azurerm_storage_account" "network_watcher_storage" {
   location                  = var.location
   account_tier              = "Standard"
   account_kind              = "StorageV2"
-  account_replication_type  = "LRS"
+  account_replication_type  = local.network_watcher_storage_repl_type
   enable_https_traffic_only = true
   min_tls_version           = "TLS1_2"
 
