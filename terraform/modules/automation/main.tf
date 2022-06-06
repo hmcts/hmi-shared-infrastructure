@@ -1,5 +1,5 @@
 locals {
-	app_list = toset( var.application_names )
+	app_list = ["cft", "crime", "dtu", "snl"]
 	key_vault_name = "hmi-shared-kv-${var.env}"
 }
 
@@ -17,7 +17,7 @@ resource "azurerm_automation_account" "hmi_automation" {
 }
 
 data "azurerm_storage_account" "sa" {
-  name                = "hmidtua${var.environment}"
+  name                = "hmidtua${var.env}"
   resource_group_name = var.resource_group
 }
 
@@ -32,7 +32,7 @@ module "automation_runbook_sas_token_renewal" {
   source   = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
   name                = each.value.name
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group
 
   environment = var.env
 

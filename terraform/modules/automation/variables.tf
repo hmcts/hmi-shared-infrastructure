@@ -4,7 +4,7 @@ variable "name" {
 variable "env" {
   type = string
 }
-variable "resource_group_name" {
+variable "resource_group" {
   type = string
 }
 variable "location" {
