@@ -74,3 +74,13 @@ module "kv" {
   common_tags             = local.common_tags
   create_managed_identity = true
 }
+
+module "automation" {
+	source = "../../modules/automation-account"
+	name = "hmi-automation-${var.environment}"
+	env = var.environment
+	resource_group_name = var.resource_group
+	location = var.location
+	common_tags         = local.common_tags
+	application_names = ["cft", "crime", "dtu", "snl"]
+}

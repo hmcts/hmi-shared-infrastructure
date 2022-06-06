@@ -1,26 +1,10 @@
 locals {
-	app_list = toset( ["cft", "crime", "dtu", "snl"] )
+	app_list = toset( var.application_names )
 	key_vault_name = "hmi-shared-kv-${var.environment}"
 }
 
-data "azuread_application" "cft_client" {
-	display_name = "cft-client"
-}
-
-data "azuread_application" "crime_client" {
-	display_name = "crime-client"
-}
-
-data "azuread_application" "dtu_client" {
-	display_name = "dtu-client"
-}
-
-data "azuread_application" "snl_client" {
-	display_name = "snl-client"
-}
-
 resource "azurerm_automation_account" "hmi_automation" {
-	name = "hmi-automation-${var.environment}"
+	name = var.name
 	location = var.location
 	resource_group_name = var.resource_group
 	sku_name = var.automation_account_sku_name
@@ -34,14 +18,6 @@ resource "azurerm_automation_account" "hmi_automation" {
   }
   
 	tags = var.common_tags
-}
-
-module "automation_runbook_sas_token_renewal" {
-	for_each = local.app_list
-	source = "git@hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
-
-	name = each.value.name
-	resource_group_name = azurerm_resource_group.rg.name
 }
 
 module "automation_runbook_sas_token_renewal" {
