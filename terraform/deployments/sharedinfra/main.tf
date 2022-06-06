@@ -76,7 +76,7 @@ module "kv" {
 }
 
 module "automation" {
-	source = "../../modules/automation-account"
+	source = "../../modules/automation"
 	name = "hmi-automation-${var.environment}"
 	env = var.environment
 	resource_group_name = var.resource_group
