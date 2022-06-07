@@ -31,7 +31,7 @@ module "automation_runbook_sas_token_renewal" {
   for_each = local.app_list
   source   = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
-  name                = each.value
+  name                = "rotate-sas-tokens-${each.value}"
   resource_group_name = var.resource_group
 
   environment = var.env
