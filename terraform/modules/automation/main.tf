@@ -17,7 +17,7 @@ resource "azurerm_automation_account" "hmi_automation" {
 }
 
 data "azurerm_storage_account" "sa" {
-  name                = "hmidtua${var.env}"
+  name                = "hmidtu${var.env}"
   resource_group_name = var.resource_group
 }
 
@@ -31,7 +31,7 @@ module "automation_runbook_sas_token_renewal" {
   for_each = local.app_list
   source   = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
-  name                = each.value.name
+  name                = each.value
   resource_group_name = var.resource_group
 
   environment = var.env
