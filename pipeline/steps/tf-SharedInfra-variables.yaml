@@ -23,8 +23,8 @@ parameters:
   - name: libarySecrets
     type: object
     default:
-      - secName: "tf_secret_elinks_token"
-        secValue: "$(tf_secret_elinks_token)"
+      - secName: "tf_secret_elinks-token"
+        secValue: "$(tf_secret_elinks-token)"
 
 steps:
 
