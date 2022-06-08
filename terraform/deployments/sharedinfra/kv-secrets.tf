@@ -27,7 +27,7 @@ module "keyvault_secrets" {
   key_vault_id = module.kv.key_vault_id
   tags         = local.common_tags
   secrets = [
-	{
+    {
       name         = "appins-instrumentation-key"
       value        = data.azurerm_application_insights.appin.instrumentation_key
       tags         = {}
@@ -78,27 +78,20 @@ module "keyvault_secrets" {
       value        = var.service_now_secret
       tags         = {}
       content_type = ""
-    }
+    },
+    [
+      for secret in var.secrets_arr : {
+        name  = secret.name
+        value = secret.value
+        tags = {
+          "source" : "ado library"
+        }
+        content_type = ""
+      }
+    ]
   ]
 
   depends_on = [
     module.keyvault-policy,
-  ]
-}
-
-module "keyvault_ado_secrets" {
-  source = "../../modules/key-vault/secret"
-
-  key_vault_id = module.kv.key_vault_id
-  tags         = local.common_tags
-  secrets = [
-    for secret in var.secrets_arr : {
-      name  = secret.name
-      value = secret.value
-      tags = {
-        "source" : "ado library"
-      }
-      content_type = ""
-    }
   ]
 }
