@@ -20,6 +20,11 @@ parameters:
     type: string
   - name: service_now_secret
     type: string
+  - name: libarySecrets
+    type: object
+    default:
+      - secName: "elinks_token"
+        secValue: "$(elinks_token)"
 
 steps:
 
