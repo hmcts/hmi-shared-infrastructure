@@ -59,6 +59,15 @@ variable "variable_group_json_path" {
   type        = string
   description = "Exported Azure DevOps Variable Group JSON Path"
 }
+variable "secrets_arr" {
+  type = list(object({
+    name  = string
+    value = string
+  }))
+  description = "Key Vault Secrets from AzDO Library"
+  #sensitive   = true
+  default = []
+}
 # Generic locals
 locals {
   common_tags    = module.ctags.common_tags
