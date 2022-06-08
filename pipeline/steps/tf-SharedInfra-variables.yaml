@@ -72,6 +72,20 @@ steps:
       variables="${variables} -var \"service_now_client=${service_now_client}\""
       variables="${variables} -var \"service_now_secret=${service_now_secret}\""
 
+      secretArr=$(env -0 | while IFS='=' read -r -d '' n v; do
+        envName="$n"
+        #echo "processing $envName"
+        if [[ "${envName}" == 'tf_secret_'* ]]; then
+          envName="${envName//tf_secret_/}"
+          envValue="$v"
+          #echo "found $envName"
+          echo "{\\\"name\\\":\\\"$envName\\\",\\\"value\\\":\\\"$envValue\\\"},"
+          #echo "found $secretArr"
+        fi
+      done)
+      secretArr="[${secretArr//[$'\t\r\n']}]"
+      variables="${variables} -var \"secrets_arr=${secretArr}\""
+
       echo "Variables set as: "
       echo "${variables}"
       echo "##vso[task.setvariable variable=$variableName;isOutput=true]${variables}"
@@ -82,3 +96,5 @@ steps:
       GNP_CLIENT_ID: $(GlobalNetworkPeering.GNP_CLIENT_ID) 
       GNP_CLIENT_SECRET: $(GlobalNetworkPeering.GNP_CLIENT_SECRET) 
       GNP_TENANT_ID: $(GlobalNetworkPeering.GNP_TENANT_ID) 
+      ${{ each sec in parameters.libarySecrets }}:
+        "${{ sec.secName }}" : "${{ sec.secValue }}"

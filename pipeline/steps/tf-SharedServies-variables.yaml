@@ -40,20 +40,6 @@ steps:
       variables="${variables} -var-file=\"$(System.DefaultWorkingDirectory)/environments/shared.tfvars\""
       variables="${variables} -out=\"${{ parameters.outputLocation }}\""
 
-      secretArr=$(env -0 | while IFS='=' read -r -d '' n v; do
-        envName="$n"
-        #echo "processing $envName"
-        if [[ "${envName}" == 'tf_secret_'* ]]; then
-          envName="${envName//tf_secret_/}"
-          envValue="$v"
-          #echo "found $envName"
-          echo "{\\\"name\\\":\\\"$envName\\\",\\\"value\\\":\\\"$envValue\\\"},"
-          #echo "found $secretArr"
-        fi
-      done)
-      secretArr="[${secretArr//[$'\t\r\n']}]"
-      variables="${variables} -var \"secrets_arr=${secretArr}\""
-
       echo "Variables set as: "
       echo "${variables}"
       echo "##vso[task.setvariable variable=$variableName;isOutput=true]${variables}"
@@ -62,5 +48,3 @@ steps:
     env:
       secure_file_json: $(secureFileVariable.secure_file_json_path)
       variable_group_json: $(variableGroupDownload.variable_group_json_path)
-      ${{ each sec in parameters.libarySecrets }}:
-        "${{ sec.secName }}" : "${{ sec.secValue }}"
