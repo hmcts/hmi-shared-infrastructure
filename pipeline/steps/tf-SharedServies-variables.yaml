@@ -22,15 +22,7 @@ parameters:
   - name: service_now_secret
     type: string
     default: ""
-  - name: libarySecrets
-    type: object
-    default:
-      - secName: "elinks_token"
-        secValue: "$(elinks_token)"
-      - secName: "vh-client-app-client"
-        secValue: "$(vh-client-app-client)"
-      - secName: "vh-client-app-secret"
-        secValue: "$(vh-client-app-secret)"
+
 
 steps:
 
