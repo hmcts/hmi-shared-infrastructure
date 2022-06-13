@@ -25,6 +25,10 @@ parameters:
     default:
       - secName: "tf_secret_elinks-token"
         secValue: "$(tf_secret_elinks-token)"
+      - secName: "tf_secret_vh-client-app-client"
+        secValue: "$(tf_secret_vh-client-app-client)"
+      - secName: "tf_secret_vh-client-app-secret"
+        secValue: "$(tf_secret_vh-client-app-secret)"
 
 steps:
 
