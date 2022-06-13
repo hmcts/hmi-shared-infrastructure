@@ -23,7 +23,6 @@ parameters:
     type: string
     default: ""
 
-
 steps:
 
   - bash: |
