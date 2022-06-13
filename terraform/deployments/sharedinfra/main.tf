@@ -71,5 +71,5 @@ module "automation" {
 	resource_group = var.resource_group
 	location = var.location
 	common_tags         = local.common_tags
-	application_names = ["cft", "crime", "dtu", "snl"]
+	application_names = ["Rota"]
 }

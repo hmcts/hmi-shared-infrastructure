@@ -1,5 +1,5 @@
 locals {
-	app_list = toset(["rota"])
+	app_list = toset(var.application_names)
 	key_vault_name = "hmi-shared-kv-${var.env}"
 }
 
