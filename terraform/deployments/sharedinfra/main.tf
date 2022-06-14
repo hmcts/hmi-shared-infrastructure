@@ -71,5 +71,20 @@ module "automation" {
 	resource_group = var.resource_group
 	location = var.location
 	common_tags         = local.common_tags
-	application_names = ["rota"]
+	sas_tokens = {
+		"rota-rl" = {
+			permissions = "rl"
+			storage_account = "hmidtu${var.environment}"
+			container = "rota"
+			blob = ""
+			expiry_date = timeadd(timestamp(), "167h")
+		},
+		"rota-rlw" = {
+			permissions = "rlw"
+			storage_account = "hmidtu${var.environment}"
+			container = "rota"
+			blob = ""
+			expiry_date = timeadd(timestamp(), "167h")
+		}
+	}
 }

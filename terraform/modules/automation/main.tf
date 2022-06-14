@@ -1,5 +1,4 @@
 locals {
-	app_list = toset(var.application_names)
 	key_vault_name = "hmi-shared-kv-${var.env}"
 }
 
@@ -28,22 +27,22 @@ resource "azurerm_role_assignment" "aa_to_sa" {
 }
 
 module "automation_runbook_sas_token_renewal" {
-  for_each = local.app_list
+  for_each = var.sas_tokens
   source   = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
-  name                = "rotate-sas-tokens-${each.value}"
+  name                = "rotate-sas-tokens-${lookup(each.value, "storage_account")}-${lookup(each.value, "container")}-${lookup(each.value, "blob")}-${lookup(each.value, "permissions")}"
   resource_group_name = var.resource_group
 
   environment = var.env
 
-  storage_account_name = "hmidtu${var.env}"
-  container_name = "rota"
-  blob_name = ""
+  storage_account_name = lookup(each.value, "storage_account")
+  container_name = lookup(each.value, "container")
+  blob_name = lookup(each.value, "blob")
 
   key_vault_name = local.key_vault_name
-  secret_name = "hmi-${each.key}-sas-${var.env}"
+  secret_name = "hmi-sas-${lookup(each.value, "container")}-${lookup(each.value, "blob")}-${lookup(each.value, "permissions")}"
 
-  expiry_date = timeadd(timestamp(), "2160h")
+  expiry_date = lookup(each.value, "expiry_date")
 
   automation_account_name = azurerm_automation_account.hmi_automation.name
 

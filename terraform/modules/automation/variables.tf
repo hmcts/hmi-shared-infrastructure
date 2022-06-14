@@ -25,8 +25,14 @@ variable "automation_account_sku_name" {
   }
 }
 
-variable "application_names" {
-	type = list(string)
-	description = "List of application names"
+variable "sas_tokens" {
+	type = map(object({
+		permissions = string
+		storage_account = string
+		container = string
+		blob = string
+		expiry_date = string
+	}))
+	description = "List of all of the SAS tokens to be created"
 	default = []
 }
