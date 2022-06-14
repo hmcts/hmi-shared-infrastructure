@@ -34,5 +34,5 @@ variable "sas_tokens" {
 		expiry_date = string
 	}))
 	description = "List of all of the SAS tokens to be created"
-	default = []
+	default = {}
 }
