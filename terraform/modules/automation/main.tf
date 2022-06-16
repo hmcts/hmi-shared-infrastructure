@@ -1,6 +1,6 @@
 locals {
 	key_vault_name = "hmi-shared-kv-${var.env}"
-	sa_list = toset(["hmidtu${var.env}", "casehqemulator${var.env}", "hmiapiminfra${var.env}sa", "hmiapimwatcher${var.env}", "hmisharedinfrasa${var.env}"])
+	sa_list = toset(["hmidtu${var.env}", "hmiapiminfra${var.env}sa", "hmiapimwatcher${var.env}", "hmisharedinfrasa${var.env}"])
 }
 
 resource "azurerm_automation_account" "hmi_automation" {
