@@ -49,7 +49,16 @@ module "keyvault-policy" {
       secret_permissions      = ["Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"]
       certificate_permissions = ["Backup", "Create", "Delete", "DeleteIssuers", "Get", "GetIssuers", "Import", "List", "ListIssuers", "ManageContacts", "ManageIssuers", "Purge", "SetIssuers", "Update"]
       storage_permissions     = []
+    },
+	"aa-${var.environment}" = {
+      tenant_id               = data.azurerm_client_config.current.tenant_id
+      object_id               = module.automation.system_id
+      key_permissions         = []
+      secret_permissions      = ["Get", "List", "Set", "Delete"]
+      certificate_permissions = []
+      storage_permissions     = []
     }
+
   }
 }
 

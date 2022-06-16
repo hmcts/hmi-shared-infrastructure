@@ -63,3 +63,28 @@ module "kv" {
   common_tags             = local.common_tags
   create_managed_identity = true
 }
+
+module "automation" {
+	source = "../../modules/automation"
+	name = "hmi-automation-${var.environment}"
+	env = var.environment
+	resource_group = var.resource_group
+	location = var.location
+	common_tags         = local.common_tags
+	sas_tokens = {
+		"rota-rl" = {
+			permissions = "rl"
+			storage_account = "hmidtu${var.environment}"
+			container = "rota"
+			blob = ""
+			expiry_date = timeadd(timestamp(), "167h")
+		},
+		"rota-rlw" = {
+			permissions = "rlw"
+			storage_account = "hmidtu${var.environment}"
+			container = "rota"
+			blob = ""
+			expiry_date = timeadd(timestamp(), "167h")
+		}
+	}
+}
