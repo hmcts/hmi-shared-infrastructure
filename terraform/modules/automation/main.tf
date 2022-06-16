@@ -1,5 +1,6 @@
 locals {
 	key_vault_name = "hmi-shared-kv-${var.env}"
+	sa_list = ["hmidtu${var.env}", "casehqemulator${var.env}", "hmiapiminfra${var.env}sa", "hmiapimwatcher${var.env}", "hmisharedinfrasa${var.env}"]
 }
 
 resource "azurerm_automation_account" "hmi_automation" {
@@ -16,12 +17,14 @@ resource "azurerm_automation_account" "hmi_automation" {
 }
 
 data "azurerm_storage_account" "sa" {
-  name                = "hmidtu${var.env}"
+  for_each = local.sa_list
+  name                = each.value
   resource_group_name = var.resource_group
 }
 
 resource "azurerm_role_assignment" "aa_to_sa" {
-  scope                = data.azurerm_storage_account.sa.id
+  for_each = {for i in local.sa_list : i =>  data.azurerm_storage_account.sa[i].id}
+  scope                = each.value
   role_definition_name = "Contributor"
   principal_id         = azurerm_automation_account.hmi_automation.identity.0.principal_id
 }
