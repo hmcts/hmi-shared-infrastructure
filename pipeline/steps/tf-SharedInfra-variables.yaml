@@ -29,6 +29,10 @@ parameters:
         secValue: "$(tf_secret_vh-client-app-client)"
       - secName: "tf_secret_vh-client-app-secret"
         secValue: "$(tf_secret_vh-client-app-secret)"
+      - secName: "tf_secret_cft-client-app-client"
+        secValue: "$(tf_secret_cft-client-app-client)"
+      - secName: "tf_secret_cft-client-app-secret"
+        secValue: "$(tf_secret_cft-client-app-secret)"
 
 steps:
 
