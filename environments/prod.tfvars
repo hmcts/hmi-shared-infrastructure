@@ -6,6 +6,12 @@ route_table = [
     address_prefix         = "51.145.56.125/32"
     next_hop_type          = "Internet"
     next_hop_in_ip_address = null
+  },
+  {
+    name                   = "ss_prod_aks"
+    address_prefix         = "10.148.0.0/18"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.11.8.36"
   }
 ]
 log_analytics_workspace_name = "hmcts-prod"
