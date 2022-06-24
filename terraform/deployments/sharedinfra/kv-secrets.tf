@@ -21,6 +21,12 @@ module "keyvault_secrets" {
   tags         = local.common_tags
   secrets = [
     {
+      name         = "appins-resource-id"
+      value        = module.app-insights.id
+      tags         = {}
+      content_type = ""
+    },
+    {
       name         = "appins-instrumentation-key"
       value        = module.app-insights.instrumentation_key
       tags         = {}
