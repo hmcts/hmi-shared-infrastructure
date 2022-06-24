@@ -14,13 +14,6 @@ module "hmidtu" {
   resource_group_name  = data.azurerm_resource_group.hmi.name
 }
 
-
-
-data "azurerm_application_insights" "appin" {
-  name                = "hmi-sharedinfra-appins-${var.environment}"
-  resource_group_name = data.azurerm_resource_group.hmi.name
-}
-
 module "keyvault_secrets" {
   source = "../../modules/key-vault/secret"
 
@@ -29,7 +22,7 @@ module "keyvault_secrets" {
   secrets = [
     {
       name         = "appins-instrumentation-key"
-      value        = data.azurerm_application_insights.appin.instrumentation_key
+      value        = module.app-insights.instrumentation_key
       tags         = {}
       content_type = ""
     },
