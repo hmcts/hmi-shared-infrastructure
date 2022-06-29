@@ -1,29 +1,29 @@
 locals {
-	key_vault_name = "hmi-shared-kv-${var.env}"
-	sa_list = toset(["hmidtu${var.env}", "hmiapiminfra${var.env}sa", "hmiapimwatcher${var.env}", "hmisharedinfrasa${var.env}"])
+  key_vault_name = "hmi-shared-kv-${var.env}"
+  sa_list        = toset(["hmidtu${var.env}", "hmiapiminfra${var.env}sa", "hmiapimwatcher${var.env}", "hmisharedinfrasa${var.env}"])
 }
 
 resource "azurerm_automation_account" "hmi_automation" {
-	name = var.name
-	location = var.location
-	resource_group_name = var.resource_group
-	sku_name = var.automation_account_sku_name
+  name                = var.name
+  location            = var.location
+  resource_group_name = var.resource_group
+  sku_name            = var.automation_account_sku_name
 
-	identity {
+  identity {
     type = "SystemAssigned"
   }
-  
-	tags = var.common_tags
+
+  tags = var.common_tags
 }
 
 data "azurerm_storage_account" "sa" {
-  for_each = local.sa_list
+  for_each            = local.sa_list
   name                = each.value
   resource_group_name = var.resource_group
 }
 
 resource "azurerm_role_assignment" "aa_to_sa" {
-  for_each = {for i in local.sa_list : i =>  data.azurerm_storage_account.sa[i].id}
+  for_each             = { for i in local.sa_list : i => data.azurerm_storage_account.sa[i].id }
   scope                = each.value
   role_definition_name = "Contributor"
   principal_id         = azurerm_automation_account.hmi_automation.identity.0.principal_id
@@ -39,11 +39,11 @@ module "automation_runbook_sas_token_renewal" {
   environment = var.env
 
   storage_account_name = each.value.storage_account
-  container_name = each.value.container
-  blob_name = each.value.blob
+  container_name       = each.value.container
+  blob_name            = each.value.blob
 
   key_vault_name = local.key_vault_name
-  secret_name = "hmi-sas-${each.value.container}-${each.value.blob}-${each.value.permissions}"
+  secret_name    = "hmi-sas-${each.value.container}-${each.value.blob}-${each.value.permissions}"
 
   expiry_date = each.value.expiry_date
 
