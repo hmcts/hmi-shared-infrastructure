@@ -27,7 +27,7 @@ resource "azurerm_virtual_network_peering" "vnet_to_uks_prod_hub" {
   name                      = each.value
   resource_group_name       = var.resource_group
   virtual_network_name      = azurerm_virtual_network.vnet.name
-  remote_virtual_network_id = "/subscriptions/${each.value == "hmcts-hub-nonprodi" ? local.peering_nonprod_subscription : local.peering_subscription}/resourceGroups/${each.value}/providers/Microsoft.Network/virtualNetworks/${each.value}"
+  remote_virtual_network_id = "/subscriptions/${each.value == "hmcts-hub-nonprodi" ? local.peering_nonprod_subscription : local.peering_prod_subscription}/resourceGroups/${each.value}/providers/Microsoft.Network/virtualNetworks/${each.value}"
   allow_forwarded_traffic   = true
 }
 resource "azurerm_virtual_network_peering" "uks_prod_hub_to_vnet" {
