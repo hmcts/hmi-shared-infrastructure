@@ -7,9 +7,10 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 locals {
-  dns_zone_name        = var.environment == "prod" ? "platform.hmcts.net" : "staging.platform.hmcts.net"
-  peering_vnets        = var.environment != "prod" && var.environment != "stg" ? ["hmcts-hub-prod-int", "ukw-hub-prod-int"] : var.environment == "stg" ? ["hmcts-hub-nonprodi"] : []
-  peering_subscription = "0978315c-75fe-4ada-9d11-1eb5e0e0b214"
+  dns_zone_name                = var.environment == "prod" ? "platform.hmcts.net" : "staging.platform.hmcts.net"
+  peering_vnets                = var.environment != "prod" && var.environment != "stg" ? ["hmcts-hub-prod-int", "ukw-hub-prod-int"] : var.environment == "stg" ? ["hmcts-hub-nonprodi"] : []
+  peering_prod_subscription    = "0978315c-75fe-4ada-9d11-1eb5e0e0b214"
+  peering_nonprod_subscription = "fb084706-583f-4c9a-bdab-949aac66ba5c"
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "vnet_to_dns" {
@@ -26,7 +27,7 @@ resource "azurerm_virtual_network_peering" "vnet_to_uks_prod_hub" {
   name                      = each.value
   resource_group_name       = var.resource_group
   virtual_network_name      = azurerm_virtual_network.vnet.name
-  remote_virtual_network_id = "/subscriptions/${local.peering_subscription}/resourceGroups/${each.value}/providers/Microsoft.Network/virtualNetworks/${each.value}"
+  remote_virtual_network_id = "/subscriptions/${each.value == "hmcts-hub-nonprodi" ? local.peering_nonprod_subscription : local.peering_subscription}/resourceGroups/${each.value}/providers/Microsoft.Network/virtualNetworks/${each.value}"
   allow_forwarded_traffic   = true
 }
 resource "azurerm_virtual_network_peering" "uks_prod_hub_to_vnet" {
