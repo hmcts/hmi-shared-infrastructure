@@ -8,7 +8,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 locals {
   dns_zone_name                = var.environment == "prod" ? "platform.hmcts.net" : "staging.platform.hmcts.net"
-  peering_prod_vnets           = var.environment != "prod" && var.environment != "stg" ? ["hmcts-hub-prod-int", "ukw-hub-prod-int"] : var.environment == "stg" ? ["hmcts-hub-nonprodi"] : []
+  peering_prod_vnets           = var.environment != "prod" && var.environment != "stg" ? ["hmcts-hub-prod-int", "ukw-hub-prod-int"] : []
   peering_nonprod_vnets        = var.environment == "stg" ? ["hmcts-hub-nonprodi"] : []
   peering_prod_subscription    = "0978315c-75fe-4ada-9d11-1eb5e0e0b214"
   peering_nonprod_subscription = "fb084706-583f-4c9a-bdab-949aac66ba5c"
