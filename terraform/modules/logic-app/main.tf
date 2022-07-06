@@ -1,5 +1,5 @@
 resource "azurerm_logic_app_workflow" "hmi_la_dturota" {
-  name                = "hmi-la-dturota-test-${var.env}"
+  name                = "hmi-la-dturota-test-${var.env}-test"
   location            = var.location
   resource_group_name = var.resource_group
   
@@ -7,7 +7,7 @@ resource "azurerm_logic_app_workflow" "hmi_la_dturota" {
 }
 
 resource "azurerm_logic_app_workflow" "hmi_la_sittingpattern_publisher" {
-  name                = "hmi-la-sittingpattern-publisher-${var.env}"
+  name                = "hmi-la-sittingpattern-publisher-${var.env}-test"
   location            = var.location
   resource_group_name = var.resource_group
 
@@ -15,7 +15,7 @@ resource "azurerm_logic_app_workflow" "hmi_la_sittingpattern_publisher" {
 }
 
 resource "azurerm_logic_app_workflow" "hmi_la_sittingpattern_retriever" {
-  name                = "hmi-la-sittingpattern-retriever-${var.env}"
+  name                = "hmi-la-sittingpattern-retriever-${var.env}-test"
   location            = var.location
   resource_group_name = var.resource_group
 
