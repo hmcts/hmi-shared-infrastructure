@@ -11,7 +11,3 @@ variable "common_tags" {
   type        = map(string)
   description = "Tags for the Azure resources"
 }
-variable "api_subscription" {
-	type = string
-	description = "Subscription of the API connections"
-}

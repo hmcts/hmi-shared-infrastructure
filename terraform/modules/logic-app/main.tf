@@ -31,7 +31,7 @@ data "azurerm_storage_account" "dtusa" {
 	resource_group_name = var.resource_group
 }
 
-resource "azurerm_api_connection" "dtu_azureblob" {
+resource "azurerm_api_connection" "azureblob" {
 	name = "azureblob"
 	resource_group_name = var.resource_group
 	managed_api_id = "subscriptions/${data.azurerm_subscription.api_sub.subscription_id}/providers/Microsoft.Web/locations/${var.location}/managedApis/azureblob"
@@ -79,24 +79,3 @@ resource "azurerm_api_connection" "azuretables" {
 
 	tags = var.common_tags
 }
-
-resource "azurerm_api_connection" "publisher_azureblob" {
-	name = "azureblob"
-	resource_group_name = var.resource_group
-	managed_api_id = "subscriptions/${data.azurerm_subscription.api_sub.subscription_id}/providers/Microsoft.Web/locations/${var.location}/managedApis/azureblob"
-	display_name = "HMI DTU Sitting Patterns"
-	parameter_values = {
-		accountName = "hmidtu${var.env}"
-		accessKey = {
-			reference = {
-				keyVault = {
-					id = "/subscriptions/${data.azurerm_subscription.api_sub.subscription_id}/resourceGroups/hmi-sharedinfra-${var.env}-rg/providers/Microsoft.KeyVault/vaults/hmi-shared-kv-${var.env}"
-				},
-				secretName = "dtu-storage-account-key"
-			}
-		}
-	}
-
-	tags = var.common_tags
-}
-
