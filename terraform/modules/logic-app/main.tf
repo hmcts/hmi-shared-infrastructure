@@ -34,8 +34,8 @@ data "azurerm_storage_account" "dtusa" {
 module "hmidtu" {
   source = "../../modules/storage-account/data"
 
-  storage_account_name = "hmisharedinfrasa${var.environment}"
-  resource_group_name  = data.azurerm_resource_group.hmi.name
+  storage_account_name = "hmidtu${var.env}"
+  resource_group_name  = var.resource_group
 }
 
 resource "azurerm_api_connection" "azureblob" {
