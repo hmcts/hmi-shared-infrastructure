@@ -31,6 +31,13 @@ data "azurerm_storage_account" "dtusa" {
 	resource_group_name = var.resource_group
 }
 
+module "hmidtu" {
+  source = "../../modules/storage-account/data"
+
+  storage_account_name = "hmisharedinfrasa${var.environment}"
+  resource_group_name  = data.azurerm_resource_group.hmi.name
+}
+
 resource "azurerm_api_connection" "azureblob" {
 	name = "azureblob"
 	resource_group_name = var.resource_group
@@ -38,14 +45,7 @@ resource "azurerm_api_connection" "azureblob" {
 	display_name = "HMI DTU Rota"
 	parameter_values = {
 		accountName = "hmidtu${var.env}"
-		accessKey = {
-			reference = {
-				keyVault = {
-					id = "/subscriptions/${data.azurerm_subscription.api_sub.subscription_id}/resourceGroups/hmi-sharedinfra-${var.env}-rg/providers/Microsoft.KeyVault/vaults/hmi-shared-kv-${var.env}"
-				},
-				secretName = "dtu-storage-account-key"
-			}
-		}
+		accessKey = module.hmidtu.primary_access_key
 	}
 
 	tags = var.common_tags
