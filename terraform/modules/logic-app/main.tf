@@ -1,5 +1,5 @@
 resource "azurerm_logic_app_workflow" "hmi_la_dturota" {
-  name                = "hmi-la-dturota${var.env}"
+  name                = "hmi-la-dturota-${var.env}"
   location            = var.location
   resource_group_name = var.resource_group
   
