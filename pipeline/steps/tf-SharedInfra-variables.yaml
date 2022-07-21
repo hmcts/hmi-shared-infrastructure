@@ -33,6 +33,10 @@ parameters:
         secValue: "$(tf_secret_cft-client-app-client)"
       - secName: "tf_secret_cft-client-app-secret"
         secValue: "$(tf_secret_cft-client-app-secret)"
+      - secName: "tf_secret_snl-user-id"
+        secValue: "$(tf_secret_snl-user-id)"
+      - secName: "tf_secret_snl-user-pwd"
+        secValue: "$(tf_secret_snl-user-pwd)"
 
 steps:
 
