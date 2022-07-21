@@ -35,3 +35,18 @@ client_kv_mi_access = {
   }
 }
 ```
+
+
+### Adding ADO Variables into Key Vault
+This is directions on how to get Azure DevOps variable in the libraries into the HMI Key Vaults.
+
+1. Add the variable to the ADO library with the prefix `tf_secret_` for example `tf_secret_my-secret-name`
+2. Edit the file `pipeline\steps\tf-SharedInfra-variables.yaml`
+3. Add onto the parameter `libarySecrets` another set of name/value objects.<br/>
+The `secName` needs to be the Key Vault serect name plus the prefix `tf_secret_`.<br/>
+The `secValue` needs to be the ADO serect name with the prefix `tf_secret_`.<br/>
+example:
+```
+- secName: "tf_secret_key-vault-secret-name"
+  secValue: "$(tf_secret_ado-variable-name)"
+```
