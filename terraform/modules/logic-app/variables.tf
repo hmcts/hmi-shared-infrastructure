@@ -14,7 +14,3 @@ variable "common_tags" {
   type        = map(string)
   description = "Tags for the Azure resources"
 }
-variable "dtu_sa" {
-  type        = string
-  description = "Name for the Storage account"
-}
