@@ -12,6 +12,30 @@ route_table = [
     address_prefix         = "10.148.0.0/18"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "10.11.8.36"
+  },
+  {
+    name                   = "cft_prod_00_vnet"
+    address_prefix         = "10.90.64.0/20"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.11.8.36"
+  },
+  {
+    name                   = "cft_prod_01_vnet"
+    address_prefix         = "10.90.80.0/20"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.11.8.36"
+  },
+  {
+    name                   = "cft_prod_00_aks"
+    address_prefix         = "10.13.0.0/20"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.11.8.36"
+  },
+  {
+    name                   = "cft_prod_01_aks"
+    address_prefix         = "10.13.16.0/20"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.11.8.36"
   }
 ]
 log_analytics_workspace_name = "hmcts-prod"
