@@ -8,7 +8,7 @@ resources:
     - repository: azTemplates
       type: github
       name: hmcts/azure-devops-templates
-      ref: refs/heads/master
+      ref: refs/heads/service-connections
       endpoint: hmcts      
 
 variables:
