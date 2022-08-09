@@ -47,10 +47,10 @@ resource "azurerm_api_connection" "keyvault" {
   managed_api_id      = "subscriptions/${data.azurerm_client_config.current.subscription_id}/providers/Microsoft.Web/locations/${var.location}/managedApis/keyvault"
   display_name        = "HMI Key Vault"
   parameter_values = {
-    "token:clientId"     = "#{keyVaultUserId}#",
+    /* "token:clientId"     = "#{keyVaultUserId}#",
     "token:clientSecret" = "#{keyVaultUserSecret}#",
     "token:TenantId"     = data.azurerm_client_config.current.tenant_id,
-    "token:grantType"    = "client_credentials",
+    "token:grantType"    = "client_credentials", */
     "vaultName"          = "hmi-shared-kv-${var.env}"
   }
 
