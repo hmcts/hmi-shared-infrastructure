@@ -20,6 +20,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "vnet_to_dns" {
   resource_group_name   = "core-infra-intsvc-rg"
   private_dns_zone_name = local.dns_zone_name
   virtual_network_id    = azurerm_virtual_network.vnet.id
+  tags                  = var.tags
 }
 
 resource "azurerm_virtual_network_peering" "vnet_to_uks_prod_hub" {
