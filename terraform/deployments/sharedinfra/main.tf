@@ -90,9 +90,11 @@ module "automation" {
 }
 
 module "logicapp" {
-  source         = "../../modules/logic-app"
-  env            = var.environment
-  resource_group = var.resource_group
-  location       = var.location
-  common_tags    = local.common_tags
+  source                = "../../modules/logic-app"
+  env                   = var.environment
+  resource_group        = var.resource_group
+  location              = var.location
+  common_tags           = local.common_tags
+  current_client_secret = var.current_client_secret
+  current_client_id     = var.current_client_id
 }
