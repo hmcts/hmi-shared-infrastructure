@@ -14,3 +14,14 @@ variable "common_tags" {
   type        = map(string)
   description = "Tags for the Azure resources"
 }
+# Current Client Details
+variable "current_client_id" {
+  description = "Client ID of the Current SP"
+  type        = string
+  sensitive   = true
+}
+variable "current_client_secret" {
+  description = "Client Secret of the Current SP"
+  type        = string
+  sensitive   = true
+}
