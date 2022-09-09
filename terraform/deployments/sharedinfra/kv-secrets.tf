@@ -93,4 +93,7 @@ module "keyvault_ado_secrets" {
       content_type = ""
     }
   ]
+  depends_on = [
+    module.keyvault-policy,
+  ]
 }
