@@ -23,7 +23,7 @@ resource "azurerm_logic_app_workflow" "hmi_la_sittingpattern_retriever" {
 }
 
 data "azurerm_client_config" "current" {}
-data "azurerm_storage_account" "hmidtu" {
+/* data "azurerm_storage_account" "hmidtu" {
   name                = "hmidtu${var.env}"
   resource_group_name = var.resource_group
 }
@@ -39,7 +39,7 @@ resource "azurerm_api_connection" "azureblob" {
   }
 
   tags = var.common_tags
-}
+} */
 
 resource "azurerm_api_connection" "keyvault" {
   name                = "keyvault"
@@ -57,7 +57,7 @@ resource "azurerm_api_connection" "keyvault" {
   tags = var.common_tags
 }
 
-resource "azurerm_api_connection" "azuretables" {
+/* resource "azurerm_api_connection" "azuretables" {
   name                = "azuretables"
   resource_group_name = var.resource_group
   managed_api_id      = "subscriptions/${data.azurerm_client_config.current.subscription_id}/providers/Microsoft.Web/locations/${var.location}/managedApis/azuretables"
@@ -68,4 +68,4 @@ resource "azurerm_api_connection" "azuretables" {
   }
 
   tags = var.common_tags
-}
+} */
