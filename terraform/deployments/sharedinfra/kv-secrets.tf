@@ -37,7 +37,7 @@ module "keyvault_secrets" {
       tags         = {}
       content_type = ""
     },
-   /*  {
+    /*  {
       name         = "dtu-storage-account-key"
       value        = module.hmidtu.primary_access_key
       tags         = {}
