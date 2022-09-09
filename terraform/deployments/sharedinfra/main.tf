@@ -2,11 +2,6 @@ data "azurerm_resource_group" "hmi" {
   name = "hmi-sharedinfra-${var.environment}-rg"
 }
 
-data "azurerm_virtual_network" "hmi" {
-  name                = "hmi-sharedinfra-vnet-${var.environment}"
-  resource_group_name = data.azurerm_resource_group.hmi.name
-}
-
 module "network" {
   source                  = "../../modules/network"
   environment             = var.environment
@@ -87,6 +82,11 @@ module "automation" {
       expiry_date     = timeadd(timestamp(), "167h")
     }
   }
+
+  depends_on = [
+    module.storage,
+    module.network
+  ]
 }
 
 module "logicapp" {

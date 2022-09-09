@@ -1,16 +1,9 @@
-module "shared_storage" {
-  source = "../../modules/storage-account/data"
-
-  storage_account_name = "hmisharedinfrasa${var.environment}"
-  resource_group_name  = data.azurerm_resource_group.hmi.name
-}
-
 
 # Created and Added via the HMI APIM Pipeline... will need moving over
 module "hmidtu" {
   source = "../../modules/storage-account/data"
 
-  storage_account_name = "hmisharedinfrasa${var.environment}"
+  storage_account_name = "hmidtu${var.environment}"
   resource_group_name  = data.azurerm_resource_group.hmi.name
 }
 
@@ -34,7 +27,7 @@ module "keyvault_secrets" {
     },
     {
       name         = "hmisharedinfrasa-storageaccount-key"
-      value        = module.shared_storage.primary_access_key
+      value        = module.storage.primary_access_key
       tags         = {}
       content_type = ""
     },
