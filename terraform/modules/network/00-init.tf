@@ -7,11 +7,11 @@ terraform {
   }
 }
 
-provider "azurerm" {
+/* provider "azurerm" {
   subscription_id = var.log_analytics_subscription_id
   alias           = "log-analytics-subscription"
   features {}
-}
+} */
 provider "azurerm" {
   subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
   alias           = "private-dns-zone-subscription"
