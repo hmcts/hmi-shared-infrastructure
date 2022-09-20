@@ -32,7 +32,7 @@ route_table = [
     next_hop_in_ip_address = "10.11.8.36"
   }
 ]
-log_analytics_workspace_name = "hmcts-prod"
+log_analytics_workspace_name = "hmcts-nonprod"
 log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
   {
