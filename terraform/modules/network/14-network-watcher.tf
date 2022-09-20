@@ -30,11 +30,11 @@ resource "azurerm_network_watcher_flow_log" "network_watcher_flow" {
     days    = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 30 : 90
   }
 
- /*  traffic_analytics {
+  traffic_analytics {
     enabled               = true
     workspace_id          = data.azurerm_log_analytics_workspace.hmcts.workspace_id
     workspace_region      = data.azurerm_log_analytics_workspace.hmcts.location
     workspace_resource_id = data.azurerm_log_analytics_workspace.hmcts.id
     interval_in_minutes   = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 60 : 10
-  } */
+  }
 }
