@@ -48,6 +48,9 @@ stages:
         - name: test
           subscription: DTS-SHAREDSERVICES-TEST
           dependency: 'dev'
+        - name: ithc
+          subscription: DTS-SHAREDSERVICES-ITHC
+          dependency: 'test'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
@@ -67,6 +70,9 @@ stages:
         - name: test
           subscription: DTS-SHAREDSERVICES-TEST
           dependency: 'dev'
+        - name: ithc
+          subscription: DTS-SHAREDSERVICES-ITHC
+          dependency: 'test'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
@@ -86,6 +92,9 @@ stages:
         - name: test
           subscription: DTS-SHAREDSERVICES-TEST
           dependency: 'dev'
+        - name: ithc
+          subscription: DTS-SHAREDSERVICES-ITHC
+          dependency: 'test'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
