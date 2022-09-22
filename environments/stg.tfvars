@@ -15,7 +15,7 @@ route_table = [
   },
   {
     name                   = "cft_nonprod_aks"
-    address_prefix         = "10.48.64.0/18"
+    address_prefix         = "10.11.192.0/18"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "10.11.72.36"
   },
