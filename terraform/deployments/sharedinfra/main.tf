@@ -12,7 +12,7 @@ module "network" {
   subnet_address_prefixes = var.subnet_address_prefixes
   apim_nsg_rules          = var.apim_nsg_rules
   apim_rules              = var.apim_rules
-  route_table             = flatten(var.route_table)
+  route_table             = local.route_table
 
   log_analytics_workspace_name  = var.log_analytics_workspace_name
   log_analytics_workspace_rg    = var.log_analytics_workspace_rg
