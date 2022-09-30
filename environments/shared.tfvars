@@ -31,3 +31,96 @@ apim_rules = {
   AuthenticateToAzureActiveDirectory80Outbound         = ["Outbound", "Allow", "Tcp", "*", "80", "VirtualNetwork", "AzureActiveDirectory"]
   AuthenticateToAzureActiveDirectory433Outbound        = ["Outbound", "Allow", "Tcp", "*", "443", "VirtualNetwork", "AzureActiveDirectory"]
 }
+
+sds_routing_rules = {
+
+  "sbox" = [
+    {
+      name                   = "ss_sbox_aks"
+      address_prefix         = "0.0.0.0/0"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.10.200.36"
+    }
+  ]
+  "dev" = [
+    {
+      name                   = "ss_dev_aks"
+      address_prefix         = "0.0.0.0/0"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.72.36"
+    }
+  ]
+  "test" = [
+    {
+      name                   = "ss_test_aks"
+      address_prefix         = "0.0.0.0/0"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.72.36"
+    }
+  ]
+  "stg" = [
+    {
+      name                   = "ss_stg_aks"
+      address_prefix         = "10.148.0.0/18"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.8.36"
+    }
+  ]
+  "prod" = [
+    {
+      name                   = "ss_prod_aks"
+      address_prefix         = "10.144.0.0/18"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.8.36"
+    }
+  ]
+  "ithc" = [
+    {
+      name                   = "ss_ithc_aks"
+      address_prefix         = "10.143.0.0/18"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.72.36"
+    }
+  ]
+}
+
+cft_routing_rules = {
+  "perftest" = [
+    {
+      name                   = "cft_perftest_aks"
+      address_prefix         = "10.48.64.0/18"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.72.36"
+    }
+  ]
+  "aat" = [
+    {
+      name                   = "cft_aat_aks"
+      address_prefix         = "10.10.128.0/18"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.72.36"
+    }
+  ]
+  "prod" = [
+    {
+      name                   = "cft_prod_00_aks"
+      address_prefix         = "10.10.128.0/20"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.8.36"
+    },
+    {
+      name                   = "cft_prod_01_aks"
+      address_prefix         = "10.10.144.0/20"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.8.36"
+    }
+  ]
+  "ithc" = [
+    {
+      name                   = "cft_ithc_aks"
+      address_prefix         = "10.11.192.0/18"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.11.72.36"
+    }
+  ]
+}
