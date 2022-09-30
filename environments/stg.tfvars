@@ -1,7 +1,7 @@
 address_space           = ["10.101.1.192/26"]
 subnet_address_prefixes = ["10.101.1.192/27", "10.101.1.224/27"]
 
-route_table = concat(
+route_table = [
   [
     {
       name                   = "azure_control_plane"
@@ -13,7 +13,7 @@ route_table = concat(
   local.sds_routing_rules["stg"],
   local.cft_routing_rules["aat"],
   local.cft_routing_rules["perftest"]
-)
+]
 
 log_analytics_workspace_name = "hmcts-prod"
 log_analytics_workspace_rg   = "oms-automation"
