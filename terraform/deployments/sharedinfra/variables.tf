@@ -5,9 +5,28 @@ variable "location" {}
 variable "support_email" {}
 variable "ping_tests" {}
 variable "builtFrom" {}
+
 variable "route_table" {
   default = null
 }
+variable "cft_routing_rules" {
+  default = null
+}
+variable "sds_routing_rules" {
+  default = null
+}
+locals {
+  route_table = flatten(concat(
+    var.environment == "sbox" ? [var.route_table, var.sds_routing_rules["sbox"]] :
+    var.environment == "dev" ? [var.route_table, var.sds_routing_rules["dev"], var.sds_routing_rules["stg"]] :
+    var.environment == "test" ? [var.route_table, var.sds_routing_rules["stg"], var.sds_routing_rules["test"]] :
+    var.environment == "stg" ? [var.route_table, var.sds_routing_rules["stg"], var.cft_routing_rules["aat"], var.cft_routing_rules["perftest"]] :
+    var.environment == "prod" ? [var.route_table, var.sds_routing_rules["prod"]] :
+    var.environment == "ithc" ? [var.route_table, var.cft_routing_rules["ithc"], var.cft_routing_rules["prod"], var.sds_routing_rules["ithc"]] :
+    var.route_table
+  ))
+}
+
 variable "address_space" {}
 variable "subnet_address_prefixes" {}
 variable "apim_nsg_rules" {}

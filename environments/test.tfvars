@@ -1,18 +1,7 @@
 address_space           = ["10.101.1.128/26"]
 subnet_address_prefixes = ["10.101.1.128/27", "10.101.1.160/27"]
+
 route_table = [
-  {
-    name                   = "ss_test_aks"
-    address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.11.72.36"
-  },
-  {
-    name                   = "ss_stg_aks"
-    address_prefix         = "10.148.0.0/18"
-    next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.11.8.36"
-  },
   {
     name                   = "azure_control_plane"
     address_prefix         = "51.145.56.125/32"
@@ -20,6 +9,7 @@ route_table = [
     next_hop_in_ip_address = null
   }
 ]
+
 log_analytics_workspace_name = "hmcts-nonprod"
 log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
