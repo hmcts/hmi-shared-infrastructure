@@ -2,7 +2,6 @@ address_space           = ["10.101.2.64/26"]
 subnet_address_prefixes = ["10.101.2.64/27", "10.101.2.96/27"]
 
 route_table = [
-
   {
     name                   = "azure_control_plane"
     address_prefix         = "51.145.56.125/32"

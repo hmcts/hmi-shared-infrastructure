@@ -23,7 +23,7 @@ locals {
     var.environment == "stg" ? [var.route_table, var.sds_routing_rules["stg"], var.cft_routing_rules["aat"], var.cft_routing_rules["perftest"]] :
     var.environment == "prod" ? [var.route_table, var.sds_routing_rules["prod"]] :
     var.environment == "ithc" ? [var.route_table, var.cft_routing_rules["ithc"], var.cft_routing_rules["prod"], var.sds_routing_rules["ithc"]] :
-    var.route_table
+    null
   ))
 }
 
