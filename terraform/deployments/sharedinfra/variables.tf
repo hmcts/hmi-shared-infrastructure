@@ -16,15 +16,15 @@ variable "sds_routing_rules" {
   default = null
 }
 locals {
-  route_table = flatten(concat(
+  route_table = flatten(
     var.environment == "sbox" ? [var.route_table, var.sds_routing_rules["sbox"]] :
     var.environment == "dev" ? [var.route_table, var.sds_routing_rules["dev"], var.sds_routing_rules["stg"]] :
     var.environment == "test" ? [var.route_table, var.sds_routing_rules["stg"], var.sds_routing_rules["test"]] :
     var.environment == "stg" ? [var.route_table, var.sds_routing_rules["stg"], var.cft_routing_rules["aat"], var.cft_routing_rules["perftest"]] :
     var.environment == "prod" ? [var.route_table, var.sds_routing_rules["prod"]] :
     var.environment == "ithc" ? [var.route_table, var.cft_routing_rules["ithc"], var.cft_routing_rules["prod"], var.sds_routing_rules["ithc"]] :
-    [var.route_table]
-  ))
+    var.route_table
+  )
 }
 
 variable "address_space" {}
