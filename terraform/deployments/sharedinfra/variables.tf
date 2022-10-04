@@ -16,15 +16,14 @@ variable "sds_routing_rules" {
   default = null
 }
 locals {
-  route_table = flatten(
-    var.environment == "sbox" ? concat(var.route_table, var.sds_routing_rules["sbox"]) :
-    (var.environment == "dev" ? concat(var.route_table, var.sds_routing_rules["dev"], var.sds_routing_rules["stg"]) :
-      (var.environment == "test" ? concat(var.route_table, var.sds_routing_rules["stg"], var.sds_routing_rules["test"]) :
-        (var.environment == "stg" ? concat(var.route_table, var.sds_routing_rules["stg"], var.cft_routing_rules["aat"], var.cft_routing_rules["perftest"]) :
-          (var.environment == "prod" ? concat(var.route_table, var.sds_routing_rules["prod"]) :
-            (var.environment == "ithc" ? concat(var.route_table, var.cft_routing_rules["ithc"], var.cft_routing_rules["prod"], var.sds_routing_rules["ithc"]) :
-    [var.route_table])))))
-  )
+  route_table = {
+    "sbox" = concat(var.route_table, var.sds_routing_rules["sbox"])
+    "dev"  = concat(var.route_table, var.sds_routing_rules["dev"], var.sds_routing_rules["stg"])
+    "test" = concat(var.route_table, var.sds_routing_rules["stg"], var.sds_routing_rules["test"])
+    "stg"  = concat(var.route_table, var.sds_routing_rules["stg"], var.cft_routing_rules["aat"], var.cft_routing_rules["perftest"])
+    "prod" = concat(var.route_table, var.sds_routing_rules["prod"])
+    "ithc" = concat(var.route_table, var.cft_routing_rules["ithc"], var.cft_routing_rules["prod"], var.sds_routing_rules["ithc"])
+  }
 }
 
 variable "address_space" {}
