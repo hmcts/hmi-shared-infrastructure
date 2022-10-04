@@ -82,6 +82,13 @@ jobs:
       service_now_client: $(service_now_client)
       service_now_secret: $(service_now_secret)
 
+  - ${{ if or(eq( parameters.environment,'prod' ), eq( parameters.environment,'stg' )) }}:
+    - template:  templates\Azure\Common\unlock-resource-group.yml@azTemplates
+      parameters:
+        subscriptionName:  ${{ parameters.subscription }}
+        resourceGroupName: ${{ parameters.resourceGroup }}
+        lockName: "${{ parameters.environment }}-lock"
+
   - template: ../steps/tf-apply.yaml
     parameters:
       subscription: ${{ parameters.subscription }}
