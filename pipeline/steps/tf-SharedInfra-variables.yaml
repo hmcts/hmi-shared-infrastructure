@@ -37,6 +37,8 @@ parameters:
         secValue: "$(tf_secret_snl-user-id)"
       - secName: "tf_secret_snl-user-pwd"
         secValue: "$(tf_secret_snl-user-pwd)"
+      - secName: "tf_secret_servicenow-auth"
+        secValue: "$(tf_secret_servicenow-auth)"
 
 steps:
 
