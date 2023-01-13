@@ -71,7 +71,7 @@ steps:
       azureSubscription: ${{ parameters.subscriptionName }}
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
-      inlineScript: az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --value "$(secure_file_json)"" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
+      inlineScript: az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --value "$(secure_file_json)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
 
   - template: templates\common\get-variable-group.yml@azTemplates 
     parameters:
