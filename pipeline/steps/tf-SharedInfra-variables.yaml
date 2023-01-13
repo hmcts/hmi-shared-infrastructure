@@ -64,6 +64,14 @@ steps:
     parameters:
       fileName: "policy-variables-${{ parameters.environment }}.json"
       variableName: "secure_file_json"
+  
+  - task: AzureCLI@2
+    displayName: Set policy file to key vault
+    inputs:
+      azureSubscription: ${{ parameters.subscriptionName }}
+      scriptType: 'pscore'
+      scriptLocation: 'inlineScript'
+      inlineScript: az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --value "$(fileJson)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
 
   - template: templates\common\get-variable-group.yml@azTemplates 
     parameters:
