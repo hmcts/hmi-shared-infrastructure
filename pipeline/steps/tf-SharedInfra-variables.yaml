@@ -64,6 +64,15 @@ steps:
     parameters:
       fileName: "policy-variables-${{ parameters.environment }}.json"
       variableName: "secure_file_json"
+  
+  - task: AzureCLI@2
+    displayName: Set policy file to key vault
+    inputs:
+      azureSubscription: ${{ parameters.subscriptionName }}
+      scriptType: 'pscore'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --file "$(secureFileVariable.secure_file_json_path)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
 
   - template: templates\common\get-variable-group.yml@azTemplates 
     parameters:
@@ -71,7 +80,7 @@ steps:
       variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
       variableName: "variable_group_json"
 
-  - template: templates/Azure/Common/get-service-connection-details.yaml@azTemplates 
+  - template: templates/Azure/Common/get-service-connection-details.yaml@azTemplates
     parameters:
       subscriptionName: ${{ parameters.subscriptionName }}
 
@@ -90,8 +99,6 @@ steps:
       variables="${variables} -var \"network_client_id=${GNP_CLIENT_ID} \""
       variables="${variables} -var \"network_client_secret=${GNP_CLIENT_SECRET} \""
       variables="${variables} -var \"network_tenant_id=${GNP_TENANT_ID} \""
-      variables="${variables} -var \"secure_file_json_path=${secureFileJson}\""
-      variables="${variables} -var \"variable_group_json_path=${variableGroupJson}\""
       variables="${variables} -var \"service_now_client=${service_now_client}\""
       variables="${variables} -var \"service_now_secret=${service_now_secret}\""
       variables="${variables} -var \"current_client_secret=${GEN_CLIENT_SECRET}\""

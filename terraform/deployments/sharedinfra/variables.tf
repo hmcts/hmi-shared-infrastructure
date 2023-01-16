@@ -81,14 +81,6 @@ variable "service_now_secret" {
   description = "Service Now Secret"
   sensitive   = true
 }
-variable "secure_file_json_path" {
-  type        = string
-  description = "Exported Secure File JSON Path"
-}
-variable "variable_group_json_path" {
-  type        = string
-  description = "Exported Azure DevOps Variable Group JSON Path"
-}
 variable "secrets_arr" {
   type = list(object({
     name  = string
