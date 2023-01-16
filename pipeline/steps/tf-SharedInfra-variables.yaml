@@ -82,7 +82,7 @@ steps:
       variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
       variableName: "variable_group_json"
 
-  - template: templates/Azure/Common/get-service-connection-details.yaml@azTemplates S
+  - template: templates/Azure/Common/get-service-connection-details.yaml@azTemplates
     parameters:
       subscriptionName: ${{ parameters.subscriptionName }}
 
