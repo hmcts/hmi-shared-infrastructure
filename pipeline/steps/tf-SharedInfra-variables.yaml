@@ -72,7 +72,7 @@ steps:
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --value "$(secureFileVariable.secure_file_json)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
+        az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --file "$(secureFileVariable.secure_file_json_path)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
 
   - template: templates\common\get-variable-group.yml@azTemplates 
     parameters:
