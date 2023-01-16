@@ -72,8 +72,8 @@ steps:
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        Write-Host "secureFileDownload.secure_file_json is $(secureFileDownload.secure_file_json)"
         Write-Host "secure_file_json is $(secure_file_json)"
+        Write-Host "secureFileDownload.secure_file_json is $(secureFileDownload.secure_file_json)"
         az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --value "$(secureFileDownload.secure_file_json)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
 
   - template: templates\common\get-variable-group.yml@azTemplates 
