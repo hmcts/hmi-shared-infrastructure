@@ -71,7 +71,10 @@ steps:
       azureSubscription: ${{ parameters.subscriptionName }}
       scriptType: 'pscore'
       scriptLocation: 'inlineScript'
-      inlineScript: az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --value "$(secureFileDownload.secure_file_json)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
+      inlineScript: |
+        Write-Host "secureFileDownload.secure_file_json is $(secureFileDownload.secure_file_json)"
+        Write-Host "secure_file_json is $(secure_file_json)"
+        az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --value "$(secureFileDownload.secure_file_json)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"
 
   - template: templates\common\get-variable-group.yml@azTemplates 
     parameters:
@@ -79,7 +82,7 @@ steps:
       variableGroupName: "HMI-APIM-BUILD-${{ upper(parameters.environment) }}"
       variableName: "variable_group_json"
 
-  - template: templates/Azure/Common/get-service-connection-details.yaml@azTemplates 
+  - template: templates/Azure/Common/get-service-connection-details.yaml@azTemplates S
     parameters:
       subscriptionName: ${{ parameters.subscriptionName }}
 
