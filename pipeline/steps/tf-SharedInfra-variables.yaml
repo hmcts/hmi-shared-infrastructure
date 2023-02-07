@@ -39,6 +39,11 @@ parameters:
         secValue: "$(tf_secret_snl-user-pwd)"
       - secName: "tf_secret_servicenow-auth"
         secValue: "$(tf_secret_servicenow-auth)"
+      - secName: "tf_secret_hmc-user-id"
+        secValue: "$(tf_secret_hmc-user-id)"
+      - secName: "tf_secret_hmc-user-pwd"
+        secValue: "$(tf_secret_hmc-user-pwd)"
+
 
 steps:
 
