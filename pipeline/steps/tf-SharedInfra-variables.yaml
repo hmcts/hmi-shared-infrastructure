@@ -43,18 +43,7 @@ parameters:
         secValue: "$(tf_secret_hmc-user-id)"
       - secName: "tf_secret_hmc-user-pwd"
         secValue: "$(tf_secret_hmc-user-pwd)"
-      - secName: "tf_secret_hmi-dtu-client-nonprod-id"
-        secValue: "$(tf_secret_hmi-dtu-client-nonprod-id)"
-      - secName: "tf_secret_hmi-dtu-client-nonprod-pwd"
-        secValue: "$(tf_secret_hmi-dtu-client-nonprod-pwd)"
-      - secName: "tf_secret_hmi-dtu-client-prod-id"
-        secValue: "$(tf_secret_hmi-dtu-client-prod-id)"
-      - secName: "tf_secret_hmi-dtu-client-prod-pwd"
-        secValue: "$(tf_secret_hmi-dtu-client-prod-pwd)"
-      - secName: "tf_secret_hmi-servicenow-client"
-        secValue: "$(tf_secret_hmi-servicenow-client)"
-      - secName: "tf_secret_hmi-servicenow-secret"
-        secValue: "$(tf_secret_hmi-servicenow-secret)"        
+
 
 steps:
 
