@@ -55,10 +55,6 @@ parameters:
         secValue: "$(tf_secret_hmi-servicenow-client)"
       - secName: "tf_secret_hmi-servicenow-secret"
         secValue: "$(tf_secret_hmi-servicenow-secret)"        
-      - secName: "tf_secret_vh-client-app-client"
-        secValue: "$(tf_secret_vh-client-app-client)"
-      - secName: "tf_secret_vh-client-app-secret"
-        secValue: "$(tf_secret_vh-client-app-secret)"
 
 steps:
 
