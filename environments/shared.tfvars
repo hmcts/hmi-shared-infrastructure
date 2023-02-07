@@ -103,14 +103,8 @@ cft_routing_rules = {
   ]
   "prod" = [
     {
-      name                   = "cft_prod_00_aks"
-      address_prefix         = "10.10.128.0/20"
-      next_hop_type          = "VirtualAppliance"
-      next_hop_in_ip_address = "10.11.8.36"
-    },
-    {
-      name                   = "cft_prod_01_aks"
-      address_prefix         = "10.10.144.0/20"
+      name                   = "cft_prod_vnet"
+      address_prefix         = "10.90.64.0/18"
       next_hop_type          = "VirtualAppliance"
       next_hop_in_ip_address = "10.11.8.36"
     }
