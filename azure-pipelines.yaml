@@ -8,7 +8,7 @@ resources:
     - repository: azTemplates
       type: github
       name: hmcts/azure-devops-templates
-      ref: add-tags-to-dnslink
+      ref: main
       endpoint: hmcts      
 
 variables:
