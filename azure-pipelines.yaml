@@ -53,7 +53,7 @@ stages:
           dependency: 'dev'
         - name: perftest
           subscription: DTS-SHAREDSERVICES-DEMO
-          dependency: 'test'
+          dependency: 'dev'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
@@ -78,7 +78,7 @@ stages:
           dependency: 'dev'
         - name: perftest
           subscription: DTS-SHAREDSERVICES-DEMO
-          dependency: 'test'
+          dependency: 'dev'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
@@ -96,14 +96,14 @@ stages:
           subscription: DTS-SHAREDSERVICES-DEV
           dependency: 'sbox'
         - name: test
-          subscription: secureFileDownload-TEST
+          subscription: DTS-SHAREDSERVICES-TEST
           dependency: 'dev'
         - name: ithc
           subscription: DTS-SHAREDSERVICES-ITHC
           dependency: 'dev'
         - name: perftest
           subscription: DTS-SHAREDSERVICES-DEMO
-          dependency: 'test'
+          dependency: 'dev'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
