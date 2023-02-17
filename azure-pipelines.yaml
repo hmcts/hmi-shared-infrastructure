@@ -53,7 +53,7 @@ stages:
           dependency: 'dev'
         - name: perftest
           subscription: DTS-SHAREDSERVICES-DEMO
-          dependency: 'dev'
+          dependency: 'test'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
@@ -78,7 +78,7 @@ stages:
           dependency: 'dev'
         - name: perftest
           subscription: DTS-SHAREDSERVICES-DEMO
-          dependency: 'dev'
+          dependency: 'test'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
@@ -103,7 +103,7 @@ stages:
           dependency: 'dev'
         - name: perftest
           subscription: DTS-SHAREDSERVICES-DEMO
-          dependency: 'dev'
+          dependency: 'test'
         - name: stg
           subscription: DTS-SHAREDSERVICES-STG
           dependency: 'test'
