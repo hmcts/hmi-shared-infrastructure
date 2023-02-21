@@ -44,7 +44,7 @@ steps:
       if [[ ${{ parameters.environment }} = "test" ]]; then env="test"; fi
       if [[ ${{ parameters.environment }} = "stg" ]]; then env="staging"; fi
       if [[ ${{ parameters.environment }} = "ithc" ]]; then env="ithc"; fi
-      if [[ ${{ parameters.environment }} = "perftest" ]]; then env="ithc"; fi
+      if [[ ${{ parameters.environment }} = "perftest" ]]; then env="perftest"; fi
       if [[ ${{ parameters.environment }} = "prod" ]]; then env="production"; fi
 
       az group create --name ${{ parameters.resourceGroup }} --location ${{ parameters.location }} --tags environment=$env businessArea=${{ parameters.businessArea }} application=${{ parameters.application }} builtFrom=${{ parameters.builtFrom }}
