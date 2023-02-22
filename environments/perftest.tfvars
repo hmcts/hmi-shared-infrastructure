@@ -15,18 +15,18 @@ log_analytics_workspace_rg   = "oms-automation"
 ping_tests = [
   {
     pingTestName = "apim-service"
-    pingTestURL  = "https://hmi-apim.perftest.platform.hmcts.net/health/liveness"
+    pingTestURL  = "https://hmi-apim.demo.platform.hmcts.net/health/liveness"
     pingText     = "&#x22;status&#x22;&#x3A;&#x20;&#x22;Up&#x22;" # xml encoding
   },
   {
     pingTestName = "hmi-casehqemulator"
-    pingTestURL  = "https://hmi-apim.perftest.platform.hmcts.net/hmi/emulator-health"
+    pingTestURL  = "https://hmi-apim.demo.platform.hmcts.net/hmi/emulator-health"
     pingText     = ""
   },
   {
     pingTestName = "hmi-pact"
-    pingTestURL  = "https://hmi-apim.perftest.platform.hmcts.net/hmi/pact-health"
+    pingTestURL  = "https://hmi-apim.demo.platform.hmcts.net/hmi/pact-health"
     pingText     = ""
   }
 ]
-environment = "perftest"
+environment = "demo"

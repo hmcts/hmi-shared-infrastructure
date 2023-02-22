@@ -51,7 +51,7 @@ stages:
         - name: ithc
           subscription: DTS-SHAREDSERVICES-ITHC
           dependency: 'dev'
-        - name: perftest
+        - name: demo
           subscription: DTS-SHAREDSERVICES-DEMO
           dependency: 'dev'
         - name: stg
@@ -76,7 +76,7 @@ stages:
         - name: ithc
           subscription: DTS-SHAREDSERVICES-ITHC
           dependency: 'dev'
-        - name: perftest
+        - name: demo
           subscription: DTS-SHAREDSERVICES-DEMO
           dependency: 'dev'
         - name: stg
@@ -101,7 +101,7 @@ stages:
         - name: ithc
           subscription: DTS-SHAREDSERVICES-ITHC
           dependency: 'dev'
-        - name: perftest
+        - name: demo
           subscription: DTS-SHAREDSERVICES-DEMO
           dependency: 'dev'
         - name: stg

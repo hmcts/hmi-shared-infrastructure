@@ -82,9 +82,9 @@ sds_routing_rules = {
       next_hop_in_ip_address = "10.11.72.36"
     }
   ]
-  "perftest" = [
+  "demo" = [
     {
-      name                   = "ss_perftest_aks"
+      name                   = "ss_demo_aks"
       address_prefix         = "0.0.0.0/0"
       next_hop_type          = "VirtualAppliance"
       next_hop_in_ip_address = "10.11.72.36"
@@ -95,7 +95,7 @@ sds_routing_rules = {
 cft_routing_rules = {
   "perftest" = [
     {
-      name                   = "cft_perftest_aks"
+      name                   = "cft_demo_aks"
       address_prefix         = "10.48.64.0/18"
       next_hop_type          = "VirtualAppliance"
       next_hop_in_ip_address = "10.11.72.36"
