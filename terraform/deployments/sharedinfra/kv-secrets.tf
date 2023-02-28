@@ -1,12 +1,12 @@
 
 # Created and Added via the HMI APIM Pipeline... will need moving over
-#module "hmidtu" {
-#  source = "../../modules/storage-account/data"
-#
-#  storage_account_name = "hmidtu${var.environment}"
-#  resource_group_name  = data.azurerm_resource_group.hmi.name
-#}
-#
+module "hmidtu" {
+  source = "../../modules/storage-account/data"
+
+  storage_account_name = "hmidtu${var.environment}"
+  resource_group_name  = data.azurerm_resource_group.hmi.name
+}
+
 module "keyvault_secrets" {
   source = "../../modules/key-vault/secret"
 

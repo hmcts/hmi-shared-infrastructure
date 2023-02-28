@@ -66,22 +66,22 @@ module "automation" {
   resource_group = var.resource_group
   location       = var.location
   common_tags    = local.common_tags
-#  sas_tokens = {
-#    "rota-rl" = {
-#      permissions     = "rl"
-#      storage_account = "hmidtu${var.environment}"
-#      container       = "rota"
-#      blob            = ""
-#      expiry_date     = timeadd(timestamp(), "167h")
-#    },
-#    "rota-rlw" = {
-#      permissions     = "rlw"
-#      storage_account = "hmidtu${var.environment}"
-#      container       = "rota"
-#      blob            = ""
-#      expiry_date     = timeadd(timestamp(), "167h")
-#    }
-#  }
+  sas_tokens = {
+    "rota-rl" = {
+      permissions     = "rl"
+      storage_account = "hmidtu${var.environment}"
+      container       = "rota"
+      blob            = ""
+      expiry_date     = timeadd(timestamp(), "167h")
+    },
+    "rota-rlw" = {
+      permissions     = "rlw"
+      storage_account = "hmidtu${var.environment}"
+      container       = "rota"
+      blob            = ""
+      expiry_date     = timeadd(timestamp(), "167h")
+    }
+  }
 
   depends_on = [
     module.storage,
@@ -89,12 +89,12 @@ module "automation" {
   ]
 }
 
-#module "logicapp" {
-#  source                = "../../modules/logic-app"
-#  env                   = var.environment
-#  resource_group        = var.resource_group
-#  location              = var.location
-#  common_tags           = local.common_tags
-#  current_client_secret = var.current_client_secret
-#  current_client_id     = var.current_client_id
-#}
+module "logicapp" {
+  source                = "../../modules/logic-app"
+  env                   = var.environment
+  resource_group        = var.resource_group
+  location              = var.location
+  common_tags           = local.common_tags
+  current_client_secret = var.current_client_secret
+  current_client_id     = var.current_client_id
+}
