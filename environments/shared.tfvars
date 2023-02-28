@@ -23,6 +23,7 @@ apim_rules = {
   AzureInfrastructureLoadBalancer                      = ["Inbound", "Allow", "Tcp", "*", "*", "AzureLoadBalancer", "VirtualNetwork"]
   DependencyOnAzureStorageOutbound                     = ["Outbound", "Allow", "Tcp", "*", "443", "VirtualNetwork", "Storage"]
   DependencyOnAzureSQLOutbound                         = ["Outbound", "Allow", "Tcp", "*", "1443", "VirtualNetwork", "Sql"]
+  DependencyOnAzureSQL1433Outbound                     = ["Outbound", "Allow", "Tcp", "*", "1433", "VirtualNetwork", "Sql"]
   DependencyForLogToEventHubPolicyOutbound             = ["Outbound", "Allow", "Tcp", "*", "5671-5672", "VirtualNetwork", "EventHub"]
   DependencyOnRedisCacheOutbound                       = ["Outbound", "Allow", "Tcp", "*", "6381-6383", "VirtualNetwork", "VirtualNetwork"]
   PublishDiagnosticLogsAndMetrics433Outbound           = ["Outbound", "Allow", "Tcp", "*", "443", "VirtualNetwork", "AzureMonitor"]
