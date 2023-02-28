@@ -8,6 +8,7 @@ apim_nsg_rules = [
   { name = "AzureInfrastructureLoadBalancer" },
   { name = "DependencyOnAzureStorageOutbound" },
   { name = "DependencyOnAzureSQLOutbound" },
+  { name = "DependencyOnAzureSQL1433Outbound"},
   { name = "DependencyForLogToEventHubPolicyOutbound" },
   { name = "DependencyOnRedisCacheOutbound" },
   { name = "PublishDiagnosticLogsAndMetrics433Outbound" },
