@@ -23,15 +23,15 @@ resource "azurerm_private_dns_zone_virtual_network_link" "vnet_to_dns" {
   tags                  = var.tags
 }
 
-#resource "azurerm_virtual_network_peering" "vnet_to_uks_prod_hub" {
-#  provider                  = azurerm.networking_client
-#  for_each                  = toset(local.peering_prod_vnets)
-#  name                      = each.value
-#  resource_group_name       = var.resource_group
-#  virtual_network_name      = azurerm_virtual_network.vnet.name
-#  remote_virtual_network_id = "/subscriptions/${local.peering_prod_subscription}/resourceGroups/${each.value}/providers/Microsoft.Network/virtualNetworks/${each.value}"
-#  allow_forwarded_traffic   = true
-#}
+resource "azurerm_virtual_network_peering" "vnet_to_uks_prod_hub" {
+  provider                  = azurerm.networking_client
+  for_each                  = toset(local.peering_prod_vnets)
+  name                      = each.value
+  resource_group_name       = var.resource_group
+  virtual_network_name      = azurerm_virtual_network.vnet.name
+  remote_virtual_network_id = "/subscriptions/${local.peering_prod_subscription}/resourceGroups/${each.value}/providers/Microsoft.Network/virtualNetworks/${each.value}"
+  allow_forwarded_traffic   = true
+}
 
 resource "azurerm_virtual_network_peering" "vnet_to_uks_nonprod_hub" {
   provider                  = azurerm.networking_client
@@ -43,15 +43,15 @@ resource "azurerm_virtual_network_peering" "vnet_to_uks_nonprod_hub" {
   allow_forwarded_traffic   = true
 }
 
-#resource "azurerm_virtual_network_peering" "uks_prod_hub_to_vnet" {
-#  provider                  = azurerm.networking_requester
-#  for_each                  = toset(local.peering_prod_vnets)
-#  name                      = azurerm_virtual_network.vnet.name
-#  resource_group_name       = each.value
-#  virtual_network_name      = each.value
-#  remote_virtual_network_id = azurerm_virtual_network.vnet.id
-#  allow_forwarded_traffic   = true
-#}
+resource "azurerm_virtual_network_peering" "uks_prod_hub_to_vnet" {
+  provider                  = azurerm.networking_requester
+  for_each                  = toset(local.peering_prod_vnets)
+  name                      = azurerm_virtual_network.vnet.name
+  resource_group_name       = each.value
+  virtual_network_name      = each.value
+  remote_virtual_network_id = azurerm_virtual_network.vnet.id
+  allow_forwarded_traffic   = true
+}
 
 resource "azurerm_virtual_network_peering" "uks_nonprod_hub_to_vnet" {
   provider                  = azurerm.networking_requester_nonprod

@@ -37,12 +37,12 @@ module "keyvault_secrets" {
       tags         = {}
       content_type = ""
     },
-#    {
-#      name         = "dtu-storage-account-key"
-#      value        = module.hmidtu.primary_access_key
-#      tags         = {}
-#      content_type = ""
-#    },
+    {
+      name         = "dtu-storage-account-key"
+      value        = module.hmidtu.primary_access_key
+      tags         = {}
+      content_type = ""
+    },
     {
       name         = "hmi-servicenow-client"
       value        = var.service_now_client
