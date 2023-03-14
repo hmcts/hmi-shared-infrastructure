@@ -84,14 +84,14 @@ sds_routing_rules = {
       next_hop_in_ip_address = "10.11.72.36"
     }
   ]
-  #"demo" = [
-  #  {
-  #    name                   = "ss_demo_aks"
-  #    address_prefix         = "0.0.0.0/0"
-  #    next_hop_type          = "VirtualAppliance"
-  #    next_hop_in_ip_address = "10.11.72.36"
-  #  }
-  #]
+  "demo" = [
+    #{
+    #  name                   = "ss_demo_aks"
+    #  address_prefix         = "0.0.0.0/0"
+    #  next_hop_type          = "VirtualAppliance"
+    #  next_hop_in_ip_address = "10.11.72.36"
+    #}
+  ]
 }
 
 cft_routing_rules = {
