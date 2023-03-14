@@ -23,7 +23,7 @@ resource "azurerm_subnet_route_table_association" "sub_rt" {
 
 
 resource "azurerm_route" "stg_aks_route_rule" {
-  count    = var.environment == "dev" || var.environment == "ithc" || var.environment == "test" || var.environment == "demo" ||  var.environment == "stg" ? 1 : 0
+  count    = var.environment == "dev" || var.environment == "ithc" || var.environment == "test" ||  var.environment == "stg" ? 1 : 0
   provider = azurerm.networking_staging
 
   name                   = "hmi-ss-${var.environment}-vnet"
