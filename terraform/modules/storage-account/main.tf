@@ -1,4 +1,9 @@
 #tfsec:ignore:azure-storage-use-secure-tls-policy
+data "azurerm_user_assigned_identity" "hmi-identity" {
+ name                = "${var.product}-${var.env}-mi"
+ resource_group_name = "managed-identities-${var.env}-rg"
+}
+
 module "sa" {
   source = "git::https://github.com/hmcts/cnp-module-storage-account.git?ref=master"
   #source = "../../../cnp-module-storage-account"
@@ -17,4 +22,6 @@ module "sa" {
   team_contact = "#vh-devops"
 
   common_tags = var.common_tags
+
+  managed_identity_object_id = data.azurerm_user_assigned_identity.hmi-identity.principal_id
 }

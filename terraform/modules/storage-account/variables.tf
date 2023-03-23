@@ -28,3 +28,9 @@ variable "sa_account_replication_type" {
   type    = string
   default = "RAGRS"
 }
+
+variable "product" {
+  type        = string
+  description = "Product Name"
+  default     = "hmi"
+}
