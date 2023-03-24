@@ -1,4 +1,4 @@
-# hmi-apim-infrastructure
+# hmi-apim-infrastructure 
 `terraform\deployments\sharedinfra` is the path for the Shared APIM Infrastructure Terraform.
 
 ### Monitoring and Alerting:
