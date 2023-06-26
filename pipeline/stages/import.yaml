@@ -36,7 +36,6 @@ stages:
                 storageAccount: ${{ variables.storageAccount }}
               outputName: '${{ variables.planOutputName }}'
               workingDirectory: ${{ variables.workingDirectory }}
-              importResources: ${{ variables.importResources}}
               serviceName: 'SharedInfra'
 
           #- template: ../jobs/setup-azmonlink.yaml
