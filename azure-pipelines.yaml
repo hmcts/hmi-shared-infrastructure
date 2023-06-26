@@ -79,6 +79,28 @@ stages:
         - name: prod
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
+         
+  - template: pipeline/stages/import.yaml
+    parameters:
+      environments:
+        - name: sbox
+          subscription: DTS-SHAREDSERVICES-SBOX
+          dependency: 'CIBuild'
+        - name: dev
+          subscription: DTS-SHAREDSERVICES-DEV
+          dependency: 'sbox'
+        - name: test
+          subscription: DTS-SHAREDSERVICES-TEST
+          dependency: 'dev'
+        - name: ithc
+          subscription: DTS-SHAREDSERVICES-ITHC
+          dependency: 'dev'
+        - name: stg
+          subscription: DTS-SHAREDSERVICES-STG
+          dependency: 'test'
+        - name: prod
+          subscription: DTS-SHAREDSERVICES-PROD
+          dependency: 'stg'
 
   - template: pipeline/stages/apply.yaml
     parameters:
@@ -101,4 +123,3 @@ stages:
         - name: prod
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
-
