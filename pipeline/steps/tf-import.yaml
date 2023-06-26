@@ -1,0 +1,26 @@
+parameters:
+  - name: subscription
+    type: string
+  
+  - name: environment
+    type: string
+
+  - name: planLocation
+    type: string
+
+  - name: workingDirectory
+    type: string
+
+  - name: importResources
+    type: object
+
+steps:
+
+- ${{each resource in parameters.importResources}}:
+  - task: TerraformCLI@0
+    displayName: Terraform import
+    inputs:
+      workingDirectory: ${{parameters.workingDirectory}}
+      command: import
+      resourceAddress: ${{ resource.address }}
+      resourceId: ${{ resource.id }}
