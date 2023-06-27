@@ -72,14 +72,16 @@ module "automation" {
       storage_account = "hmidtu${var.environment}"
       container       = "rota"
       blob            = ""
-      expiry_date     = timeadd(timestamp(), "167h")
+      #expiry_date     = timeadd(timestamp(), "167h")
+      expiry_days = 7
     },
     "rota-rlw" = {
       permissions     = "rlw"
       storage_account = "hmidtu${var.environment}"
       container       = "rota"
       blob            = ""
-      expiry_date     = timeadd(timestamp(), "167h")
+      #expiry_date     = timeadd(timestamp(), "167h")
+      expiry_days = 7
     }
   }
 
