@@ -31,7 +31,7 @@ variable "sas_tokens" {
     storage_account = string
     container       = string
     blob            = string
-    expiry_date     = string
+    expiry_days     = string
   }))
   description = "List of all of the SAS tokens to be created"
   default     = {}

@@ -79,7 +79,7 @@ stages:
         - name: prod
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
-
+          
   - template: pipeline/stages/apply.yaml
     parameters:
       environments:
@@ -101,4 +101,3 @@ stages:
         - name: prod
           subscription: DTS-SHAREDSERVICES-PROD
           dependency: 'stg'
-
