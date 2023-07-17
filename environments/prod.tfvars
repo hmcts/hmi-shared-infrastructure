@@ -24,6 +24,11 @@ ping_tests = [
     pingTestName = "apim-service"
     pingTestURL  = "https://hmi-apim.platform.hmcts.net/health/liveness"
     pingText     = "&#x22;status&#x22;&#x3A;&#x20;&#x22;Up&#x22;" # xml encoding
+  },
+  {
+    pingTestName = "hmc-apim-service"
+    pingTestURL  = "https://hmi-apim.platform.hmcts.net/hmi/hmc-health"
+    pingText     = "&#x22;status&#x22;&#x3A;&#x20;&#x22;Up&#x22;" # xml encoding
   }
 ]
 environment = "prod"

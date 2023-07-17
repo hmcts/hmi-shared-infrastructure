@@ -45,7 +45,7 @@ module "automation_runbook_sas_token_renewal" {
   key_vault_name = local.key_vault_name
   secret_name    = "hmi-sas-${each.value.container}-${each.value.blob}-${each.value.permissions}"
 
-  expiry_date = each.value.expiry_date
+  expiry_days = each.value.expiry_days
 
   automation_account_name = azurerm_automation_account.hmi_automation.name
 

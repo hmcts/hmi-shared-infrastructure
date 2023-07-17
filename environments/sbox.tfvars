@@ -27,6 +27,11 @@ ping_tests = [
     pingTestName = "hmi-pact"
     pingTestURL  = "https://hmi-apim.sandbox.platform.hmcts.net/hmi/pact-health"
     pingText     = ""
+  },
+  {
+    pingTestName = "hmc-apim-service"
+    pingTestURL  = "https://hmi-apim.sandbox.platform.hmcts.net/hmi/hmc-health"
+    pingText     = "&#x22;status&#x22;&#x3A;&#x20;&#x22;Up&#x22;" # xml encoding
   }
 ]
 environment = "sbox"
