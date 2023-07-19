@@ -8,6 +8,7 @@ apim_nsg_rules = [
   { name = "AzureInfrastructureLoadBalancer" },
   { name = "DependencyOnAzureStorageOutbound" },
   { name = "DependencyOnAzureSQLOutbound" },
+  { name = "DependencyOnAzureSQL1433Outbound"},
   { name = "DependencyForLogToEventHubPolicyOutbound" },
   { name = "DependencyOnRedisCacheOutbound" },
   { name = "PublishDiagnosticLogsAndMetrics433Outbound" },
@@ -23,6 +24,7 @@ apim_rules = {
   AzureInfrastructureLoadBalancer                      = ["Inbound", "Allow", "Tcp", "*", "*", "AzureLoadBalancer", "VirtualNetwork"]
   DependencyOnAzureStorageOutbound                     = ["Outbound", "Allow", "Tcp", "*", "443", "VirtualNetwork", "Storage"]
   DependencyOnAzureSQLOutbound                         = ["Outbound", "Allow", "Tcp", "*", "1443", "VirtualNetwork", "Sql"]
+  DependencyOnAzureSQL1433Outbound                     = ["Outbound", "Allow", "Tcp", "*", "1433", "VirtualNetwork", "Sql"]
   DependencyForLogToEventHubPolicyOutbound             = ["Outbound", "Allow", "Tcp", "*", "5671-5672", "VirtualNetwork", "EventHub"]
   DependencyOnRedisCacheOutbound                       = ["Outbound", "Allow", "Tcp", "*", "6381-6383", "VirtualNetwork", "VirtualNetwork"]
   PublishDiagnosticLogsAndMetrics433Outbound           = ["Outbound", "Allow", "Tcp", "*", "443", "VirtualNetwork", "AzureMonitor"]
@@ -82,12 +84,20 @@ sds_routing_rules = {
       next_hop_in_ip_address = "10.11.72.36"
     }
   ]
+  "demo" = [
+    #{
+    #  name                   = "ss_demo_aks"
+    #  address_prefix         = "0.0.0.0/0"
+    #  next_hop_type          = "VirtualAppliance"
+    #  next_hop_in_ip_address = "10.11.72.36"
+    #}
+  ]
 }
 
 cft_routing_rules = {
   "perftest" = [
     {
-      name                   = "cft_perftest_aks"
+      name                   = "cft_demo_aks"
       address_prefix         = "10.48.64.0/18"
       next_hop_type          = "VirtualAppliance"
       next_hop_in_ip_address = "10.11.72.36"

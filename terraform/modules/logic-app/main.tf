@@ -27,7 +27,6 @@ data "azurerm_storage_account" "hmidtu" {
   name                = "hmidtu${var.env}"
   resource_group_name = var.resource_group
 }
-
 resource "azurerm_api_connection" "azureblob" {
   name                = "azureblob"
   resource_group_name = var.resource_group
