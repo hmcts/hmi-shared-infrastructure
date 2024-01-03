@@ -1,11 +1,11 @@
 output "instrumentation_key" {
-  value = azurerm_application_insights.app_insights.instrumentation_key
+  value = module.application_insights.instrumentation_key
 }
 
 output "app_id" {
-  value = azurerm_application_insights.app_insights.app_id
+  value = module.application_insights.app_id
 }
 
 output "id" {
-  value = azurerm_application_insights.app_insights.id
+  value = module.application_insights.id
 }

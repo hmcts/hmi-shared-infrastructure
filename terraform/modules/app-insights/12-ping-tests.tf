@@ -4,7 +4,7 @@ resource "azurerm_template_deployment" "web-test" {
   deployment_mode     = "Incremental"
   count               = length(var.ping_tests)
   parameters = {
-    appInsightsName = azurerm_application_insights.app_insights.name
+    appInsightsName = module.application_insights.name
     pingTestName    = "${lookup(var.ping_tests[count.index], "pingTestName")}-${var.environment}"
     pingTestURL     = lookup(var.ping_tests[count.index], "pingTestURL")
     pingText        = lookup(var.ping_tests[count.index], "pingText")
