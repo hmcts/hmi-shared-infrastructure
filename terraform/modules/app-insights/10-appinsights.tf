@@ -2,8 +2,8 @@ module "application_insights" {
   source = "git::https://github.com/hmcts/terraform-module-application-insights?ref=main"
 
 
-  env      = var.env
-  product  = var.product
+  env      = var.environment
+  product  = var.project
   name     = "${var.project}-appins"
   location = var.location
 
