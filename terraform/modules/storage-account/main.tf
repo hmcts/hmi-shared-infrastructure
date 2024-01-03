@@ -13,7 +13,7 @@ module "sa" {
   account_replication_type = var.sa_account_replication_type
   access_tier              = var.sa_access_tier
 
-  team_name    = "HMI DevOps"
+
   team_contact = "#vh-devops"
 
   common_tags = var.common_tags
