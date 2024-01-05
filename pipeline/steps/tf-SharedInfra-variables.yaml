@@ -74,7 +74,7 @@ steps:
     displayName: Set policy file to key vault
     inputs:
       azureSubscription: ${{ parameters.subscriptionName }}
-      scriptType: 'pscore'
+      scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
         az keyvault secret set --name "HMI-APIM-BUILD-${{ upper(parameters.environment) }}-json" --file "$(secureFileVariable.secure_file_json_path)" --vault-name "hmi-shared-kv-${{ parameters.environment }}"

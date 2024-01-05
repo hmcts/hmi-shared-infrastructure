@@ -1,8 +1,18 @@
-resource "azurerm_application_insights" "app_insights" {
-  name                = "${var.project}-appins-${var.environment}"
+module "application_insights" {
+  source = "git::https://github.com/hmcts/terraform-module-application-insights?ref=main"
+
+
+  env                 = var.environment
+  product             = var.project
+  name                = "${var.project}-appins"
   location            = var.location
-  resource_group_name = var.resource_group
-  tags                = var.tags
   application_type    = "other"
-  retention_in_days   = var.environment == "sbox" || var.environment == "dev" || var.environment == "test" ? 30 : 60
+  resource_group_name = var.resource_group
+
+  common_tags = var.tags
+}
+
+moved {
+  from = azurerm_application_insights.app_insights
+  to   = module.application_insights.azurerm_application_insights.this
 }
