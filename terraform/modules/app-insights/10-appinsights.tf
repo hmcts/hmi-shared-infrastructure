@@ -2,11 +2,11 @@ module "application_insights" {
   source = "git::https://github.com/hmcts/terraform-module-application-insights?ref=main"
 
 
-  env      = var.environment
-  product  = var.project
-  name     = "${var.project}-appins"
-  location = var.location
-
+  env                 = var.environment
+  product             = var.project
+  name                = "${var.project}-appins"
+  location            = var.location
+  application_type    = "other"
   resource_group_name = var.resource_group
 
   common_tags = var.tags
